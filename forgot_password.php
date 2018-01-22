@@ -35,7 +35,7 @@
 			    $password = substr( str_shuffle( $chars ), 0, 8);
 			    //update table
 			    $query = "UPDATE user 
-			              SET encrypted_password=\"".$password."\"
+			              SET encryptedpassword=\"".$password."\"
 			              WHERE email=\"".$email."\"";
 			    
 			    $result = $mysqli->query($query);

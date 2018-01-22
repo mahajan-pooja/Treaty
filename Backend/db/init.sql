@@ -18,23 +18,148 @@ CREATE SCHEMA IF NOT EXISTS `treaty`;
 -- Table treaty.users
 -- -------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `treaty`.`user`;
+
 CREATE TABLE IF NOT EXISTS `treaty`.`user` (
-`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-`email` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
-`role` VARCHAR(20) CHARACTER SET `utf8` NULL DEFAULT NULL,
-`last_login_time` TIMESTAMP NULL DEFAULT NULL,
-`encrypted_password` VARCHAR(64) NOT NULL,
-`isactive` BIGINT(20) NOT NULL DEFAULT '1',
-`modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-`modifiedby`BIGINT(20) NULL DEFAULT NULL,
-`created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-`createdby`BIGINT(20) NULL DEFAULT NULL,
-PRIMARY KEY (`id`),
-UNIQUE INDEX `ix_user_email` (`email`),
-INDEX `ix_user_createdby` (`createdby`),
-INDEX `ix_user_lastupdateby` (`modifiedby`))
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) CHARACTER SET `utf8` NOT NULL,
+  `role` VARCHAR(20) CHARACTER SET `utf8` NULL DEFAULT NULL,
+  `lastlogintime` TIMESTAMP NULL DEFAULT NULL,
+  `encryptedpassword` VARCHAR(64) NOT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby`BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ix_user_email` (`email` ASC),
+  INDEX `ix_user_createdby` (`createdby` ASC),
+  INDEX `ix_user_lastupdateby` (`modifiedby` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_unicode_ci
+COLLATE = utf8_unicode_ci;
+
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.userdetails
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`userdetail`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`userdetail` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `firstname` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+  `lastname` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+  `phonenumber` VARCHAR(10) NOT NULL,
+  `address1` VARCHAR(100) CHARACTER SET `utf8` NOT NULL,
+  `address2` VARCHAR(100) CHARACTER SET `utf8` NULL DEFAULT NULL,
+  `city` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
+  `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
+  `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
+  `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby`BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ix_userdetail_phonenumber` (`phonenumber` ASC),
+  INDEX `ix_userdetail_userid` (`userid` ASC),
+  INDEX `ix_userdetail_createdby` (`createdby` ASC),
+  INDEX `ix_userdetail_lastupdateby` (`modifiedby` ASC),
+  CONSTRAINT `fk_userdetail_userid`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.businessdetail
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`businessdetail`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `businessname` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  `businesssector` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+  `address1` VARCHAR(100) CHARACTER SET `utf8` NOT NULL,
+  `address2` VARCHAR(100) CHARACTER SET `utf8` NULL DEFAULT NULL,
+  `city` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
+  `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
+  `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
+  `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby`BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ix_businessdetail_userid_businessname_businesssector_zipcode` (`userid`, `businessname`, `businesssector`, `zipcode`),
+  CONSTRAINT `fk_businessdetail_userid`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.businessoffer
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`businessoffer`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `businessid` BIGINT(20) NOT NULL,
+  `offername` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
+  `offerdescription` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
+  `creditedpoints` BIGINT(80) NOT NULL,
+  `startdate` TIMESTAMP NOT NULL,
+  `expirationdate` TIMESTAMP NOT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby`BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ix_businessoffer_userid_businessid_offername` (`userid`, `businessid`, `offername`),
+  CONSTRAINT `fk_businessoffer_userid`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_businessoffer_businessid`
+    FOREIGN KEY (`businessid`)
+    REFERENCES `treaty`.`businessdetail` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.customeroffer
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`customeroffer`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `offerid` BIGINT(20) NOT NULL,
+  `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `balance` BIGINT(80) NULL DEFAULT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdby`BIGINT(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `ix_bcustomeroffer_userid_offerid` (`userid`, `offerid`),
+  CONSTRAINT `fk_customeroffer_userid`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_customeroffer_offerid`
+    FOREIGN KEY (`offerid`)
+    REFERENCES `treaty`.`businessoffer` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
 
 -- -------------------------------------------------------------------------------------------------------

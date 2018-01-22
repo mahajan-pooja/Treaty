@@ -38,7 +38,7 @@
 			}
 			
 			if(!empty($signInemail)) {
-			    $query = "SELECT role FROM user where email=\"".$signInemail."\" and encrypted_password=\"". $signInpassword."\"";
+			    $query = "SELECT role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
@@ -52,13 +52,13 @@
 			        $signupresponse="Passwords dont match";
 			    } else {
 			        //check if user already exist
-			        $query = "SELECT role FROM user where email=\"".$signUpemail."\" and encrypted_password=\"". $signUppassword."\"";
+			        $query = "SELECT role FROM user where email=\"".$signUpemail."\" and encryptedpassword=\"". $signUppassword."\"";
 			        $result = $mysqli->query($query);
 			        if ($result->num_rows > 0) {
 			            $signupresponse="User with email already exists. Please sign in.";
 			        } else {
 			            // insert into table
-			            $query = "INSERT INTO user (email,role,encrypted_password) 
+			            $query = "INSERT INTO user (email,role,encryptedpassword) 
 			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"". $signUppassword."\")";            
 			            $result = $mysqli->query($query);
 			            if ($result) {

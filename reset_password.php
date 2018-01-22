@@ -38,12 +38,12 @@
 			    if(strcmp($npassword, $cpassword) != 0) {
 			        $response = "Passwords dont match";
 			    } else {
-			        $query = "SELECT role FROM user where email=\"".$email."\" and encrypted_password=\"". $tpassword."\"";
+			        $query = "SELECT role FROM user where email=\"".$email."\" and encryptedpassword=\"". $tpassword."\"";
 			        // Sign In
 			        $result = $mysqli->query($query);
 			        if ($result->num_rows > 0) {
 			            $query = "UPDATE user 
-			                      SET encrypted_password=\"".$npassword."\"
+			                      SET encryptedpassword=\"".$npassword."\"
 			                      WHERE email=\"".$email."\"";
 			            
 			            $result = $mysqli->query($query);
