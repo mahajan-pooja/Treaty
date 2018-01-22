@@ -23,13 +23,10 @@
 			include 'header.php';
 			require 'config.php';
 			
-			$signInemail = $_POST['signInemail'];
-			$signInpassword = $_POST['signInpassword'];
-			
-			$signUpemail = $_POST['signUpemail'];
-			$signUppassword= $_POST['signUppassword'];
-			$signUpcpassword = $_POST['signUpcpassword'];
-			$signUprole = $_POST['user'];
+			$email = $_POST['email'];
+			$tpassword = $_POST['tpassword'];
+			$npassword = $_POST['npassword'];
+			$cpassword = $_POST['cpassword'];
 			
 			// database connection
 			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
@@ -37,35 +34,24 @@
 			    die('Could not connect: ' . mysql_error());
 			}
 			
-			if(!empty($signInemail)) {
-			    $query = "SELECT role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
-			    // Sign In
-			    $result = $mysqli->query($query);
-			    if ($result->num_rows > 0) {
-			        echo '<script>window.location.href = "index.php";</script>';
+			if(!empty($email)) {
+			    if(strcmp($npassword, $cpassword) != 0) {
+			        $response = "Passwords dont match";
 			    } else {
-			        $response="Invalid username/password";
-			    }
-			} else if(!empty($signUpemail)) {
-			    //check if both the passwords are same
-			    if(strcmp($signUppassword, $signUpcpassword) != 0) {
-			        $signupresponse="Passwords dont match";
-			    } else {
-			        //check if user already exist
-			        $query = "SELECT role FROM user where email=\"".$signUpemail."\" and encryptedpassword=\"". $signUppassword."\"";
+			        $query = "SELECT role FROM user where email=\"".$email."\" and encryptedpassword=\"". $tpassword."\"";
+			        // Sign In
 			        $result = $mysqli->query($query);
 			        if ($result->num_rows > 0) {
-			            $signupresponse="User with email already exists. Please sign in.";
-			        } else {
-			            // insert into table
-			            $query = "INSERT INTO user (email,role,encryptedpassword) 
-			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"". $signUppassword."\")";            
+			            $query = "UPDATE user 
+			                      SET encryptedpassword=\"".$npassword."\"
+			                      WHERE email=\"".$email."\"";
+			            
 			            $result = $mysqli->query($query);
 			            if ($result) {
 			                echo '<script>window.location.href = "index.php";</script>';
-			            } else {
-			                $signupresponse="Failed to signup";
 			            }
+			        } else {
+			            $response = "Unable to find email. Please try again.";
 			        }
 			    }
 			}
@@ -102,73 +88,27 @@
 			</div>
 		</div>
 		<br>
-		<h1 style="margin-top: 5%;">Welcome to Login Portal.</h1>
-		<br>
-		<div class="main" style="margin-bottom: 2%;">
+		<div class="main" style="margin-bottom: 2%;margin-top: 5%;">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
 				<div class="img-w3l-agile">
 					<img src="images/1.jpg" alt=" ">
 					<form style="color: black!important;"></form>
 				</div>
-				<ul class="resp-tabs-list" style="margin-left: 0px;">
-					<li class="resp-tab-item">
-						<h3><span>Sign In</span></h3>
-					</li>
-					<li class="resp-tab-item">
-						<h3><span>Sign Up</span></h3>
-					</li>
-				</ul>
+				<div class="resp-tab-item" style="width:100%; padding:0px;">
+					<h3><span>Reset Password</span></h3>
+				</div>
 				<div class="resp-tabs-container">
 					<div class="tab-1 resp-tab-content">
 						<div class="login-top">
 							<form method="post">
-								<input type="email" name="signInemail" class="email" placeholder="Email" required/>
-								<input type="password" name="signInpassword" class="password" placeholder="Password" required/>	
+								<input type="email" name="email" class="email" placeholder="Email" required/>
+								<input type="password" name="tpassword" class="password" placeholder="Temporary password" required/>
+								<input type="password" name="npassword" class="password" placeholder="New password" required/>
+								<input type="password" name="cpassword" class="password" placeholder="Confirm password" required/>
 								<label style="color:red;">
 								<?php echo $response; ?>
 								</label>
-								<div class="login-bottom">
-									<ul>
-										<li>
-											<input type="checkbox" id="brand" value="">
-											<label for="brand"><span></span> Remember me?</label>
-										</li>
-										<li>
-											<a href="forgot_password.php">Forgot password?</a>
-										</li>
-									</ul>
-									<div class="clear"></div>
-								</div>
-								<input type="submit" value="Sign In">
-							</form>
-							<img src="images/google-login.png" width="200" height="50" style="width: 60%; height: 40%; padding-top: 2%;"><br>
-							<img src="images/facebook.png" width="200" height="50" style="width: 62%; height: 40%;">
-						</div>
-					</div>
-					<div class="tab-1 resp-tab-content">
-						<div class="login-top sign-top">
-							<form method="post" style="color: black!important;">
-								<input type="radio" name="user" style="margin: 0px;" value="Customer" required> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-								<input type="radio" name="user" style="margin: 0px;" value="Business Owner"> <span>Business Owner</span><br><br>
-								<input type="email" name="signUpemail" class="email" placeholder="Email" required/>
-								<input type="password" name="signUppassword" class="password" placeholder="Password" required/>
-								<input type="password" name="signUpcpassword" class="password" placeholder="Confirm Password" required/>
-								<label style="color:red;">
-								<?php echo $signupresponse; ?>
-								</label>
-								<div class="login-bottom">
-									<ul>
-										<li>
-											<input type="checkbox" id="brand1" value="">
-											<label for="brand1"><span></span> Remember me?</label>
-										</li>
-										<li>
-											<a href="forgot_password.php">Forgot password?</a>
-										</li>
-									</ul>
-									<div class="clear"></div>
-								</div>
-								<input type="submit" value="Sign Up">							
+								<input type="submit" value="Submit">
 							</form>
 						</div>
 					</div>
