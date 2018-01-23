@@ -27,13 +27,9 @@ CREATE TABLE IF NOT EXISTS `treaty`.`user` (
   `encryptedpassword` VARCHAR(64) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `createdby`BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_user_email` (`email` ASC),
-  INDEX `ix_user_createdby` (`createdby` ASC),
-  INDEX `ix_user_lastupdateby` (`modifiedby` ASC))
+  UNIQUE INDEX `ix_user_email` (`email` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -57,14 +53,10 @@ CREATE TABLE IF NOT EXISTS `treaty`.`userdetail` (
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `createdby`BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `ix_userdetail_phonenumber` (`phonenumber` ASC),
   INDEX `ix_userdetail_userid` (`userid` ASC),
-  INDEX `ix_userdetail_createdby` (`createdby` ASC),
-  INDEX `ix_userdetail_lastupdateby` (`modifiedby` ASC),
   CONSTRAINT `fk_userdetail_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`))
@@ -90,9 +82,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `createdby`BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `ix_businessdetail_userid_businessname_businesssector_zipcode` (`userid`, `businessname`, `businesssector`, `zipcode`),
   CONSTRAINT `fk_businessdetail_userid`
@@ -118,9 +108,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   `expirationdate` TIMESTAMP NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `createdby`BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `ix_businessoffer_userid_businessid_offername` (`userid`, `businessid`, `offername`),
   CONSTRAINT `fk_businessoffer_userid`
@@ -141,20 +129,22 @@ DROP TABLE IF EXISTS `treaty`.`customeroffer`;
 CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
+  `businessid` BIGINT(20) NOT NULL,
   `offerid` BIGINT(20) NOT NULL,
   `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
   `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
   `balance` BIGINT(80) NULL DEFAULT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modifiedby`BIGINT(20) NULL DEFAULT NULL,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `createdby`BIGINT(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_bcustomeroffer_userid_offerid` (`userid`, `offerid`),
+  UNIQUE INDEX `ix_bcustomeroffer_userid_businessid_offerid` (`userid`, `businessid`, `offerid`),
   CONSTRAINT `fk_customeroffer_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_customeroffer_businessid`
+    FOREIGN KEY (`businessid`)
+    REFERENCES `treaty`.`businessdetail` (`id`),
   CONSTRAINT `fk_customeroffer_offerid`
     FOREIGN KEY (`offerid`)
     REFERENCES `treaty`.`businessoffer` (`id`))
