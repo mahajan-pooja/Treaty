@@ -27,7 +27,3 @@ public function generate(){
     }
 }
 ?>
-<?php
-$ex1 = new QRGenerator(); 
-echo "<img src=".$ex1->generate().">";
-?>

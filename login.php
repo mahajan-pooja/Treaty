@@ -176,9 +176,7 @@
 			</div>
 			<div class="clear"> </div>
 		</div>
-		<div class="footer" style="padding: 0.5em 0;">
-			<p style="color: #fece1a;">Treaty.com © copyright 2018</p>
-		</div>
+		<?php include 'footer.php'; ?>
 		<!-- js-scripts -->			
 		<!-- js -->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
