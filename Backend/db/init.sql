@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `treaty`.`user`;
 CREATE TABLE IF NOT EXISTS `treaty`.`user` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) CHARACTER SET `utf8` NOT NULL,
+  `phonenumber` VARCHAR(10) NOT NULL,
   `role` VARCHAR(20) CHARACTER SET `utf8` NULL DEFAULT NULL,
   `lastlogintime` TIMESTAMP NULL DEFAULT NULL,
   `encryptedpassword` VARCHAR(255) NOT NULL,
