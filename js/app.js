@@ -377,8 +377,11 @@ $("#send-mail").click(function () {
 
 function initializeMap() {
 
-    var lat = '44.8164056'; //Set your latitude.
-    var lon = '20.46090424'; //Set your longitude.
+    // var lat = '44.8164056'; //Set your latitude.
+    // var lon = '20.46090424'; //Set your longitude.
+
+    var lon = '-121.930889'; //Set your latitude.
+    var lat = '37.388767'; //Set your longitude.
 
     var centerLon = lon - 0.0105;
 
@@ -400,7 +403,7 @@ function initializeMap() {
     });
 
     var infowindow = new google.maps.InfoWindow({
-        content: "Your content goes here!"
+        content: "Treaty"
     });
 
     google.maps.event.addListener(marker, 'click', function () {
