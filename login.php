@@ -9,8 +9,10 @@
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
 			function hideURLbar(){ window.scrollTo(0,1); } 
 		</script>
+
 		<!-- Meta tag Keywords -->
 		<!-- css files -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
 		<link rel="stylesheet" href="css/font-awesome.css">
 		<!-- Font-Awesome-Icons-CSS -->
@@ -23,13 +25,25 @@
 			include 'header.php';
 			require 'config.php';
 			
-			$signInemail = $_POST['signInemail'];
-			$signInpassword = $_POST['signInpassword'];
+			if(isset($_POST['signInemail'])){
+				$signInemail = $_POST['signInemail'];
+			}
+			if(isset($_POST['signInpassword'])){
+				$signInpassword = $_POST['signInpassword'];
+			}
+			if(isset($_POST['signUpemail'])){
+				$signUpemail = $_POST['signUpemail'];
+			}
 			
-			$signUpemail = $_POST['signUpemail'];
-			$signUppassword= $_POST['signUppassword'];
-			$signUpcpassword = $_POST['signUpcpassword'];
-			$signUprole = $_POST['user'];
+			if(isset($_POST['signUppassword'])){
+				$signUppassword= $_POST['signUppassword'];
+			}
+			if(isset($_POST['signUpcpassword'])){
+				$signUpcpassword = $_POST['signUpcpassword'];
+			}
+			if(isset($_POST['user'])){
+				$signUprole = $_POST['user'];
+			}
 			
 			// database connection
 			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
@@ -125,7 +139,11 @@
 								<input type="email" name="signInemail" class="email" placeholder="Email" required/>
 								<input type="password" name="signInpassword" class="password" placeholder="Password" required/>	
 								<label style="color:red;">
-								<?php echo $response; ?>
+								<?php
+                                	if(isset($response)){
+										echo $response;
+									}
+								?>
 								</label>
 								<div class="login-bottom">
 									<ul>
@@ -141,8 +159,23 @@
 								</div>
 								<input type="submit" value="Sign In">
 							</form>
-							<img src="images/google-login.png" width="200" height="50" style="width: 60%; height: 40%; padding-top: 2%;"><br>
-							<img src="images/facebook.png" width="200" height="50" style="width: 62%; height: 40%;">
+                                
+							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
+								<div class="col-md-12">
+									<a class="form-control btn btn-fb fb-btn-bg" href="">
+										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign in with Facebook
+									</a>
+								</div>                          
+							</div>
+                            
+							<div id="social" class="row" style="margin-left: -15px;">
+								<div class="col-md-12">
+									<a class="form-control btn btn-google google-btn-bg" href="">
+										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign in with Google
+									</a>
+								</div>                          
+							</div>                                                                
+
 						</div>
 					</div>
 					<div class="tab-1 resp-tab-content">
@@ -170,6 +203,22 @@
 								</div>
 								<input type="submit" value="Sign Up">							
 							</form>
+                            
+							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
+								<div class="col-md-12">
+									<a class="form-control btn btn-fb fb-btn-bg" href="">
+										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign up with Facebook
+									</a>
+								</div>                          
+							</div>
+                            
+							<div id="social" class="row" style="margin-left: -15px;">
+								<div class="col-md-12">
+									<a class="form-control btn btn-google google-btn-bg" href="">
+										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign up with Google
+									</a>
+								</div>                          
+							</div>                             
 						</div>
 					</div>
 				</div>
