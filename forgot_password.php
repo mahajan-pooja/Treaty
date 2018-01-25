@@ -23,7 +23,10 @@
 			include 'header.php';
 			require 'config.php';
 			
-			$email = $_POST['email'];
+			if(isset($_POST['email'])){
+				$email = $_POST['email'];
+			}
+			
 			
 			// database connection
 			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
@@ -115,7 +118,11 @@
 							<form method="post">
 								<input type="email" name="email" class="email" placeholder="Email" required/>
 								<label style="color:red;">
-								<?php echo $response; ?>
+								<?php 
+									if(isset($response)){
+										echo $response;
+									}
+								?>
 								</label>
 								<input type="submit" value="Submit">
 							</form>

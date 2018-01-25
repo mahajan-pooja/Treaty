@@ -181,13 +181,17 @@
 					<div class="tab-1 resp-tab-content">
 						<div class="login-top sign-top">
 							<form method="post" style="color: black!important;">
-								<input type="radio" name="user" style="margin: 0px;" value="Customer" required> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<input type="radio" name="user" style="margin: 0px;" value="Customer" required checked="checked"> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								<input type="radio" name="user" style="margin: 0px;" value="Business Owner"> <span>Business Owner</span><br><br>
 								<input type="email" name="signUpemail" class="email" placeholder="Email" required/>
 								<input type="password" name="signUppassword" class="password" placeholder="Password" required/>
 								<input type="password" name="signUpcpassword" class="password" placeholder="Confirm Password" required/>
 								<label style="color:red;">
-								<?php echo $signupresponse; ?>
+								<?php
+                                	if(isset($signupresponse)){
+										echo $signupresponse;
+									}
+								?>								
 								</label>
 								<div class="login-bottom">
 									<ul>
