@@ -35,7 +35,7 @@
 .notPara{
 	color: white;
 	font-size: 120%;
-	margin-left: 25%;
+	margin-left: 18%;
 }
 .business_name{
 	color: white;
@@ -46,12 +46,16 @@
 }
 .business_title{
 	color: white;
-	background-color: gray;
+	/*background-color: gray;*/
+	background: rgba(0, 0, 0, 0.5);
 	padding: 4%;
 	margin-bottom: 2%;
 	text-align: center;
 	margin-top: 3%;
 	display: none;
+}
+.bus_name{
+	font-size: 120%;
 }
 .offer{
 	background-color: #e1603d;
@@ -67,13 +71,12 @@
 	text-align: center;
 }
 .b_name{
-	font-size: 120%;
+	font-size: 150%;
 }
 .downImg{
 	width: 6%;
 	height: 10%;
 	float: right;
-	margin-top: -1.5%;
 }
 .pointsDiv{
 	width: 90%;
@@ -84,11 +87,11 @@
 	display: none;
 }
 .addReward{
-	width: 50%;
+	width: 100%;
 	height: auto;
-	padding: 2%;
+	padding: 3%;
 	color: white;
-	margin-left: 25%;
+	background: rgba(0, 0, 0, 0.5);
 }
 .redeemReward{
 	width: 50%;
@@ -97,10 +100,16 @@
 	color: white;
 	margin-left: 25%;
 }
+.secHead{
+	color: white;
+	font-size: 160%;
+	text-align: center;
+	margin: 3%;
+}
 body {
 	font-family: 'Raleway', sans-serif;
 	/*background: url(../images/1.jpg) no-repeat 0px 0px;*/
-	background-color: #e1603d;
+	background-color: #E1603D;
     background-size: cover;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -528,7 +537,32 @@ input.name,input.date {
     width: 50%;
     margin-left: 18%;
 }
-
+.submitBtn input[type=submit] {
+    color: #fff;
+    padding: 0.8em;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background: #ffb900;
+    outline: none;
+    font-weight: 400;
+    text-transform: capitalize;
+    width: 50%;
+}
+.submitButton input[type=submit]{
+	color: #fff;
+    padding: 0.8em;
+    font-size: 0.9em;
+    cursor: pointer;
+    border: none;
+    border-radius: 3px;
+    background: #ffb900;
+    outline: none;
+    font-weight: 400;
+    text-transform: capitalize;
+    width: 50%;
+}
 .submit input[type="submit"]:hover {
     background:#e5ac16;
 }

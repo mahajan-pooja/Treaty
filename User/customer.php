@@ -24,7 +24,7 @@
 
 <body>
 
-	<h1>Customer Dashboard</h1>
+	<h1></h1> 
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
@@ -57,18 +57,65 @@
 
 					<div class="tab-left">
 						<ul class="resp-tabs-list">
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>QR Code</li>
+							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Explore</li>
+							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
 							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
 						</ul>
 					</div>
 
 					<div class="tab-right">
 						<div class="resp-tabs-container">
+							<!-- QR Code -->
+							<div class="tab-1 resp-tab-content gallery-images">
+								<div class="wthree-subscribe">	
+									<p class="secHead">Your QR Code</p><br>
+									<?php 
+										include 'GenerateQR/QRGenerator.php';
+										$ex1 = new QRGenerator(); 
+										echo "<img style='width:65%;margin-left:15%;' src=".$ex1->generate().">";
+									?>
+								</div>
+							</div>
+							<!-- Customer Rewards section -->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Your Reward Points</p>
+								<div class="register agileits">
+									<div class="business_name">
+										<span class="b_name">Walmart</span>
+										<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
+										<div class="pointsDiv" id="pointsDiv">
+										Reward Points - 20<br><br>
+										<a href="" style="color: orange;">View Details</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Explore section -->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Explore Business supporting Treaty Rewards</p>
+								<div class="agileinfo-recover">
+									<div class="business_cat_name">
+										<span class="b_name">Restaurant</span>
+										<img class="downImg" id="business_title_downImg" src="images/down.png" width="100" height="100" onclick="loadSubCat();"><br>
+										<div class="business_title" id="business_title">
+											<div>
+												<span class="bus_name">Subway</span> 
+												<a href="" style="color: orange;margin-left: 5%;">View Details</a>
+												<button style="padding: 1%;color: red;margin-top: 1%;margin:0% 5% 0% 5%;" value="Subscribe" name="subscribe">Subscribe</button>
+												<img class="downImg" id="offer_downImg" src="images/down.png" width="100" height="100" onclick="loadOffer();">
+											</div>
+											
+											
+											<div class="offer" id="offer">1 Sandwich free salad for 100 points</div>
+										</div>
+									</div>
+								</div>
+							</div>
 							<!-- Customer Profile section -->
 							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Your Profile</p>
 								<div class="w3l-sign-in">
 									<form action="#" method="post" class="agile_form">
 										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
@@ -90,47 +137,12 @@
 									</form>	
 								</div>
 							</div>
-							<!-- Customer Rewards section -->
-							<div class="tab-1 resp-tab-content">
-								<div class="register agileits">
-									<div class="business_name">
-										<span class="b_name">Walmart</span>
-										<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
-										<div class="pointsDiv" id="pointsDiv">
-										Reward Points - 20<br><br>
-										<a href="" style="color: orange;">View Details</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- QR Code -->
-							<div class="tab-1 resp-tab-content gallery-images">
-								<div class="wthree-subscribe">	
-									<p style="color: white;text-align: center;">Your QR code - </p><br>
-									<?php 
-										include 'GenerateQR/QRGenerator.php';
-										$ex1 = new QRGenerator(); 
-										echo "<img style='width:65%;margin-left:15%;' src=".$ex1->generate().">";
-									?>
-								</div>
-							</div>
-							<!-- Explore section -->
-							<div class="tab-1 resp-tab-content">
-								<div class="agileinfo-recover">
-									<div class="business_cat_name">
-										<span class="b_name">Restaurant</span>
-										<img class="downImg" id="business_title_downImg" src="images/down.png" width="100" height="100" onclick="loadSubCat();"><br>
-										<div class="business_title" id="business_title">
-											<div><span>Subway</span><br> <a href="" style="color: orange;">View Details</a></div>
-											<img class="downImg" id="offer_downImg" src="images/down.png" width="100" height="100" onclick="loadOffer();">
-											<button style="padding: 1%;color: red;margin-top: 1%;margin-left:5%;" value="Subscribe" name="subscribe">Subscribe</button>
-											<div class="offer" id="offer">1 Sandwich free salad for 100 points</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							
+							
+							
 							<!--Change Password-->
 							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Change Password</p>
 								<div class="agile-send-mail">
 									<form action="#" method="post" class="agile_form">
 										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>

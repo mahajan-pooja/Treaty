@@ -25,7 +25,7 @@
 	?>
 </head>
 <body>
-	<h1>Business Dashboard</h1>
+	<h1></h1>
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
@@ -67,18 +67,86 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
+							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add / Redeem Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
 							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
-							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add Rewards</li>
-							<li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Redeem Rewards</li>
+							<!-- <li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Redeem Rewards</li> -->
+							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
 							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
 						</ul>
 					</div>
 					<div class="tab-right">
 						<div class="resp-tabs-container">
+							<!-- Add Rewards section -->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Add & Redeem Rewards</p>
+								<div class="agileinfo-recover">
+									<?php 
+										include 'qrscanner/qrscanner.php';
+									?>
+									<p class="b_name" style="color: white;font-size: 150%;">Customer have 100 Reward points.</p><br>
+									<div class="addReward">
+										<p style="font-size: 150%;">--- Add Rewards ---</p><br>
+										<form action="#" method="post" class="agile_form">
+										<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
+										<div class="submitButton"><br>
+											<input type="submit" name="amount" value="Add Rewards" onclick="addPoints()"> 
+										</div>
+										</form>
+									</div><br>
+									<div class="addReward">
+										<p style="font-size: 150%;">--- Redeem Rewards ---</p><br>
+										<form action="#" method="post" class="agile_form">
+										<input style="width: 50%;" type="text" name="amount" placeholder=" Rewards"><br>
+										<div class="submitButton"><br>
+											<input type="submit" name="amount" value="Redeem Rewards" onclick="redeemPoints()"> 
+										</div>
+										</form>
+									</div>
+								</div>
+							</div>
+							<!-- Register Business section -->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Register Your Business</p>
+								<div class="register agileits">
+									<form action="#" method="post" class="agile_form">
+										<input type="text" placeholder="Business Name" name="fname" class="name agileits" required=""/>
+										<input type="text" placeholder="Business Sector" name="lname" class="name agileits" required=""/>
+										<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
+										<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
+										<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
+										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
+										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
+										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
+										<div class="submitBtn"><br>
+										  <input type="submit" value="Submit"><br><br>
+										  <input type="submit" value="Update Business" onClick="loadData()"><br><br>
+										  <input type="submit" value="Delete Business" onClick="deleteBusiness()">
+										</div>   
+									</form>
+								</div>
+							</div>
+							<!-- Create Offer section -->
+							<div class="tab-1 resp-tab-content gallery-images">
+								<p class="secHead">Create Offer For Your Business</p>
+								<div class="wthree-subscribe">	
+									<form action="#" method="post" class="agile_form">
+										<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
+										<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
+										<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
+										<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+										<div class="submitBtn"><br>
+										  <input type="submit" value="Submit"><br><br>
+										  <input type="submit" value="Update Offer" onClick="loadData()"><br><br>
+										  <input type="submit" value="Delete Offer" onClick="deleteOffer()">
+										</div>   
+									</form>
+								</div>
+							</div>
 							<!-- Business Owner Profile section -->
 							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Your Profile</p>
 								<div class="w3l-sign-in">
 									<form action="#" method="post" class="agile_form">
 										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
@@ -90,7 +158,7 @@
 										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
 										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
-										<div class="submit"><br>
+										<div class="submitBtn"><br>
 										  <input type="submit" value="Submit"><br><br>
 										  <input type="submit" value="Update Profile" onClick="loadData()"><br><br>
 										  <input type="submit" value="Delete Profile" onClick="deleteOwner()">
@@ -98,65 +166,14 @@
 									</form>	
 								</div>
 							</div>
-							<!-- Register Business section -->
-							<div class="tab-1 resp-tab-content">
-								<div class="register agileits">
-									<form action="#" method="post" class="agile_form">
-										<input type="text" placeholder="Business Name" name="fname" class="name agileits" required=""/>
-										<input type="text" placeholder="Business Sector" name="lname" class="name agileits" required=""/>
-										<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
-										<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
-										<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
-										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
-										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
-										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
-										<div class="submit"><br>
-										  <input type="submit" value="Submit"><br><br>
-										  <input type="submit" value="Update Business" onClick="loadData()"><br><br>
-										  <input type="submit" value="Delete Business" onClick="deleteBusiness()">
-										</div>   
-									</form>
-								</div>
-							</div>
-							<!-- Create Offer section -->
-							<div class="tab-1 resp-tab-content gallery-images">
-								<div class="wthree-subscribe">	
-									<form action="#" method="post" class="agile_form">
-										<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
-										<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
-										<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
-										<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-										<div class="submit"><br>
-										  <input type="submit" value="Submit"><br><br>
-										  <input type="submit" value="Update Offer" onClick="loadData()"><br><br>
-										  <input type="submit" value="Delete Offer" onClick="deleteOffer()">
-										</div>   
-									</form>
-								</div>
-							</div>
-							<!-- Add Rewards section -->
-							<div class="tab-1 resp-tab-content">
-								<div class="agileinfo-recover">
-									<?php 
-										include 'qrscanner/qrscanner.php';
-									?>
-									<div class="addReward">
-										<p class="b_name" style="color: white;">Customer have 100 Reward points.</p><br>
-										<form action="#" method="post" class="agile_form">
-										<input type="text" name="amount" placeholder="Amount"><br>
-										<div class="submit"><br>
-											<input type="submit" name="amount" value="Add Points" onclick="addPoints()"> 
-										</div>
-										</form>
-									</div>
-								</div>
-							</div>
+							
+							
+							
 							<!--Redeem Rewards-->
-							<div class="tab-1 resp-tab-content">
+							<!-- <div class="tab-1 resp-tab-content">
 								<div class="agileinfo-recover">
 									<?php 
-										include 'qrscanner/qrscanner.php';
+										//include 'qrscanner/qrscanner.php';
 									?>
 									<div class="redeemReward">
 										<p>Customer have 100 Reward points.</p><br>
@@ -168,15 +185,16 @@
 										</form>
 									</div>
 								</div>
-							</div>
+							</div> -->
 							<!--Change Password-->
 							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Change Password</p>
 								<div class="agile-send-mail">
 									<form action="#" method="post" class="agile_form">
 										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>	
-										<div class="submit"><br>
+										<div class="submitBtn"><br>
 										  <input type="submit" value="Submit">
 										</div>  
 									</form>
