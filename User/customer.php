@@ -60,8 +60,6 @@
 							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>QR Code</li>
 							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Explore</li>
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
-							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
 						</ul>
 					</div>
 
@@ -113,7 +111,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- Customer Profile section -->
+		<!-- Customer Profile section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Profile</p>
 								<div class="w3l-sign-in">
@@ -161,57 +159,26 @@
 			</div>
 		</div>
 	</div>
-	<?php
-	echo "1gsdashgdasgdsa";
-	include 'footer.php';
-	require 'config.php';
-	
-	$fname = $_POST['fname'];
-	$lname = $_POST['lname'];
-	$phone = $_POST['phone'];
-	$street1= $_POST['street1'];
-	$street2 = $_POST['street2'];
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$country = $_POST['country'];
-	$zip = $_POST['zip'];
-	// database connection
-	$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-	if (!$mysqli) {
-		die('Could not connect: ' . mysql_error());
-	}
-	echo "here";
-	if(!empty($fname)) {
-		echo "here1";
-		//get the userid from user table
-		$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
-		echo "here2";
-		// Sign In
-		$result = $mysqli->query($query);
-		echo "here3";
-		if ($result->num_rows > 0) {
-			echo "here4";
-			$row = $result->fetch_array();
-			echo $row;
-			$userid = $row["id"];
-			echo "21122###".$userid."###11212";
-			//insert the entry in userdetail table
-			// insert into table
-			$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-				address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-						,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-			echo $query;
-			$result = $mysqli->query($query);
-			if ($result) {
-				echo '<script>window.location.href = "/Treaty/index.php";</script>';
-			} else {
-				echo "Failed to update profile";
-			}
-		} else {
-			echo "Invalid username/password";
+	<?php 
+		include 'footer.php';
+		require 'config.php';
+		// database connection
+		$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
+		if (!$mysqli) {
+			die('Could not connect: ' . mysql_error());
 		}
-	}
-	echo "here2";
+		
+		
+		$query = "SELECT * FROM businessdetail";
+		
+		$result = $mysqli->query($query);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			// TODO :echo businessdetails list
+			printf($row);
+		}
+		/* close connection */
+		$mysqli->close();
 	?>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
