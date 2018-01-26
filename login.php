@@ -43,7 +43,12 @@
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
-			        echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+					$row = $result->fetch_array();
+					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+						echo '<script>window.location.href = "User/business.php";</script>';
+					} else {
+						echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+					}
 			    } else {
 			        $response="Invalid username/password";
 			    }
@@ -63,7 +68,12 @@
 			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";            
 			            $result = $mysqli->query($query);
 			            if ($result) {
-			                echo '<script>window.location.href = "User/customer_profile.php";</script>';
+							if(strcasecmp($signUprole, 'Business Owner') == 0) {
+								echo '<script>window.location.href = "User/business_profile.php";</script>';
+							} else {
+								echo '<script>window.location.href = "User/customer_profile.php";</script>';
+							}
+			                	
 			            } else {
 			                $signupresponse="Failed to signup";
 			            }
