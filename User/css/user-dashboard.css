@@ -54,6 +54,11 @@
 	margin-top: 3%;
 	display: none;
 }
+.settingImg{
+	width: 10%;
+	height: 10%;
+	margin-left: 45%;
+}
 .bus_name{
 	font-size: 120%;
 }
@@ -85,6 +90,43 @@
 	padding: 2%;
 	margin-top: 3%;
 	display: none;
+}
+.offerDesc{
+	float: left;
+}
+
+.offerDiv{
+	color: white;
+    background:rgba(0, 0, 0, 0.5);
+    margin-bottom: 2%;
+    text-align: center;
+    padding: 2%;
+    float: left;
+    width: 100%;
+}
+.offerDesc{
+	color: white;
+    background-color: #FFB900;
+    padding: 3%;
+    text-align: center;
+    float: left;
+    width: 87%;
+    font-size: 130%;
+}
+.btn{
+	float: left;
+	margin-left: 3%;
+	color: white;
+    cursor: pointer;
+	width: 10%;
+	height: 10%;
+
+}
+.btnDiv{
+	float: left;
+	margin-left: 2%;
+	width: 33%;
+	padding-top: 2%;
 }
 .addReward{
 	width: 100%;
@@ -158,11 +200,12 @@ h1 {
 .container {
 	width: 36%;
 	margin: 0 auto;
+
 }
 .tabs {
     background-color: rgba(0, 0, 0, 0.33);
     padding: 1.5em;
-    min-height: 482px;
+    /*min-height: 482px;*/
 }
 .tab-left {
     width: 25%;
@@ -183,6 +226,7 @@ h1 {
 .tab{
 	clear:both;
 	padding: 0px;
+	min-height: 482px;
 }
 .tab_box{
 	background:#fd926d;
@@ -535,7 +579,7 @@ input.name,input.date {
     font-weight: 400;
     text-transform: capitalize;
     width: 50%;
-    margin-left: 18%;
+    margin-left: 20%;
 }
 .submitBtn input[type=submit] {
     color: #fff;
@@ -772,7 +816,7 @@ h3 {
 }
 .resp-tab-item {
     display: inline-block;
-    width: 17%;
+    /*width: 17%;*/
 }
 }
 @media screen and (max-width: 320px) {
