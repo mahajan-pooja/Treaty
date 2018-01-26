@@ -149,6 +149,7 @@
 										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
 										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
+										<input type="text" placeholder="Phone number" name="phone" class="name agileits" required=""/>
 										<div class="submitBtn"><br>
 										  <input type="submit" value="Save"><br><br>
 										  <input type="submit" value="Cancel" onClick="loadData()">
@@ -181,7 +182,51 @@
 			</div>
 		</div>
 	</div>
-	<?php include 'footer.php' ?>
+	<?php
+		include 'footer.php';
+		require 'config.php';
+		
+		$fname = $_POST['fname'];
+		$lname = $_POST['lname'];
+		$phone = $_POST['phone'];
+		$street1= $_POST['street1'];
+		$street2 = $_POST['street2'];
+		$city = $_POST['city'];
+		$state = $_POST['state'];
+		$country = $_POST['country'];
+		$zip = $_POST['zip'];
+		// database connection
+		$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
+		if (!$mysqli) {
+			die('Could not connect: ' . mysql_error());
+		}
+		if(!empty($fname)) {
+			//get the userid from user table
+			$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
+			// Sign In
+			$result = $mysqli->query($query);
+			if ($result->num_rows > 0) {
+				$row = $result->fetch_array();
+				$userid = $row["id"];
+				//insert the entry in userdetail table
+				// insert into table
+				$query = "INSERT INTO businessdetail(userid, businessname, businesssector,
+					address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $street1."\",\"". $street2."\"
+							,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
+				echo $query;
+				$result = $mysqli->query($query);
+				if ($result) {
+					echo '<script>window.location.href = "/Treaty/index.php";</script>';
+				} else {
+					echo "Failed to update profile";
+				}
+			} else {
+				echo "Invalid username/password";
+			}
+		}
+		/* close connection */
+		$mysqli->close();
+	?>
 </div>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
