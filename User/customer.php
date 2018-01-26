@@ -60,8 +60,6 @@
 							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>QR Code</li>
 							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Explore</li>
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
-							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
 						</ul>
 					</div>
 
@@ -113,47 +111,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- Customer Profile section -->
-							<div class="tab-1 resp-tab-content">
-								<p class="secHead">Your Profile</p>
-								<div class="w3l-sign-in">
-									<form action="#" method="post" class="agile_form">
-										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
-										<input type="text" placeholder="Last Name" name="lname" class="name agileits" required=""/>
-										<input type="text" placeholder="Phone Number" name="phone" class="name agileits" required=""/>
-										<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
-										<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
-										<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
-										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
-										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
-										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
-										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
-										
-										<div class="submit"><br>
-										  <input type="submit" value="Submit"><br><br>
-										  <input type="submit" value="Update Profile" onClick="loadData()"><br><br>
-										  <input type="submit" value="Delete Profile" onClick="deleteCustomer()">
-										</div>   
-									</form>	
-								</div>
-							</div>
-							
-							
-							
-							<!--Change Password-->
-							<div class="tab-1 resp-tab-content">
-								<p class="secHead">Change Password</p>
-								<div class="agile-send-mail">
-									<form action="#" method="post" class="agile_form">
-										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
-										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
-										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>	
-										<div class="submit"><br>
-										  <input type="submit" value="Submit">
-										</div>  
-									</form>
-								</div>
-							</div>
+
 						</div>
 					</div>
 					<div class="clear"></div>
