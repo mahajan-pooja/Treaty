@@ -30,6 +30,7 @@
 			$signUppassword= $_POST['signUppassword'];
 			$signUpcpassword = $_POST['signUpcpassword'];
 			$signUprole = $_POST['user'];
+			$signUpPhone = $_POST['signUpPhone'];
 			
 			// database connection
 			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
@@ -42,7 +43,7 @@
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
-			        echo '<script>window.location.href = "index.php";</script>';
+			        echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
 			    } else {
 			        $response="Invalid username/password";
 			    }
@@ -58,17 +59,19 @@
 			            $signupresponse="User with email already exists. Please sign in.";
 			        } else {
 			            // insert into table
-			            $query = "INSERT INTO user (email,role,encryptedpassword) 
-			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"". $signUppassword."\")";            
+			            $query = "INSERT INTO user (email,role,phonenumber,encryptedpassword) 
+			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";            
 			            $result = $mysqli->query($query);
 			            if ($result) {
-			                echo '<script>window.location.href = "index.php";</script>';
+			                echo '<script>window.location.href = "User/customer_profile.php";</script>';
 			            } else {
 			                $signupresponse="Failed to signup";
 			            }
 			        }
 			    }
 			}
+			/* close connection */
+			$mysqli->close();
 			?>
 	</head>
 	<body>

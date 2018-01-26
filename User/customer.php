@@ -111,7 +111,47 @@
 									</div>
 								</div>
 							</div>
-
+		<!-- Customer Profile section -->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Your Profile</p>
+								<div class="w3l-sign-in">
+									<form method="post" class="agile_form">
+										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
+										<input type="text" placeholder="Last Name" name="lname" class="name agileits" required=""/>
+										<input type="text" placeholder="Phone Number" name="phone" class="name agileits" required=""/>
+										<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
+										<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
+										<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
+										<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
+										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
+										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
+										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
+										
+										<div class="submit"><br>
+										  <input type="submit" value="Submit"><br><br>
+										  <input type="submit" value="Update Profile" onClick="loadData()"><br><br>
+										  <input type="submit" value="Delete Profile" onClick="deleteCustomer()">
+										</div>   
+									</form>	
+								</div>
+							</div>
+							
+							
+							
+							<!--Change Password-->
+							<div class="tab-1 resp-tab-content">
+								<p class="secHead">Change Password</p>
+								<div class="agile-send-mail">
+									<form action="#" method="post" class="agile_form">
+										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
+										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
+										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>	
+										<div class="submit"><br>
+										  <input type="submit" value="Submit">
+										</div>  
+									</form>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -119,7 +159,27 @@
 			</div>
 		</div>
 	</div>
-	<?php include 'footer.php' ?>
+	<?php 
+		include 'footer.php';
+		require 'config.php';
+		// database connection
+		$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
+		if (!$mysqli) {
+			die('Could not connect: ' . mysql_error());
+		}
+		
+		
+		$query = "SELECT * FROM businessdetail";
+		
+		$result = $mysqli->query($query);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			// TODO :echo businessdetails list
+			printf($row);
+		}
+		/* close connection */
+		$mysqli->close();
+	?>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
 		<script src="js/jquery-ui.js"></script>
