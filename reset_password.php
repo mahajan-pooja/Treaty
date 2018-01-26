@@ -39,12 +39,7 @@
 				$cpassword = $_POST['cpassword'];		
 			}			
 			
-			// database connection
-			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-			if (!$mysqli) {
-			    die('Could not connect: ' . mysql_error());
-			}
-			
+					
 			if(!empty($email)) {
 			    if(strcmp($npassword, $cpassword) != 0) {
 			        $response = "Passwords dont match";

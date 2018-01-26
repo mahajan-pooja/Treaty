@@ -25,12 +25,9 @@
 			
 			if(isset($_POST['email'])){
 				$email = $_POST['email'];
-			}
+			}		
 			
-			
-			// database connection
-			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-			
+				
 			//send email
 			if(!empty($email)) {
 			    //generate password
@@ -67,7 +64,7 @@
 			        }
 			        
 			    } else {
-			        $emailresponse = "User does not exist. Pleae signup.";
+			        $emailresponse = "User does not exist. Please signup.";
 			    }
 			}
 			?>

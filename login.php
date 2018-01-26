@@ -22,9 +22,12 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
 		<?php 
+			session_start();
+			
 			include 'header.php';
 			require 'config.php';
 			
+
 			if(isset($_POST['signInemail'])){
 				$signInemail = $_POST['signInemail'];
 			}
@@ -45,22 +48,25 @@
 				$signUprole = $_POST['user'];
 			}
 			
-			// database connection
-			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-			if (!$mysqli) {
-			    die('Could not connect: ' . mysql_error());
-			}
-			
+						
+			// Sign In
 			if(!empty($signInemail)) {
-			    $query = "SELECT role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
+			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
+			        //Store userid in Session
+			        $result_rows = mysqli_fetch_array($result);
+					$_SESSION['userid'] = $result_rows['id']; 
+			        
+			        //Use $_SESSION['userid'] wherever u want to access the userid    
 			        echo '<script>window.location.href = "index.php";</script>';
+			        
 			    } else {
 			        $response="Invalid username/password";
 			    }
-			} else if(!empty($signUpemail)) {
+			//Sign up
+			} else if(!empty($signUpemail)) { 
 			    //check if both the passwords are same
 			    if(strcmp($signUppassword, $signUpcpassword) != 0) {
 			        $signupresponse="Passwords dont match";
@@ -83,6 +89,10 @@
 			        }
 			    }
 			}
+
+			//Social Login
+			
+
 			?>
 	</head>
 	<body>
