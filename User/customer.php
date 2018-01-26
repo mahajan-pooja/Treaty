@@ -164,7 +164,6 @@
 	<?php
 	echo "1gsdashgdasgdsa";
 	include 'footer.php';
-	include 'header.php';
 	require 'config.php';
 	
 	$fname = $_POST['fname'];
