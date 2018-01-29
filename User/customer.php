@@ -160,15 +160,10 @@
 		</div>
 	</div>
 	<?php 
+		
 		include 'footer.php';
-		require 'config.php';
-		// database connection
-		$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-		if (!$mysqli) {
-			die('Could not connect: ' . mysql_error());
-		}
-		
-		
+		require '../config.php';
+						
 		$query = "SELECT * FROM businessdetail";
 		
 		$result = $mysqli->query($query);
