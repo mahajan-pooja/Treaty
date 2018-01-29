@@ -27,7 +27,9 @@
 				$signInemail = $_POST['signInemail'];
 			}
 
-			$signInpassword = $_POST['signInpassword'];
+			if(isset($_POST['signInpassword'])){
+				$signInpassword = $_POST['signInpassword'];
+			}
 			
 			$signUpemail = $_POST['signUpemail'];
 			$signUppassword= $_POST['signUppassword'];
