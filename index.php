@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    
     <head>
         <?php 
         
         include 'header.php';
         ?>
-    </head>
-    
+    </head>    
     <body>
         <div class="navbar">
             <div class="navbar-inner">
@@ -96,9 +94,9 @@
             <div class="container">
                 <!-- Start title section -->
                 <div class="title">
-                    <h1>What We Do?</h1>
+                    <h1>Treaty Reward Program</h1>
                     <!-- Section's title goes here -->
-                    <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                    <p>How Treaty Reward Program Works for Cutomer?</p>
                     <!--Simple description for section goes here. -->
                 </div>
                 <div class="row-fluid">
@@ -107,8 +105,8 @@
                             <div class="circle-border zoom-in">
                                 <img class="img-circle" src="images/Service1.png" alt="service 1">
                             </div>
-                            <h3>Modern Design</h3>
-                            <p>We Create Modern And Clean Theme For Your Business Company.</p>
+                            <h3>Sign In</h3>
+                            <p>Register to our Treaty Reward Program and become a membere of our Treaty Community.</p>
                         </div>
                     </div>
                     <div class="span4">
@@ -116,8 +114,8 @@
                             <div class="circle-border zoom-in">
                                 <img class="img-circle" src="images/Service2.png" alt="service 2" />
                             </div>
-                            <h3>Powerfull Theme</h3>
-                            <p>We Create Modern And Powerful Theme With Lots Animation And Features</p>
+                            <h3>Explore & Subscribe</h3>
+                            <p>Explore all nearby businesses that support our Treaty Reward Program and subscribe to grab exciting offers.</p>
                         </div>
                     </div>
                     <div class="span4">
@@ -125,8 +123,8 @@
                             <div class="circle-border zoom-in">
                                 <img class="img-circle" src="images/Service3.png" alt="service 3">
                             </div>
-                            <h3>Clean Code</h3>
-                            <p>We Create Modern And Powerful Html5 And CSS3 Code Easy For Read And Customize.</p>
+                            <h3>Earn & Redeem Rewards</h3>
+                            <p>Earn 1 Treaty Reward Point for every $1 you spent. And Redeem your earned rewards using exciting offers.</p>
                         </div>
                     </div>
                 </div>
@@ -644,8 +642,8 @@
         <div class="section secondary-section">
             <div class="triangle"></div>
             <div class="container centered">
-                <p class="large-text">Elegance is not the abundance of simplicity. It is the absence of complexity.</p>
-                <a href="#" class="button">Purshase now</a>
+                <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
+                <a href="#" class="button">Find Locations</a>
             </div>
         </div>
         <!-- Client section start -->
@@ -876,11 +874,11 @@
                 </div>
                 <div class="container">
                     <div class="span9 center contact-info">
-                        <p>3700, Casa verde st, San Jose, CA</p>
-                        <p class="info-mail">poojamahajan2092@gmail.com</p>
-                        <p>+1 607 232 9877</p>
-                        <p>+1 909 672 8817</p>
-                        <p>+1 424 290 9770</p>
+                        <p>2711 N 1st St, San Jose, CA 95134</p>
+                        <p class="info-mail">treatyrewards@gmail.com</p>
+                        <p>+1 607 232 9825</p>
+                        <p>+1 909 672 8342</p>
+                        <p>+1 424 290 9876</p>
                         <div class="title">
                             <h3>We Are Social</h3>
                         </div>
@@ -897,7 +895,7 @@
                                     <span class="icon-twitter-circled"></span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="">
                                     <span class="icon-linkedin-circled"></span>
                                 </a>
@@ -911,7 +909,7 @@
                                 <a href="">
                                     <span class="icon-dribbble-circled"></span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a href="">
                                     <span class="icon-gplus-circled"></span>
@@ -945,7 +943,10 @@
         <script type="text/javascript" src="js/jquery.placeholder.js"></script>
         <script type="text/javascript" src="js/jquery.inview.js"></script>
         <!-- Load google maps api and call initializeMap function defined in app.js -->
-        <script async="" defer="" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initializeMap"></script>
+        <script async="" defer="" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKtmIHbU9xj413vxhL-oJHz8ybTyF60KQ&callback=initializeMap"></script>
+
+
+        <!-- <script async="" defer="" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initializeMap"></script> -->
         <!-- css3-mediaqueries.js for IE8 or older -->
         <!--[if lt IE 9]>
             <script src="js/respond.min.js"></script>
