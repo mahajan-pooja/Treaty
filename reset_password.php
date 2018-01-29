@@ -23,17 +23,23 @@
 			include 'header.php';
 			require 'config.php';
 			
-			$email = $_POST['email'];
-			$tpassword = $_POST['tpassword'];
-			$npassword = $_POST['npassword'];
-			$cpassword = $_POST['cpassword'];
-			
-			// database connection
-			$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-			if (!$mysqli) {
-			    die('Could not connect: ' . mysql_error());
+			if(isset($_POST['email'])){
+				$email = $_POST['email'];
+			}
+
+			if(isset($_POST['tpassword'])){
+				$tpassword = $_POST['tpassword'];	
 			}
 			
+			if(isset($_POST['npassword'])){
+				$npassword = $_POST['npassword'];		
+			}
+			
+			if(isset($_POST['cpassword'])){
+				$cpassword = $_POST['cpassword'];		
+			}			
+			
+					
 			if(!empty($email)) {
 			    if(strcmp($npassword, $cpassword) != 0) {
 			        $response = "Passwords dont match";
@@ -106,9 +112,14 @@
 								<input type="password" name="npassword" class="password" placeholder="New password" required/>
 								<input type="password" name="cpassword" class="password" placeholder="Confirm password" required/>
 								<label style="color:red;">
-								<?php echo $response; ?>
+								<?php 
+									if(isset($response)){
+										echo $response; 
+									}
+								?>
 								</label>
 								<input type="submit" value="Submit">
+									}
 							</form>
 						</div>
 					</div>

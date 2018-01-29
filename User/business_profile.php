@@ -158,22 +158,37 @@
 	</div>
 	<?php
 	include 'footer.php';
-	require 'config.php';
+	require '../config.php';
 	
-	$fname = $_POST['fname'];
-	$lname = $_POST['lname'];
-	$phone = $_POST['phone'];
-	$street1= $_POST['street1'];
-	$street2 = $_POST['street2'];
-	$city = $_POST['city'];
-	$state = $_POST['state'];
-	$country = $_POST['country'];
-	$zip = $_POST['zip'];
-	// database connection
-	$mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
-	if (!$mysqli) {
-		die('Could not connect: ' . mysql_error());
+	if(isset($_POST['fname'])){
+		$fname = $_POST['fname'];
 	}
+	if(isset($_POST['lname'])){
+		$lname = $_POST['lname'];
+	}
+	if(isset($_POST['phone'])){
+		$phone = $_POST['phone'];
+	}
+	if(isset($_POST['street1'])){
+		$street1= $_POST['street1'];
+	}
+	if(isset($_POST['street2'])){
+		$street2 = $_POST['street2'];
+	}
+	if(isset($_POST['city'])){
+		$city = $_POST['city'];
+	}
+	if(isset($_POST['state'])){
+		$state = $_POST['state'];
+	}	
+	if(isset($_POST['country'])){
+		$country = $_POST['country'];
+	}
+	if(isset($_POST['zip'])){
+		$zip = $_POST['zip'];
+	}	
+	
+	
 	if(!empty($fname)) {
 		//get the userid from user table
 		$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
