@@ -23,7 +23,10 @@
 			include 'header.php';
 			require 'config.php';
 			
-			$signInemail = $_POST['signInemail'];
+			if(isset($_POST['signInemail'])){
+				$signInemail = $_POST['signInemail'];
+			}
+
 			$signInpassword = $_POST['signInpassword'];
 			
 			$signUpemail = $_POST['signUpemail'];
