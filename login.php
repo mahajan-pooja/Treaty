@@ -21,9 +21,11 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
 		<?php 
-			include 'header.php';
+			include 'header.php';			
 			require 'config.php';
-			
+			require_once "social_login/fb_config.php";
+			require_once "social_login/google_config.php";
+
 			if(isset($_POST['signInemail'])){
 				$signInemail = $_POST['signInemail'];
 			}
@@ -100,6 +102,57 @@
 			        }
 			    }
 			}
+
+			//Make email id unique in table
+			//Social Login
+			//Facebook Sign In
+			if (isset($_SESSION['fb_access_token'])) {
+				//Check user role
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['fb_user_data']['email']."\"";
+			    // Sign In
+			    $result = $mysqli->query($query);
+			    if ($result->num_rows > 0) {
+
+					$row = $result->fetch_array();
+					$_SESSION['userid'] = $row['id']; 
+			        
+					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+						header('Location: User/business_profile.php');
+						exit();
+					} else {
+						header('Location: User/customer_profile.php');
+						exit();
+					}
+				}
+			}
+			$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
+			$permissions = ['email'];
+			$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
+			
+
+			//Google Sign In
+			if(isset($_SESSION['google_access_token'])){
+
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+			    // Sign In
+			    $result = $mysqli->query($query);
+			    if ($result->num_rows > 0) {
+
+					$row = $result->fetch_array();
+					$_SESSION['userid'] = $row['id']; 
+			        
+					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+						header('Location: User/business_profile.php');
+						exit();
+					} else {
+						header('Location: User/customer_profile.php');
+						exit();
+					}
+				}
+			}
+			$google_loginURL = $gClient->createAuthUrl();
+
+
 			/* close connection */
 			$mysqli->close();
 			?>
@@ -181,7 +234,7 @@
 
 							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
 								<div class="col-md-12">
-									<a class="form-control btn btn-fb fb-btn-bg" href="">
+									<a class="form-control btn btn-fb fb-btn-bg" onclick="window.location = '<?php echo $fb_loginURL ?>';">
 										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign in with Facebook
 									</a>
 								</div>                          
@@ -189,7 +242,7 @@
                             
 							<div id="social" class="row" style="margin-left: -15px;">
 								<div class="col-md-12">
-									<a class="form-control btn btn-google google-btn-bg" href="">
+									<a class="form-control btn btn-google google-btn-bg" onclick="window.location = '<?php echo $google_loginURL ?>';">
 										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign in with Google
 									</a>
 								</div>                          

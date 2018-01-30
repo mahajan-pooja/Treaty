@@ -3,7 +3,8 @@
     <head>
         <?php 
         
-        include 'header.php';
+            include 'header.php';
+        
         ?>
     </head>    
     <body>
