@@ -63,11 +63,11 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add / Redeem Rewards</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Offers</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
-							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
+							<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add / Redeem Rewards</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Offers</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
+							<li class="resp-tab-item-business"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
 							<!-- <li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Redeem Rewards</li> -->
 							<!-- <li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
 							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li> -->
@@ -150,7 +150,7 @@
 										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
 										<div class="submitBtn"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel" onClick="loadData()">
 										</div>   
 									</form>
@@ -167,7 +167,7 @@
 										<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 										<div class="submitBtn"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
 										</div>   
 									</form>
