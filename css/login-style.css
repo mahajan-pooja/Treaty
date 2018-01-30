@@ -262,6 +262,58 @@ h2.resp-accordion {
 	-ms-transition:0.5s all;
 }
 /*-- //footer --*/
+
+/*-- //Social Sign in/up --*/
+.fb-img {
+	top: 3px;
+	left: 18px;
+	width: 37px;
+	position:absolute;
+}	
+.google-img {
+	top: 3px;
+	left: 18px;
+	width: 37px;
+	position:absolute;			
+}
+.fb-btn-bg {
+	background: #3664a2!important;
+}	
+.google-btn-bg {
+	background: #4285f4!important;
+}			
+#social .btn-fb:hover {
+	color: #ffffff;
+	background-color: #30487b!important;
+	border-color: #175fdd;
+	-webkit-transition: 0.5s all;
+}
+#social .btn-fb {
+	color: #ffffff;
+	background-color: #4582ec;
+	border-color: #4582ec;
+}	
+#social .btn-google:hover {
+	color: #ffffff;
+	background-color: #1863e6!important;
+	border-color: #175fdd;
+	-webkit-transition: 0.5s all;
+}
+#social .btn-google {
+	color: #ffffff;
+	background-color: #4582ec;
+	border-color: #4582ec;
+}					
+#social .btn {
+	padding: 8px 12px;
+	font-size: 18px;
+	box-shadow:none;
+	line-height: 1.42857143;
+	text-shadow:none;
+	background:none;
+}
+/*-- //Social Sign in/up --*/
+
 /*-- //Index-Page-Styling --*/
 /*--responsive--*/
 @media(max-width: 1440px){
