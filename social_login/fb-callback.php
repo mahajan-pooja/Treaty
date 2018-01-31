@@ -25,10 +25,13 @@
 
 	$response = $FB->get("/me?fields=id, first_name, last_name, email", $fb_access_token);
 	$fb_user_data = $response->getGraphNode()->asArray();
-	$_SESSION['fb_user_data'] = $fb_user_data;
+	//Set session Variables
+	$_SESSION['email'] = $fb_user_data['email'];
+	$_SESSION['first_name'] = $fb_user_data['first_name'];
+	$_SESSION['last_name'] = $fb_user_data['last_name'];	
 	$_SESSION['fb_access_token'] = (string) $fb_access_token;
 	
-	$query = "SELECT id, role FROM user where email=\"".$_SESSION['fb_user_data']['email']."\"";
+	$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
 		
 	$result = $mysqli->query($query);
 	if ($result->num_rows > 0) {

@@ -21,9 +21,9 @@
 		session_start();
 		include 'business_profile_nav.html';
 		
-		$first_name = $_SESSION['fb_user_data']['first_name'];
-		$last_name = $_SESSION['fb_user_data']['last_name'];
-		$email_id = $_SESSION['fb_user_data']['email'];
+		$first_name = $_SESSION['first_name'];
+		$last_name = $_SESSION['last_name'];
+		$email_id = $_SESSION['email'];
 	?>
 </head>
 

@@ -16,8 +16,8 @@
 	$oAuth = new Google_Service_Oauth2($gClient);
 	$google_user_data = $oAuth->userinfo_v2_me->get();
 
-	$_SESSION['givenName'] = $google_user_data['givenName'];
-	$_SESSION['familyName'] = $google_user_data['familyName'];
+	$_SESSION['first_name'] = $google_user_data['givenName'];
+	$_SESSION['last_name'] = $google_user_data['familyName'];
 	$_SESSION['email'] = $google_user_data['email'];
 
 	$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";

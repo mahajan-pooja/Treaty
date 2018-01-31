@@ -103,12 +103,11 @@
 			    }
 			}
 
-			//Make email id unique in table
 			//Social Login
 			//Facebook Sign In
 			if (isset($_SESSION['fb_access_token'])) {
 				//Check user role
-				$query = "SELECT id, role FROM user where email=\"".$_SESSION['fb_user_data']['email']."\"";
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
