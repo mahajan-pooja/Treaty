@@ -35,7 +35,7 @@ body{
 header{
 	width: 100%;
 	height: auto;
-	background: black;
+	background: #a9c750;
 }
 .header-left,
 .header-right{
@@ -86,21 +86,26 @@ h1{
 	font-weight: 300;
 	line-height: 40px;
 }
+.logoClass{
+	width: 115%!important;
+	height: 50%;
+}
 a{
 	text-decoration: none;
 	color: white;
+	border: 1px solid #a9c750;
 }
 nav>a{
 	position: relative;
 	display: inline-block;
-	font-size: 13px;
+	font-size: 15px;
 	line-height: 40px;
 	padding: 0 2em;
 	-webkit-transition: all .3s ease;
 }
 nav>a:hover{
-	background: rgba(255,255,255,.9);
 	color: black;
+	border: 1px solid black;
 }
 .hidden-desktop{
 	display: none;

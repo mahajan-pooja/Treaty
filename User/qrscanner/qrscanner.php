@@ -10,7 +10,7 @@ img{
     border:0;
 }
 #main{
-    background:#ffb900;
+    background:rgba(254, 206, 26,0.2);
 	width: 100%;
     height: auto;
     margin-bottom: 3%;

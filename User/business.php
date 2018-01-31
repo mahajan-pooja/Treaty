@@ -84,7 +84,7 @@
 									?>
 									<p class="b_name" style="color: white;font-size: 150%;">Customer have 100 Reward points.</p><br>
 									<div class="addReward">
-										<p style="font-size: 150%;">--- Add Rewards ---</p><br>
+										<p style="font-size: 150%;color:black;">--- Add Rewards ---</p><br>
 										<form action="#" method="post" class="agile_form">
 										<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
 										<div class="submitButton"><br>
@@ -93,7 +93,7 @@
 										</form>
 									</div><br>
 									<div class="addReward">
-										<p style="font-size: 150%;">--- Redeem Rewards ---</p><br>
+										<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p><br>
 										<form action="#" method="post" class="agile_form">
 										<input style="width: 50%;" type="text" name="amount" placeholder=" Rewards"><br>
 										<div class="submitButton"><br>

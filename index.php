@@ -41,8 +41,8 @@
         <div id="home">
             <!-- Start cSlider -->
             <div id="da-slider" class="da-slider">
-                <div class="triangle"></div>
-                <!-- mask elemet use for masking background image -->
+<!--                 <div class="triangle"></div>
+ -->                <!-- mask elemet use for masking background image -->
                 <div class="mask"></div>
                 <!-- All slides centred in container element -->
                 <div class="container">
@@ -135,10 +135,10 @@
         <!-- Service section end -->
         <!-- Portfolio section start -->
         <div class="section secondary-section " id="portfolio">
-            <div class="triangle"></div>
+            <div class="triangleBlack"></div>
             <div class="container">
                 <div class=" title">
-                    <h1>Businesses Like Yours Depend on Belly</h1>
+                    <h1>Businesses Like Yours Depend on Treaty</h1>
                     <p>Register your business and be a part of Treaty Community.</p>
                 </div>
                <!--  <ul class="nav nav-pills">
@@ -515,7 +515,7 @@
         <!-- Portfolio section end -->
         <!-- About us section start -->
         <div class="section primary-section" id="about">
-            <div class="triangle"></div>
+            <div class="triangleGray"></div>
             <div class="container">
                 <div class="title">
                     <h1>Who We Are?</h1>
@@ -524,7 +524,7 @@
                 <div class="row-fluid team">
                     <div class="span4" id="first-person">
                         <div class="thumbnail">
-                            <img src="images/Team1.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Pooja Mahajan</h3>
                             <ul class="social">
                                 <li>
@@ -551,7 +551,7 @@
                     </div>
                     <div class="span4" id="second-person">
                         <div class="thumbnail">
-                            <img src="images/Team2.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Poonam Korade</h3>
                             <ul class="social">
                                 <li>
@@ -578,7 +578,7 @@
                     </div>
                     <div class="span4" id="third-person">
                         <div class="thumbnail">
-                            <img src="images/Team3.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Rajeshwari Kute</h3>
                             <ul class="social">
                                 <li>
@@ -642,7 +642,7 @@
         </div>
         <!-- About us section end -->
         <div class="section secondary-section">
-            <div class="triangle"></div>
+            <div class="triangleBlack"></div>
             <div class="container centered">
                 <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
                 <a href="#" class="button">Find Locations</a>
@@ -652,7 +652,7 @@
         <!-- Client section start -->
         <div id="clients">
             <div class="section primary-section">
-                <div class="triangle"></div>
+                <div class="triangleGray"></div>
                 <div class="container">
                     <div class="title">
                         <h1>What Client Say?</h1>
@@ -717,37 +717,37 @@
                     <ul class="row client-slider" id="clint-slider">
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo01.png" alt="client logo 1">
+                                <img src="images/cl1.jpg" alt="client logo 1">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 2">
+                                <img src="images/cl2.jpg" alt="client logo 2">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo03.png" alt="client logo 3">
+                                <img src="images/cl3.jpg" alt="client logo 3">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 4">
+                                <img src="images/cl4.jpg" alt="client logo 4">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo05.png" alt="client logo 5">
+                                <img src="images/cl5.jpg" alt="client logo 5">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 6">
+                                <img src="images/cl6.jpg" alt="client logo 6">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 7">
+                                <img src="images/cl7.jpg" alt="client logo 7">
                             </a>
                         </li>
                     </ul>
@@ -876,9 +876,9 @@
                 </div>
                 <div class="container">
                     <div class="span9 center contact-info">
-                        <p>2711 N 1st St, San Jose, CA 95134</p>
+                        <p class="black">2711 N 1st St, San Jose, CA 95134</p>
                         <p class="info-mail">treatyrewards@gmail.com</p>
-                        <p>+1 607 232 9825</p>
+                        <p class="black">+1 607 232 9825</p>
                         <div class="title">
                             <h3>We Are Social</h3>
                         </div>
@@ -923,7 +923,7 @@
         <!-- Contact section edn -->
         <!-- Footer section start -->
         <div class="footer">
-            <p style="color: #FECE1A;">Treaty.com © copyright 2018</p>
+            <p style="color: white;">Treaty.com © copyright 2018</p>
         </div>
         <!-- Footer section end -->
         <!-- ScrollUp button start -->
