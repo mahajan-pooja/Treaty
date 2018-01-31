@@ -52,14 +52,32 @@
             	$zip = $_POST['zip'];
             }
 
+			if(isset($_POST['oName'])){
+				$oName = $_POST['oName'];
+			}
+			if(isset($_POST['oDesc'])){
+				$oDesc = $_POST['oDesc'];
+			}
+			if(isset($_POST['oPoints'])){
+				$oPoints = $_POST['oPoints'];
+			}
+			if(isset($_POST['datepicker1'])){
+				$datepicker1 = $_POST['datepicker1'];
+			}
+			if(isset($_POST['datepicker2'])){
+				$datepicker2 = $_POST['datepicker2'];
+			}
+			if(isset($_POST['taskOption'])){
+				$selectOption = $_POST['taskOption'];
+			}
 			$userid = $_SESSION['userid'];
             if(!empty($fname)) {
-	    		//insert the entry in userdetail table
-	    		// insert into table
+	    		//create business
 	    		$query = "INSERT INTO businessdetail(userid, businessname, businesssector,
 	    			address1, address2, city, state, country, zipcode, modified, created)
 					VALUES (\"".$_SESSION['userid']."\",\"".$fname."\",\"". $lname."\",\"". $street1."\",\"". $street2."\"
 	    					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
+				echo $query;
 	    		$result = $mysqli->query($query);
 	    		if ($result) {
 					$_SESSION["businessname"] = $fname;
@@ -68,19 +86,46 @@
 	    		} else {
 	    			echo "Failed to update profile";
 	    		}
-            } else {
-            	//get the businessname, businesssector
-            	$query = "SELECT businessname, businesssector, address1, city
+			} else if(!empty($oName)) {
+				//create offer
+				$query = "INSERT INTO businessoffer(userid, businessid, offername,
+	    			offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
+					VALUES (\"".$userid."\",\"".$selectOption."\",\"". $oName."\",\"". $oDesc."\",\"". $oPoints."\"
+	    					,\"". $datepicker1."\",\"". $datepicker2."\",1, sysdate(), sysdate())";
+	    		$result = $mysqli->query($query);
+	    		if ($result) {
+	    			echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+	    		} else {
+	    			echo "Failed to update profile";
+	    		}
+			} else {
+				//load businessname and sector
+				$query = "SELECT businessname, businesssector
+            	 		  FROM businessdetail
+            			  WHERE userid=\"".$userid."\" LIMIT 1";
+
+            	$result = $mysqli->query($query);
+				$businessresultset = array();
+            	if ($result->num_rows > 0) {
+					$row = $result->fetch_array();
+            		array_push($businessresultset,$row["businessname"]);
+            		array_push($businessresultset,$row["businesssector"]);
+				}
+
+            	//get the offer business details
+            	$query = "SELECT id, address1, city
             	 		  FROM businessdetail
             			  WHERE userid=\"".$userid."\"";
-            	// Sign In
+            	
             	$result = $mysqli->query($query);
             	if ($result->num_rows > 0) {
-            		$row = $result->fetch_array();
-            		$_SESSION["businessname"] = $row["businessname"];
-            		$_SESSION["businesssector"] = $row["businesssector"];
-					$businessrow = $row;
-            	} else {
+					$businessrow = $result;
+					$resultset = array();
+					while ($row = $businessrow->fetch_row()) {
+						$addr = $row[0]."-".$row[1].", ".$row[2];
+						array_push($resultset, $addr);
+					}
+				} else {
 					unset($_SESSION["businessname"]);
             		unset($_SESSION["businesssector"]);
             	}
@@ -193,11 +238,11 @@
                                 <div class="tab-1 resp-tab-content">
                                     <p class="secHead">Register Your Business</p>
                                     <div class="register agileits">
-                                        <form action="#" method="post" class="agile_form">
-											<input <?php echo !isset($_SESSION["businessname"]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($_SESSION["businessname"]) ? 'Business name' : $_SESSION["businessname"] ?>">
-                                            <input <?php echo !isset($_SESSION["businesssector"]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($_SESSION["businesssector"]) ? 'Business sector' : $_SESSION["businesssector"] ?>">
+                                        <form method="post" class="agile_form">
+											<input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits"
+													placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>">
+                                            <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits"
+													placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>">
                                             <input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
                                             <input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
                                             <input type="text" placeholder="City" name="city" class="name agileits" required=""/>
@@ -217,16 +262,17 @@
                                     <p class="secHead">Create Offer For Your Business</p>
                                     <div class="wthree-subscribe">
                                         <form action="#" method="post" class="agile_form">
-											<select class="name agileits">
-												<!-- Handle  $businessrow here , iterate over $businessrow
-												dropdown should display $businessrow['address1'],$businessrow['city']
-												e.g 1433 cedarmeadow ct, Sanjose should be one entry --->
+											<select class="name agileits" name="taskOption">
+												<?php foreach($resultset as $row) {
+													?>
+												<option value="<?php echo explode("-",$row)[0];?>"><?php echo explode("-",$row)[1];?></option>
+												<?php } ?>
 											</select><br>
                                             <input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
                                             <input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
                                             <input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
-                                            <input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-                                            <input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+                                            <input placeholder="Start Date" class="date" name="datepicker1" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+                                            <input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
                                             <div class="submitBtn"><br>
                                                 <input type="submit" value="Save"><br><br>
                                                 <input type="submit" value="Cancel">
