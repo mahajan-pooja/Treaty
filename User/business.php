@@ -51,7 +51,6 @@
             if(isset($_POST['zip'])){
             	$zip = $_POST['zip'];
             }
-
 			if(isset($_POST['oName'])){
 				$oName = $_POST['oName'];
 			}
@@ -77,7 +76,6 @@
 	    			address1, address2, city, state, country, zipcode, modified, created)
 					VALUES (\"".$_SESSION['userid']."\",\"".$fname."\",\"". $lname."\",\"". $street1."\",\"". $street2."\"
 	    					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-				echo $query;
 	    		$result = $mysqli->query($query);
 	    		if ($result) {
 					$_SESSION["businessname"] = $fname;
@@ -108,15 +106,15 @@
 				$businessresultset = array();
             	if ($result->num_rows > 0) {
 					$row = $result->fetch_array();
-            		array_push($businessresultset,$row["businessname"]);
-            		array_push($businessresultset,$row["businesssector"]);
+            		array_push($businessresultset, $row["businessname"]);
+            		array_push($businessresultset, $row["businesssector"]);
 				}
 
             	//get the offer business details
             	$query = "SELECT id, address1, city
             	 		  FROM businessdetail
             			  WHERE userid=\"".$userid."\"";
-            	
+
             	$result = $mysqli->query($query);
             	if ($result->num_rows > 0) {
 					$businessrow = $result;
