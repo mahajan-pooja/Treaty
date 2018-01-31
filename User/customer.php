@@ -72,7 +72,7 @@
 									<?php 
 										include 'GenerateQR/QRGenerator.php';
 										$ex1 = new QRGenerator(); 
-										echo "<img style='width:65%;margin-left:15%;' src=".$ex1->generate().">";
+										echo "<img style='max-width:100%;margin-left:25%;' src=".$ex1->generate().">";
 									?>
 								</div>
 							</div>
@@ -85,7 +85,7 @@
 										<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
 										<div class="pointsDiv" id="pointsDiv">
 										Reward Points - 20<br><br>
-										<a href="" style="color: orange;">View Details</a>
+										<a href="" style="color: brown;border:none;">View Details</a>
 										</div>
 									</div>
 								</div>
@@ -99,9 +99,8 @@
 										<img class="downImg" id="business_title_downImg" src="images/down.png" width="100" height="100" onclick="loadSubCat();"><br>
 										<div class="business_title" id="business_title">
 											<div>
-												<span class="bus_name">Subway</span> 
-												<a href="" style="color: orange;margin-left: 5%;">View Details</a>
-												<button style="padding: 1%;color: red;margin-top: 1%;margin:0% 5% 0% 5%;" value="Subscribe" name="subscribe">Subscribe</button>
+												<span class="bus_name"><a href="">Subway</a></span>
+												<button class="subscribe" value="Subscribe" name="subscribe">Subscribe</button>
 												<img class="downImg" id="offer_downImg" src="images/down.png" width="100" height="100" onclick="loadOffer();">
 											</div>
 											

@@ -5,13 +5,14 @@
         
         include 'header.php';
         ?>
+        <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
     </head>    
     <body>
         <div class="navbar">
             <div class="navbar-inner">
                 <div class="container">
                     <a href="#" class="brand">
-                        <img src="images/logo.png" width="120" height="40" alt="Logo" />
+                        <img src="images/logoIcon.png" width="240" height="80" alt="Logo" />
                         <!-- This is website logo -->
                     </a>
                     <!-- Navigation button, visible on small resolution -->
@@ -22,9 +23,8 @@
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav" id="top-navigation">
                             <li class="active"><a href="#home">Home</a></li>
-                            <li><a href="">Find Locations</a></li>
-                            <li><a href="#service">Services</a></li>
-                            <li><a href="#portfolio">Portfolio</a></li>
+                            <li><a href="#service">Customer</a></li>
+                            <li><a href="#portfolio">Businesses</a></li>
                             <li><a href="#about">About</a></li>
                             <li><a href="#clients">Clients</a></li>
                             <li><a href="#price">Price</a></li>
@@ -41,28 +41,30 @@
         <div id="home">
             <!-- Start cSlider -->
             <div id="da-slider" class="da-slider">
-                <div class="triangle"></div>
-                <!-- mask elemet use for masking background image -->
+<!--                 <div class="triangle"></div>
+ -->                <!-- mask elemet use for masking background image -->
                 <div class="mask"></div>
                 <!-- All slides centred in container element -->
                 <div class="container">
                     <!-- Start first slide -->
                     <div class="da-slide">
-                        <h2 class="fittext2">Welcome to pluton theme</h2>
-                        <h4>Clean & responsive</h4>
-                        <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
-                        <a href="#" class="da-link button">Read more</a>
+                        <h2 class="fittext2">Retain Your Customers With Treaty</h2>
+                        <!-- <h4></h4> -->
+                        <p>
+                        In today's competitive world where the customer is spoiled for choice, its difficult for a business to retain customers. With Treaty you can stay at the top of your game.
+                        Attract customers with loyalty rewards and make them keep coming back. </p>
+                        <!-- <a href="#" class="da-link button">Read more</a> -->
                         <div class="da-img">
-                            <img src="images/Slider01.png" alt="image01" width="320">
+                            <img src="png/001-favorite.png" alt="image01" width="250">
                         </div>
                     </div>
                     <!-- End first slide -->
                     <!-- Start second slide -->
                     <div class="da-slide">
-                        <h2>Easy management</h2>
-                        <h4>Easy to use</h4>
-                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
-                        <a href="#" class="da-link button">Read more</a>
+                        <h2>Create Custom Rewards</h2>
+                        <!-- <h4></h4> -->
+                        <p>Promote customer loyalty with unique and exciting rewards that suits your business. Send them tailer made offers to increase foot traffic at your store.</p>
+                        <!-- <a href="#" class="da-link button">Read more</a> -->
                         <div class="da-img">
                             <img src="images/Slider02.png" width="320" alt="image02">
                         </div>
@@ -70,10 +72,10 @@
                     <!-- End second slide -->
                     <!-- Start third slide -->
                     <div class="da-slide">
-                        <h2>Revolution</h2>
-                        <h4>Customizable</h4>
-                        <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
-                        <a href="#" class="da-link button">Read more</a>
+                        <h2>Track Customer Activity</h2>
+<!--                         <h4>Customizable</h4>
+ -->                        <p>Get to know who your customers are and what brings them back. Treaty provides you a window into knowing what your customers are interested in.</p>
+                        <!-- <a href="#" class="da-link button">Read more</a> -->
                         <div class="da-img">
                             <img src="images/Slider03.png" width="320" alt="image03">
                         </div>
@@ -133,13 +135,13 @@
         <!-- Service section end -->
         <!-- Portfolio section start -->
         <div class="section secondary-section " id="portfolio">
-            <div class="triangle"></div>
+            <div class="triangleBlack"></div>
             <div class="container">
                 <div class=" title">
-                    <h1>Have You Seen our Works?</h1>
-                    <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                    <h1>Businesses Like Yours Depend on Treaty</h1>
+                    <p>Register your business and be a part of Treaty Community.</p>
                 </div>
-                <ul class="nav nav-pills">
+               <!--  <ul class="nav nav-pills">
                     <li class="filter" data-filter="all">
                         <a href="#noAction">All</a>
                     </li>
@@ -152,12 +154,12 @@
                     <li class="filter" data-filter="identity">
                         <a href="#noAction">Identity</a>
                     </li>
-                </ul>
+                </ul> -->
                 <!-- Start details for portfolio project 1 -->
                 <div id="single-project">
                     <div id="slidingDiv" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio01.png" alt="project 1" />
+                            <img src="images/c1.jpg" alt="project 1" />
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -185,7 +187,7 @@
                     <!-- Start details for portfolio project 2 -->
                     <div id="slidingDiv1" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio02.png" alt="project 2">
+                            <img src="images/c2.jpg" alt="project 2">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -213,7 +215,7 @@
                     <!-- Start details for portfolio project 3 -->
                     <div id="slidingDiv2" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio03.png" alt="project 3">
+                            <img src="images/c3.jpg" alt="project 3">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -241,7 +243,7 @@
                     <!-- Start details for portfolio project 4 -->
                     <div id="slidingDiv3" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio04.png" alt="project 4">
+                            <img src="images/c4.jpg" alt="project 4">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -269,7 +271,7 @@
                     <!-- Start details for portfolio project 5 -->
                     <div id="slidingDiv4" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio05.png" alt="project 5">
+                            <img src="images/c5.jpg" alt="project 5">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -297,7 +299,7 @@
                     <!-- Start details for portfolio project 6 -->
                     <div id="slidingDiv5" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio06.png" alt="project 6">
+                            <img src="images/c6.jpg" alt="project 6">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -325,7 +327,7 @@
                     <!-- Start details for portfolio project 7 -->
                     <div id="slidingDiv6" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio07.png" alt="project 7">
+                            <img src="images/c7.png" alt="project 7">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -353,7 +355,7 @@
                     <!-- Start details for portfolio project 8 -->
                     <div id="slidingDiv7" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio08.png" alt="project 8">
+                            <img src="images/c8.jpg" alt="project 8">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -381,7 +383,7 @@
                     <!-- Start details for portfolio project 9 -->
                     <div id="slidingDiv8" class="toggleDiv row-fluid single-project">
                         <div class="span6">
-                            <img src="images/Portfolio09.png" alt="project 9">
+                            <img src="images/c9.jpeg" alt="project 9">
                         </div>
                         <div class="span6">
                             <div class="project-description">
@@ -409,100 +411,100 @@
                     <ul id="portfolio-grid" class="thumbnails row">
                         <li class="span4 mix web">
                             <div class="thumbnail">
-                                <img src="images/Portfolio01.png" alt="project 1">
+                                <img src="images/c1.jpg" alt="project 1">
                                 <a href="#single-project" class="more show_hide" rel="#slidingDiv">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Retaurants</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix photo">
                             <div class="thumbnail">
-                                <img src="images/Portfolio02.png" alt="project 2">
+                                <img src="images/c2.jpg" alt="project 2">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv1">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Retailers</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix identity">
                             <div class="thumbnail">
-                                <img src="images/Portfolio03.png" alt="project 3">
+                                <img src="images/c3.jpg" alt="project 3">
                                 <a href="#single-project" class="more show_hide" rel="#slidingDiv2">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Salon & Spa</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix web">
                             <div class="thumbnail">
-                                <img src="images/Portfolio04.png" alt="project 4">
+                                <img src="images/c4.jpg" alt="project 4">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv3">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Gorcery Stores</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix photo">
                             <div class="thumbnail">
-                                <img src="images/Portfolio05.png" alt="project 5">
+                                <img src="images/c5.jpg" alt="project 5">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv4">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Auto Repair Shops</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix identity">
                             <div class="thumbnail">
-                                <img src="images/Portfolio06.png" alt="project 6">
+                                <img src="images/c6.jpg" alt="project 6">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv5">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Pet Stores</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix web">
                             <div class="thumbnail">
-                                <img src="images/Portfolio07.png" alt="project 7" />
+                                <img src="images/c7.png" alt="project 7" />
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv6">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Convenience & Gas</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix photo">
                             <div class="thumbnail">
-                                <img src="images/Portfolio08.png" alt="project 8">
+                                <img src="images/c8.jpg" alt="project 8">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv7">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Health & Fitness Centers</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
                         <li class="span4 mix identity">
                             <div class="thumbnail">
-                                <img src="images/Portfolio09.png" alt="project 9">
+                                <img src="images/c9.jpeg" alt="project 9">
                                 <a href="#single-project" class="show_hide more" rel="#slidingDiv8">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Thumbnail label</h3>
-                                <p>Thumbnail caption...</p>
+                                <h3>Cleaning Services</h3>
+                                <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
                         </li>
@@ -513,16 +515,16 @@
         <!-- Portfolio section end -->
         <!-- About us section start -->
         <div class="section primary-section" id="about">
-            <div class="triangle"></div>
+            <div class="triangleGray"></div>
             <div class="container">
                 <div class="title">
                     <h1>Who We Are?</h1>
-                    <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                    <p>We are passionate Software Engineers trying to help small business communities through Treaty Program.</p>
                 </div>
                 <div class="row-fluid team">
                     <div class="span4" id="first-person">
                         <div class="thumbnail">
-                            <img src="images/Team1.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Pooja Mahajan</h3>
                             <ul class="social">
                                 <li>
@@ -549,7 +551,7 @@
                     </div>
                     <div class="span4" id="second-person">
                         <div class="thumbnail">
-                            <img src="images/Team2.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Poonam Korade</h3>
                             <ul class="social">
                                 <li>
@@ -576,7 +578,7 @@
                     </div>
                     <div class="span4" id="third-person">
                         <div class="thumbnail">
-                            <img src="images/Team3.png" alt="team 1">
+                            <img src="images/a1.jpg" alt="team 1">
                             <h3>Rajeshwari Kute</h3>
                             <ul class="social">
                                 <li>
@@ -604,27 +606,27 @@
                 </div>
                 <div class="about-text centered">
                     <h3>About Us</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl ut aliquip consequat. I learned that we can do anything, but we can't do everything...</p>
                 </div>
-                <h3>Skills</h3>
+                <h3>We achieved</h3>
                 <div class="row-fluid">
                     <div class="span6">
                         <ul class="skills">
                             <li>
                                 <span class="bar" data-width="80%"></span>
-                                <h3>Graphic Design</h3>
+                                <h3>Businesses</h3>
                             </li>
                             <li>
                                 <span class="bar" data-width="95%"></span>
-                                <h3>Html & Css</h3>
+                                <h3>Customers</h3>
                             </li>
                             <li>
                                 <span class="bar" data-width="68%"></span>
-                                <h3>jQuery</h3>
+                                <h3>Profit</h3>
                             </li>
                             <li>
                                 <span class="bar" data-width="70%"></span>
-                                <h3>Wordpress</h3>
+                                <h3>Retaintions</h3>
                             </li>
                         </ul>
                     </div>
@@ -640,7 +642,7 @@
         </div>
         <!-- About us section end -->
         <div class="section secondary-section">
-            <div class="triangle"></div>
+            <div class="triangleBlack"></div>
             <div class="container centered">
                 <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
                 <a href="#" class="button">Find Locations</a>
@@ -650,7 +652,7 @@
         <!-- Client section start -->
         <div id="clients">
             <div class="section primary-section">
-                <div class="triangle"></div>
+                <div class="triangleGray"></div>
                 <div class="container">
                     <div class="title">
                         <h1>What Client Say?</h1>
@@ -715,37 +717,37 @@
                     <ul class="row client-slider" id="clint-slider">
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo01.png" alt="client logo 1">
+                                <img src="images/cl1.jpg" alt="client logo 1">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 2">
+                                <img src="images/cl2.jpg" alt="client logo 2">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo03.png" alt="client logo 3">
+                                <img src="images/cl3.jpg" alt="client logo 3">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 4">
+                                <img src="images/cl4.jpg" alt="client logo 4">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo05.png" alt="client logo 5">
+                                <img src="images/cl5.jpg" alt="client logo 5">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo02.png" alt="client logo 6">
+                                <img src="images/cl6.jpg" alt="client logo 6">
                             </a>
                         </li>
                         <li>
                             <a href="">
-                                <img src="images/clients/ClientLogo04.png" alt="client logo 7">
+                                <img src="images/cl7.jpg" alt="client logo 7">
                             </a>
                         </li>
                     </ul>
@@ -764,9 +766,9 @@
                         <h3>Basic</h3>
                         <ul class="list">
                             <li class="price">$19,99</li>
-                            <li><strong>Free</strong> Setup</li>
+                            <li><strong>6 Months</strong></li>
                             <li><strong>24/7</strong> Support</li>
-                            <li><strong>5 GB</strong> File Storage</li>
+                            <li><strong>Upto 500</strong> Customers</li>
                         </ul>
                         <!-- <a href="#" class="button button-ps">BUY</a> -->
                     </div>
@@ -774,9 +776,9 @@
                         <h3>Pro</h3>
                         <ul class="list">
                             <li class="price">$39,99</li>
-                            <li><strong>Free</strong> Setup</li>
+                            <li><strong>12 Months</strong></li>
                             <li><strong>24/7</strong> Support</li>
-                            <li><strong>25 GB</strong> File Storage</li>
+                            <li><strong>Upto 2000</strong> Customers</li>
                         </ul>
                         <!-- <a href="#" class="button button-ps">BUY</a> -->
                     </div>
@@ -784,9 +786,9 @@
                         <h3>Premium</h3>
                         <ul class="list">
                             <li class="price">$79,99</li>
-                            <li><strong>Free</strong> Setup</li>
+                            <li><strong>24 Months</strong></li>
                             <li><strong>24/7</strong> Support</li>
-                            <li><strong>50 GB</strong> File Storage</li>
+                            <li><strong>Unlimited</strong> Customers</li>
                         </ul>
                         <!-- <a href="#" class="button button-ps">BUY</a> -->
                     </div>
@@ -812,7 +814,7 @@
                     <strong>Well done!</strong>You successfully subscribet to our newsletter.</div>
                 <div class="row-fluid">
                     <div class="span5">
-                        <p>Subscribe to our newsletter and receive updates for exciting loyalty rewards programs.</p>
+                        <p>Subscribe to our newsletter and receive updates from Treaty Community.</p>
                     </div>
                     <div class="span7">
                         <form class="inline-form">
@@ -874,11 +876,9 @@
                 </div>
                 <div class="container">
                     <div class="span9 center contact-info">
-                        <p>2711 N 1st St, San Jose, CA 95134</p>
+                        <p class="black">2711 N 1st St, San Jose, CA 95134</p>
                         <p class="info-mail">treatyrewards@gmail.com</p>
-                        <p>+1 607 232 9825</p>
-                        <p>+1 909 672 8342</p>
-                        <p>+1 424 290 9876</p>
+                        <p class="black">+1 607 232 9825</p>
                         <div class="title">
                             <h3>We Are Social</h3>
                         </div>
@@ -923,7 +923,7 @@
         <!-- Contact section edn -->
         <!-- Footer section start -->
         <div class="footer">
-            <p style="color: #FECE1A;">Treaty.com © copyright 2018</p>
+            <p style="color: white;">Treaty.com © copyright 2018</p>
         </div>
         <!-- Footer section end -->
         <!-- ScrollUp button start -->

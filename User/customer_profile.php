@@ -57,10 +57,10 @@
 
 					<div class="tab-left">
 						<ul class="resp-tabs-list">
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Create Account</li>
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Update Account</li>
-							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
-							<li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Deactivate Account</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-plane" aria-hidden="true"></i>Create Account</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-plane" aria-hidden="true"></i>Update Account</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-plane" aria-hidden="true"></i>Deactivate Account</li>
 						</ul>
 					</div>
 
@@ -84,7 +84,7 @@
 										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
 										
 										<div class="submit"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
 										</div>   
 									</form>	
@@ -108,7 +108,7 @@
 										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
 										
 										<div class="submit"><br>
-										  <input type="submit" value="Update"><br><br>
+										  <input type="submit" value="Update">
 										  <input type="submit" value="Cancel"><br><br>
 									
 										</div>   
@@ -127,7 +127,7 @@
 										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>	
 										<div class="submit"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
 										</div>  
 									</form>
@@ -143,7 +143,7 @@
 									<form action="#" method="post" class="agile_form">
 										<p class="b_name" style="color: white;text-align: center;">Click on below button to Deactivate your account.</p><br>	
 										<div class="submit"><br>
-										  <input type="submit" value="Deactivate"><br><br>
+										  <input type="submit" value="Deactivate">
 										  <input type="submit" value="Cancel">
 										</div>  
 									</form>

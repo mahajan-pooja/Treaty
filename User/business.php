@@ -63,11 +63,11 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add / Redeem Rewards</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Offers</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
-							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
+							<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add / Redeem Rewards</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Offers</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
+							<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
+							<li class="resp-tab-item-business"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
 							<!-- <li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Redeem Rewards</li> -->
 							<!-- <li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
 							<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li> -->
@@ -84,7 +84,7 @@
 									?>
 									<p class="b_name" style="color: white;font-size: 150%;">Customer have 100 Reward points.</p><br>
 									<div class="addReward">
-										<p style="font-size: 150%;">--- Add Rewards ---</p><br>
+										<p style="font-size: 150%;color:black;">--- Add Rewards ---</p><br>
 										<form action="#" method="post" class="agile_form">
 										<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
 										<div class="submitButton"><br>
@@ -93,7 +93,7 @@
 										</form>
 									</div><br>
 									<div class="addReward">
-										<p style="font-size: 150%;">--- Redeem Rewards ---</p><br>
+										<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p><br>
 										<form action="#" method="post" class="agile_form">
 										<input style="width: 50%;" type="text" name="amount" placeholder=" Rewards"><br>
 										<div class="submitButton"><br>
@@ -151,7 +151,7 @@
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
 										<input type="text" placeholder="Phone number" name="phone" class="name agileits" required=""/>
 										<div class="submitBtn"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel" onClick="loadData()">
 										</div>   
 									</form>
@@ -168,7 +168,7 @@
 										<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 										<div class="submitBtn"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
 										</div>   
 									</form>

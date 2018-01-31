@@ -96,7 +96,7 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 .ui-datepicker .ui-datepicker-header {
 	position: relative;
 	padding: .56em 0;
-	background: #047e7f;
+	background: #a9c750;
 	color:#403f45;
 	text-transform: uppercase;
 }
@@ -122,7 +122,7 @@ font-weight: normal; }
 .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
 .ui-datepicker select.ui-datepicker-month, 
 .ui-datepicker select.ui-datepicker-year { width: 49%;}
-.ui-datepicker table {width: 100%; font-size: .7em; border-collapse: collapse; margin:0;background:  #019a9c; }
+.ui-datepicker table {width: 100%; font-size: .7em; border-collapse: collapse; margin:0; }
 .ui-datepicker th { padding: .7em .3em; text-align: center; font-weight: bold; border: 0;  }
 .ui-datepicker th span{
 	color: #FFF;

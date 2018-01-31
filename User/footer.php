@@ -11,6 +11,6 @@
 	   
 </style>
 <div class="footer">
-		<p style="color: #fece1a;font-size: 1em;letter-spacing: 2px;"> Treaty.com © copyright 2018</p>
+		<p style="color: white;font-size: 1.3em;letter-spacing: 2px;"> Treaty.com © copyright 2018</p>
 	</div>
 </html>
