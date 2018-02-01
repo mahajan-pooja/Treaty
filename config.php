@@ -2,7 +2,7 @@
 $HOST_NAME = "localhost";
 $DATABASE_NAME = "treaty";
 $DATABASE_USERNAME = "root";
-$DATABASE_PASSWORD = "";
+$DATABASE_PASSWORD = "root";
 
 //Database Connection
 $mysqli = new mysqli($HOST_NAME, $DATABASE_USERNAME, $DATABASE_PASSWORD, $DATABASE_NAME);
