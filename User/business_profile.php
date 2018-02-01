@@ -193,29 +193,20 @@
 	}
 
 	$userid = $_SESSION['userid'];
+    
 	if(!empty($fname)) {
-		// //get the userid from user table
-		// $query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
-		// // Sign In
-		// $result = $mysqli->query($query);
-		// if ($result->num_rows > 0) {
-		// 	$row = $result->fetch_array();
-		// 	$userid = $row["id"];
-			//insert the entry in userdetail table
-			// insert into table
-			$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-				address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-						,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-			echo $query;
-			$result = $mysqli->query($query);
-			if ($result) {
-				echo '<script>window.location.href = "/Treaty/index.php";</script>';
-			} else {
-				echo "Failed to update profile";
-			}
-		// } else {
-		// 	echo "Invalid username/password";
-		// }
+		//insert the entry in userdetail table
+		// insert into table
+		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
+			address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
+		echo $query;
+		$result = $mysqli->query($query);
+		if ($result) {
+			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+		} else {
+			echo "Failed to update profile";
+		}
 	} else {
 		echo "emtpy";
 	}

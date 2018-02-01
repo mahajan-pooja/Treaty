@@ -238,9 +238,11 @@
                                     <div class="register agileits">
                                         <form method="post" class="agile_form">
 											<input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>">
+													placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>"
+                                                    value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>">
                                             <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>">
+													placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>"
+                                                    value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
                                             <input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
                                             <input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
                                             <input type="text" placeholder="City" name="city" class="name agileits" required=""/>
