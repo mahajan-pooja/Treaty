@@ -64,8 +64,8 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Edit</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Delete</li>
+							<li class="resp-tab-item-edit" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Edit</li>
+							<li class="resp-tab-item-edit"><i class="fa fa-university" aria-hidden="true"></i>Delete</li>
 							
 						</ul>
 					</div>
@@ -87,7 +87,7 @@
 										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 										<div class="submit"><br>
 											<!--After click on save button redirect to offers page - http://localhost:8888/Treaty/User/business.php#horizontalTab2-->
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
 										</div>   
 									</form>
@@ -102,7 +102,7 @@
 									<form action="#" method="post" class="agile_form">
 										<p class="b_name" style="color: white;text-align: center;">Click on below button to Delete your Offer.</p><br>	
 										<div class="submit"><br>
-										  <input type="submit" value="Delete"><br><br>
+										  <input type="submit" value="Delete">
 										  <input type="submit" value="Cancel">
 										</div>  
 									</form>
