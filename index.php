@@ -3,7 +3,8 @@
     <head>
         <?php 
         
-        include 'header.php';
+            include 'header.php';
+        
         ?>
         <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
     </head>    

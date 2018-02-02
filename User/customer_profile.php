@@ -18,7 +18,12 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
 	<?php 
+		session_start();
 		include 'customer_profile_nav.html';
+
+		$first_name = $_SESSION['first_name'];
+		$last_name = $_SESSION['last_name'];
+		$email_id = $_SESSION['email'];
 	?>
 </head>
 

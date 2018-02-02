@@ -21,8 +21,13 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
+
 	<?php
 		include 'business_profile_nav.html';
+		
+		$first_name = $_SESSION['first_name'];
+		$last_name = $_SESSION['last_name'];
+		$email_id = $_SESSION['email'];
 	?>
 </head>
 
