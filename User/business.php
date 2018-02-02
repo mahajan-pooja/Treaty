@@ -97,6 +97,7 @@
                     echo "Failed to update profile";
                 }
             } else {
+                //TODO : this should be called on tab change
                 //load businessname and sector
                 $query = "SELECT businessname, businesssector
                                        FROM businessdetail
@@ -126,6 +127,36 @@
                 } else {
                     unset($_SESSION["businessname"]);
                     unset($_SESSION["businesssector"]);
+                }
+				
+				//get business list
+				$query = "SELECT id, businessname, businesssector, address1, address2, city, state, country, zipcode
+						  FROM businessdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                
+                $result = $mysqli->query($query);
+                $businesslistresultset = array();
+                if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
+						array_push($businesslistresultset, $address);
+					}
+                }
+				
+				//get offers list
+				$query = "SELECT id, offername, creditedpoints
+						  FROM businessoffer
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                
+                $result = $mysqli->query($query);
+                $offerlistresultset = array();
+                if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						$address = $row["offername"] . " - " . $row["creditedpoints"] . " points". "-" . $row["id"];;
+						array_push($offerlistresultset, $address);
+					}
                 }
             }
             /* close connection */
@@ -160,10 +191,10 @@
 								fit: true
 							});
 						});
-						function editBusiness(){
+						function editBusiness(businessid){
 							window.location.assign("edit_business.php");
 						}
-						function editOffer(){
+						function editOffer(offerid){
 							window.location.assign("edit_offer.php");
 						}
 						
@@ -176,9 +207,6 @@
 								<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
-								<!-- <li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Redeem Rewards</li> -->
-								<!-- <li class="resp-tab-item"><i class="fa fa-plane" aria-hidden="true"></i>Profile</li>
-									<li class="resp-tab-item"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li> -->
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -219,20 +247,24 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Your Business Offers</p>
 									<div class="register agileits">
-										<div class="offerDiv">
-											<span class="offerDesc">1 salad free - 100 points</span>
-											<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer()"></img>
-										</div>
+										<?php foreach($offerlistresultset as $value): ?>
+											<div class="offerDiv">
+												<span class="offerDesc"><?php echo explode("-",$value)[0];echo "-"; echo explode("-",$value)[1]; ?></span>
+												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("-",$value)[2]; ?>)"></img>
+											</div>
+										<?php endforeach; ?>
 									</div>
 								</div>
 								<!-- All Business section -->
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Your Business List</p>
 									<div class="register agileits">
-										<div class="offerDiv">
-											<span class="offerDesc">Wallmart</span>
-											<img class="btn" width="100" src="images/setting.png" height="100" onClick="editBusiness()"></img>
-										</div>
+										<?php foreach($businesslistresultset as $value): ?>
+											<div class="offerDiv">
+												<span class="offerDesc"><?php echo explode("-",$value)[0];?></span>
+												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editBusiness(<?php echo explode("-",$value)[1]; ?>)"></img>
+											</div>
+									    <?php endforeach; ?>
 									</div>
 								</div>
 								<!-- Register Business section -->
@@ -268,7 +300,7 @@
                                             <select class="name agileits" name="taskOption">
 												<?php foreach($resultset as $row) {
 													?>
-												<option value="<?php echo explode("-",$row)[0];?>"><?php echo explode("-",$row)[1];?></option>
+													<option value="<?php echo explode("-",$row)[0];?>"><?php echo explode("-",$row)[1];?></option>
 												<?php } ?>
 											</select><br>
 											<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
