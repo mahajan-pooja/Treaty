@@ -20,17 +20,58 @@
 	$_SESSION['last_name'] = $google_user_data['familyName'];
 	$_SESSION['email'] = $google_user_data['email'];
 
-	$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-	$result = $mysqli->query($query);
-	if ($result->num_rows > 0) {
-		$row = $result->fetch_array();
-		$_SESSION['userid'] = $row['id']; 
-		if(strcasecmp($row['role'], 'Business Owner') == 0) {
-			header('Location: ../User/business_profile.php');
-			exit();
-		} else {
-			header('Location: ../User/customer_profile.php');
-			exit();
+	//Sign In
+	 if (isset($_SESSION['google_signin_btn'])){
+		$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+		$result = $mysqli->query($query);
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_array();
+			$_SESSION['userid'] = $row['id']; 
+			if(strcasecmp($row['role'], 'Business Owner') == 0) {
+				header('Location: ../User/business_profile.php');
+				exit();
+			} else {
+				header('Location: ../User/customer_profile.php');
+				exit();
+			}
+		}	
+	}
+
+	//Sign Up
+	if (isset($_SESSION['google_signup_btn'])){
+		//Check user exists				
+		$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+					
+		$result = $mysqli->query($query);
+		if ($result->num_rows > 0) {
+			 $_SESSION['signupresponse'] = "User with email already exists. Please sign in.";
 		}
-	}	
+		else
+		{
+			$signUpPhone = '1234567890';
+			$signUppassword = 'google';
+			$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
+						VALUES (\"".$_SESSION['email']."\",\"".$_SESSION['signUprole']."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+		    
+		    $result = $mysqli->query($query);		    
+		    
+		    if ($result){
+		    	$signUprole = $_SESSION['signUprole'];
+				if(strcasecmp($signUprole, 'Business Owner') == 0){
+					header('Location: ../User/business_profile.php');
+					exit();
+				} 
+				else
+				{
+					header('Location: ../User/customer_profile.php');
+					exit();
+				}
+			}
+			else 
+			{
+			    $_SESSION['signupresponse'] = "Failed to signup";
+			}
+		}						
+		
+	}
 ?>
