@@ -244,7 +244,7 @@ session_start();
                                 <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
                                     <div class="col-md-12">									
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
-                                        <input class="form-control btn btn-google google-btn-bg" type="submit" value="Sign in with Google" onclick="window.location = '<?php echo $fb_loginURL ?>';">
+                                        <input class="form-control btn btn-google google-btn-bg" type="submit" value="Sign in with Google" onclick="window.location = '<?php echo $google_loginURL ?>';">
                                     </div>
                                 </div>
 
