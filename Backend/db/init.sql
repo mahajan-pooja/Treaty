@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_businessdetail_userid_businessname_businesssector_zipcode` (`userid`, `businessname`, `businesssector`, `zipcode`),
+  UNIQUE INDEX `ix_businessdetail_userid_businessname_businesssector_zip_addr1` (`userid`, `businessname`, `businesssector`, `zipcode`, `address1`),
   CONSTRAINT `fk_businessdetail_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`))

@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -7,7 +11,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="keywords" content="Classic Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
 		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-			function hideURLbar(){ window.scrollTo(0,1); } 
+			function hideURLbar(){ window.scrollTo(0,1); }
 		</script>
 		<!-- Meta tag Keywords -->
 		<!-- css files -->
@@ -20,6 +24,7 @@
 		<link href="//fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
+
 		<?php 
 			include 'header.php';			
 			require 'config.php';
@@ -53,7 +58,7 @@
 			if(isset($_POST['signUpPhone'])){
 				$signUpPhone = $_POST['signUpPhone'];
 			}
-			
+
 			// database connection
 			if(!empty($signInemail)) {
 			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
@@ -63,8 +68,8 @@
 
 					$row = $result->fetch_array();
 					//Store userid in Session
-			        $_SESSION['userid'] = $row['id']; 
-			        //Use $_SESSION['userid'] wherever u want to access the userid  
+			        $_SESSION['userid'] = $row['id'];
+			        //Use $_SESSION['userid'] wherever u want to access the userid
 
 					if(strcasecmp($row['role'], 'Business Owner') == 0) {
 						echo '<script>window.location.href = "User/business.php";</script>';
@@ -86,8 +91,8 @@
 			            $signupresponse="User with email already exists. Please sign in.";
 			        } else {
 			            // insert into table
-			            $query = "INSERT INTO user (email,role,phonenumber,encryptedpassword) 
-			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";            
+			            $query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
+			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 			            $result = $mysqli->query($query);
 			            if ($result) {
 							if(strcasecmp($signUprole, 'Business Owner') == 0) {
@@ -95,7 +100,6 @@
 							} else {
 								echo '<script>window.location.href = "User/customer_profile.php";</script>';
 							}
-			                	
 			            } else {
 			                $signupresponse="Failed to signup";
 			            }
@@ -208,11 +212,11 @@
 						<div class="login-top">
 							<form method="post">
 								<input type="email" name="signInemail" class="email" placeholder="Email" required/>
-								<input type="password" name="signInpassword" class="password" placeholder="Password" required/>	
+								<input type="password" name="signInpassword" class="password" placeholder="Password" required/>
 								<label style="color:red;">
-								<?php 
+								<?php
 									if(isset($response)){
-										echo $response; 
+										echo $response;
 									}
 								?>
 								</label>
@@ -236,18 +240,18 @@
 									<a class="form-control btn btn-fb fb-btn-bg" onclick="window.location = '<?php echo $fb_loginURL ?>';">
 										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign in with Facebook
 									</a>
-								</div>                          
+								</div>
 							</div>
-                            
+
 							<div id="social" class="row" style="margin-left: -15px;">
 								<div class="col-md-12">
 									<a class="form-control btn btn-google google-btn-bg" onclick="window.location = '<?php echo $google_loginURL ?>';">
 										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign in with Google
 									</a>
-								</div>                          
+								</div>
 							</div>
 
-						
+
 						</div>
 					</div>
 					<div class="tab-1 resp-tab-content">
@@ -260,9 +264,9 @@
 								<input type="password" name="signUppassword" class="password" placeholder="Password" required/>
 								<input type="password" name="signUpcpassword" class="password" placeholder="Confirm Password" onkeyup="comparePasswords();" required/>
 								<label style="color:red;">
-								<?php 
+								<?php
 									if(isset($signupresponse)){
-										echo $signupresponse; 
+										echo $signupresponse;
 									}
 								?>
 								</label>
@@ -278,7 +282,7 @@
 									</ul>
 									<div class="clear"></div>
 								</div>
-								<input type="submit" value="Sign Up">							
+								<input type="submit" value="Sign Up">
 							</form>
                             
 							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
@@ -303,7 +307,7 @@
 			<div class="clear"> </div>
 		</div>
 		<?php include 'footer.php'; ?>
-		<!-- js-scripts -->			
+		<!-- js-scripts -->
 		<!-- js -->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
 		<!-- //js -->
@@ -312,13 +316,13 @@
 		<script type="text/javascript">
 			$(document).ready(function () {
 				$('#horizontalTab').easyResponsiveTabs({
-					type: 'default', //Types: default, vertical, accordion           
+					type: 'default', //Types: default, vertical, accordion
 					width: 'auto', //auto or any width like 600px
 					fit: true   // 100% fit in a container
 				});
 			});
 		</script>
 		<!-- //tabs -->
-		<!-- //js-scripts -->	
+		<!-- //js-scripts -->
 	</body>
 </html>

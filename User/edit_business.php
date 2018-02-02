@@ -64,8 +64,8 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Edit</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Delete</li>
+							<li class="resp-tab-item-edit" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Edit</li>
+							<li class="resp-tab-item-edit"><i class="fa fa-university" aria-hidden="true"></i>Delete</li>
 							
 						</ul>
 					</div>
@@ -85,7 +85,7 @@
 										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
 										<div class="submit"><br>
-										  <input type="submit" value="Save"><br><br>
+										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel" onClick="loadData()">
 										</div>   
 									</form>
@@ -99,7 +99,7 @@
 									<form action="#" method="post" class="agile_form">
 										<p class="b_name" style="color: white;text-align: center;">Click on below button to Delete your business.</p><br>	
 										<div class="submit"><br>
-										  <input type="submit" value="Delete"><br><br>
+										  <input type="submit" value="Delete">
 										  <input type="submit" value="Cancel">
 										</div>  
 									</form>
