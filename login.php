@@ -165,7 +165,7 @@ session_start();
 			<div class="navbar-inner">
 				<div class="container">
 					<a href="#" class="brand">
-						<img src="images/logo.png" width="120" height="40" alt="Logo" />
+						<img src="images/logoIcon.png" width="240" height="80" alt="Logo" />
 						<!-- This is website logo -->
 					</a>
 					<!-- Navigation button, visible on small resolution -->
@@ -190,9 +190,9 @@ session_start();
 				</div>
 			</div>
 		</div>
-		<br>
-		<h4></h4>
-		<br><br>
+		<br><br><br><br><br>
+		<h2>Welcome to Treaty</h2>
+
 		<div class="main" style="margin-bottom: 2%;">
 			<div id="horizontalTab" style="display: block; width: 100%; ">
 				<div class="img-w3l-agile">
@@ -232,25 +232,23 @@ session_start();
 									</ul>
 									<div class="clear"></div>
 								</div>
-								<input type="submit" value="Sign In">
+								<input class="button" type="submit" value="Sign In" style="margin-bottom:10px">
+                                
+                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                    <div class="col-md-12">									
+                                        <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
+                                        <input class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign in with Facebook" onclick="window.location = '<?php echo $fb_loginURL ?>';">
+                                    </div>
+                                </div>
+                                
+                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                    <div class="col-md-12">									
+                                        <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
+                                        <input class="form-control btn btn-google google-btn-bg" type="submit" value="Sign in with Google" onclick="window.location = '<?php echo $fb_loginURL ?>';">
+                                    </div>
+                                </div>
+
 							</form>
-
-							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
-								<div class="col-md-12">
-									<a class="form-control btn btn-fb fb-btn-bg" onclick="window.location = '<?php echo $fb_loginURL ?>';">
-										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign in with Facebook
-									</a>
-								</div>
-							</div>
-
-							<div id="social" class="row" style="margin-left: -15px;">
-								<div class="col-md-12">
-									<a class="form-control btn btn-google google-btn-bg" onclick="window.location = '<?php echo $google_loginURL ?>';">
-										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign in with Google
-									</a>
-								</div>
-							</div>
-
 
 						</div>
 					</div>
@@ -282,24 +280,24 @@ session_start();
 									</ul>
 									<div class="clear"></div>
 								</div>
-								<input type="submit" value="Sign Up">
+                                
+								<input class="button" type="submit" value="Sign Up" style="margin-bottom:10px">
+                                
+                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                    <div class="col-md-12">									
+                                        <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
+                                        <input class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
+                                    </div>
+                                </div>
+                                
+                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                    <div class="col-md-12">									
+                                        <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
+                                        <input class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
+                                    </div>
+                                </div>                                
 							</form>
                             
-							<div id="social" class="row" style="margin-left: -15px; margin-bottom:20px">
-								<div class="col-md-12">
-									<a class="form-control btn btn-fb fb-btn-bg" onclick="window.location = '<?php echo $fb_loginURL ?>';">
-										<img src="images/fb.png" width="25px" height="25px" class="fb-img" alt=""> Sign up with Facebook
-									</a>
-								</div>                          
-							</div>
-                            
-							<div id="social" class="row" style="margin-left: -15px;">
-								<div class="col-md-12">
-									<a class="form-control btn btn-google google-btn-bg" onclick="window.location = '<?php echo $google_loginURL ?>';">
-										<img src="images/google.jpg" width="25px" height="25px" class="google-img" alt=""> Sign up with Google
-									</a>
-								</div>                          
-							</div>                            
 						</div>
 					</div>
 				</div>
