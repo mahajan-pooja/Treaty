@@ -61,20 +61,21 @@
 					
 		$result = $mysqli->query($query);
 		if ($result->num_rows > 0) {
-			 $_SESSION['signupresponse'] = "User with email already exists. Please sign in.";
+			 $_SESSION['signupresponse_social'] = "User with email already exists. Please sign in.";
+			 header('Location: ../login.php');
+			 exit();
 		}
 		else
 		{
 			$signUpPhone = '1234567890';
 			$signUppassword = 'facebook';
 			$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-						VALUES (\"".$_SESSION['email']."\",\"".$_SESSION['signUprole']."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+						VALUES (\"".$_SESSION['email']."\",\"".$_SESSION['signUprole_social']."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 		    
 		    $result = $mysqli->query($query);		    
-		    
 		    if ($result){
-		    	$signUprole = $_SESSION['signUprole'];
-				if(strcasecmp($signUprole, 'Business Owner') == 0){
+		    	
+				if(strcasecmp($_SESSION['signUprole_social'], 'Business Owner') == 0){
 					header('Location: ../User/business_profile.php');
 					exit();
 				} 
@@ -86,7 +87,7 @@
 			}
 			else 
 			{
-			    $_SESSION['signupresponse'] = "Failed to signup";
+			    $_SESSION['signupresponse_social'] = "Failed to signup";
 			}
 		}						
 		

@@ -52,16 +52,20 @@ session_start();
 			}
 
 			if(isset($_POST['user'])){
-				$signUprole = $_POST['user'];	
-				$_SESSION['signUprole'] = $_POST['user'];
+				$signUprole = $_POST['user'];					
 			}
 
 			if(isset($_POST['signUpPhone'])){
 				$signUpPhone = $_POST['signUpPhone'];
 			}
 
-			if(isset($_SESSION['signupresponse'])){
-				$signupresponse = $_SESSION['signupresponse'];
+			if(isset($_SESSION['signupresponse_social'])){
+				$signupresponse_social = $_SESSION['signupresponse_social'];
+			}
+
+			if(isset($_POST['user_social'])){
+				$signUprole_social = $_POST['user_social'];
+				$_SESSION['signUprole_social'] = $_POST['user_social'];
 			}
 
 			// database connection
@@ -142,30 +146,37 @@ session_start();
 				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
 				    
 				header('Location:'.$fb_loginURL);
+				exit();
 				
 			}
 			
 			//Facebook Sign Up
 			if (isset($_POST['fb_signup_btn'])){
-
-				$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];
+				
+				
+				$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];				
 				
 			    if (isset($_SESSION['fb_access_token'])) {
 					//Check user exists				
 					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";					
 					$result = $mysqli->query($query);
 					if ($result->num_rows > 0) {
-						 $signupresponse="User with email already exists. Please sign in.";
+						 $signupresponse_social="User with email already exists. Please sign in.";
+						 header('Location: login.php');
+						 exit();
+
 					}
 					else
 					{						
 						$signUpPhone = '1234567890';
 						$signUppassword = 'facebook';
 						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 			            $result = $mysqli->query($query);
+
 			            if ($result) {
-							if(strcasecmp($signUprole, 'Business Owner') == 0) {
+
+							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
 								header('Location: User/business_profile.php');
 								exit();
 							} 
@@ -177,15 +188,16 @@ session_start();
 			            }
 			            else 
 			            {
-			                $signupresponse="Failed to signup";
+			                $signupresponse_social="Failed to signup";
 			            }
 					}
 				}				
 				$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
 				$permissions = ['email'];
 				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
-				    
+				 
 				header('Location:'.$fb_loginURL);
+				exit();
 				
 			}
 
@@ -214,7 +226,8 @@ session_start();
 					}
 				}
 				$google_loginURL = $gClient->createAuthUrl();
-				header('Location:'.$google_loginURL);				
+				header('Location:'.$google_loginURL);
+				exit();				
 				
 			}
 
@@ -222,26 +235,25 @@ session_start();
 			if (isset($_POST['google_signup_btn'])){
 
 				$_SESSION['google_signup_btn'] = $_POST['google_signup_btn'];
-				if(isset($_POST['user'])){
-					$_SESSION['signUprole'] = $_POST['user'];
-				}
-
-			    if (isset($_SESSION['fb_access_token'])) {
+				
+			    if (isset($_SESSION['google_access_token'])) {
 					//Check user exists				
 					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";					
 					$result = $mysqli->query($query);
 					if ($result->num_rows > 0) {
-						 $signupresponse="User with email already exists. Please sign in.";
+						 $signupresponse_social="User with email already exists. Please sign in.";
+						 header('Location: login.php');
+						 exit();
 					}
 					else
 					{						
 						$signUpPhone = '1234567890';
 						$signUppassword = 'google';
 						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 			            $result = $mysqli->query($query);
 			            if ($result) {
-							if(strcasecmp($signUprole, 'Business Owner') == 0) {
+							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
 								header('Location: User/business_profile.php');
 								exit();
 							} 
@@ -253,12 +265,13 @@ session_start();
 			            }
 			            else 
 			            {
-			                $signupresponse="Failed to signup";
+			                $signupresponse_social="Failed to signup";
 			            }
 					}
 				}				
 				$google_loginURL = $gClient->createAuthUrl();
 				header('Location:'.$google_loginURL);	
+				exit();
 				
 			}
 
@@ -389,11 +402,22 @@ session_start();
 								</div>
                                 
 								<input class="button" type="submit" value="Sign Up">
-                                                                
+								<br><br>
 							</form>
-
-							<form method="post">
-                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+							<hr color = "black">
+							<form method="post" style="color: black!important;">
+								<br>
+								<input type="radio" name="user_social" style="margin: 0px;" value="Customer" required checked="checked"> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+								<input type="radio" name="user_social" style="margin: 0px;" value="Business Owner"> <span>Business Owner</span>
+								<label style="color:red;">
+								<?php
+									if(isset($signupresponse_social)){
+										echo $signupresponse_social;
+									}
+								?>
+								</label>
+								<br><br>
+								<div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
                                     <div class="col-md-12">									
                                         <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
                                         <input name="fb_signup_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
@@ -405,8 +429,8 @@ session_start();
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
                                         <input name="google_signup_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
                                     </div>
-                                </div>								
-							</form>
+                                </div>
+							</form>						
                             
 						</div>
 					</div>
