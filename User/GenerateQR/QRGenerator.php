@@ -8,9 +8,10 @@ class QRGenerator {
     protected $marginInRows; 
     protected $debug; 
 
-    public function __construct($data='PoojaMahajan92449',$size='300',$encoding='UTF-8',$errorCorrectionLevel='L',$marginInRows=4,$debug=false) { 
-
-        $this->data=urlencode($data); 
+    public function __construct($data='',$size='300',$encoding='UTF-8',$errorCorrectionLevel='L',$marginInRows=4,$debug=false) { 
+            session_start();
+            $userid = $_SESSION['userid'];
+        $this->data=urlencode($userid); 
         $this->size=($size>100 && $size<800)? $size : 300; 
         $this->encoding=($encoding == 'Shift_JIS' || $encoding == 'ISO-8859-1' || $encoding == 'UTF-8') ? $encoding : 'UTF-8'; 
         $this->errorCorrectionLevel=($errorCorrectionLevel == 'L' || $errorCorrectionLevel == 'M' || $errorCorrectionLevel == 'Q' || $errorCorrectionLevel == 'H') ?  $errorCorrectionLevel : 'L';

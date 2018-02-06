@@ -65,12 +65,14 @@ img{
 {
     width:100%;
     height:auto;
+    padding-top: 2.5%;
 }
 #result{
     border: solid;
 	border-width: 1px 1px 1px 1px;
 	padding:20px;
 	width:80%;
+    display: none;
 }
 
 ul{
@@ -152,7 +154,15 @@ QR Code scanner
 <!-- <img src="down.png"/>
  --></td></tr>
 <tr><td colspan="3" align="center">
-<div id="result"></div>
+<div id="result">
+    <?php
+     //if(isset($_COOKIE['uid'])){
+        // echo 'hello'.$_COOKIE['uid'];
+    //}
+    ?>
+    
+</div>
+
 </td></tr>
 </table>
 <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
@@ -173,5 +183,8 @@ QR Code scanner
 </div>
 <canvas id="qr-canvas" width="800" height="600"></canvas>
 <script type="text/javascript">load();</script>
+<script type="text/javascript">
+   //alert(value);
+</script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 <?php
 	// Start the session
 	session_start();
-	?>
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,6 +20,19 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
+		<?php 
+		if($_GET['flag'] == 'add'){ ?>
+		<script type="text/javascript">
+			alert("Rewards added successfully.");
+			window.location.href = "business.php";
+		</script>
+		<?php } else if($_GET['flag'] == 'redeem'){ ?>
+		<script type="text/javascript">
+			alert("Rewards redeemed successfully.");
+			window.location.href = "business.php";
+		</script>
+		<?php } ?>
+		
         <?php
             include 'business_nav.html';
             require '../config.php';
@@ -69,6 +82,7 @@
             if (isset($_POST['taskOption'])) {
                 $selectOption = $_POST['taskOption'];
             }
+            
             $userid = $_SESSION['userid'];
             if (!empty($fname)) {
                 //create business
@@ -159,8 +173,6 @@
 					}
                 }
             }
-            /* close connection */
-            $mysqli->close();
         ?>
 	</head>
 	<body>
@@ -197,7 +209,6 @@
 						function editOffer(offerid){
 							window.location.assign("edit_offer.php");
 						}
-						
 					</script>
 					<div class="tabs">
 						<div class="tab-left">
@@ -218,15 +229,37 @@
 										<?php 
 											include 'qrscanner/qrscanner.php';
 											?>
-										<p class="b_name" style="color: white;font-size: 150%;">Customer have 100 Reward points.</p>
+										<p class="b_name" id="custPoints" style="color: white;font-size: 150%;">
+											 <?php
+											//get customer points for add redeem
+								            if(isset($_GET['custID'])){
+								            	echo "Customer Rewards : ";
+								            $query = "SELECT balance
+														  FROM customeroffer
+								                          WHERE userid=\"" . $_GET['custID'] . "\" and isactive = 1";
+								            $result = $mysqli->query($query);
+								                $offerlistresultset = array();
+								                if ($result->num_rows > 0) {
+													while($row = $result->fetch_assoc()) {
+														$points = $row["balance"];
+													}
+								                } 
+								                if($points == ''){ 
+								                	echo 0;
+								                }else{
+								                	echo $points;
+								                }
+								            }
+											?>
+										</p>
 										<br>
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Add Rewards ---</p>
 											<br>
-											<form action="#" method="post" class="agile_form">
+											<form action="addRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
 												<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
 												<div class="submitButton"><br>
-													<input type="submit" name="amount" value="Add Rewards" onclick="addPoints()"> 
+													<input type="submit" value="Add Rewards"> 
 												</div>
 											</form>
 										</div>
@@ -234,10 +267,10 @@
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p>
 											<br>
-											<form action="#" method="post" class="agile_form">
-												<input style="width: 50%;" type="text" name="amount" placeholder=" Rewards"><br>
+											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
+												<input style="width: 50%;" type="text" name="points" placeholder=" Rewards"><br>
 												<div class="submitButton"><br>
-													<input type="submit" name="amount" value="Redeem Rewards" onclick="redeemPoints()"> 
+													<input type="submit" value="Redeem Rewards"> 
 												</div>
 											</form>
 										</div>
@@ -332,5 +365,10 @@
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+		<?php 
+		/* close connection */
+            $mysqli->close();
+        ?>
+
 	</body>
 </html>

@@ -80,7 +80,7 @@ session_start();
 			        $_SESSION['userid'] = $row['id'];
 			        //Use $_SESSION['userid'] wherever u want to access the userid
 
-					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+					if(strcasecmp($row['role'], 'Owner') == 0) {
 						echo '<script>window.location.href = "User/business.php";</script>';
 					} else {
 						echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';

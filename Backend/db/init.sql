@@ -131,7 +131,6 @@ CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
   `businessid` BIGINT(20) NOT NULL,
-  `offerid` BIGINT(20) NOT NULL,
   `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
   `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
   `balance` BIGINT(80) NULL DEFAULT NULL,
@@ -139,16 +138,12 @@ CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_bcustomeroffer_userid_businessid_offerid` (`userid`, `businessid`, `offerid`),
   CONSTRAINT `fk_customeroffer_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`),
   CONSTRAINT `fk_customeroffer_businessid`
     FOREIGN KEY (`businessid`)
-    REFERENCES `treaty`.`businessdetail` (`id`),
-  CONSTRAINT `fk_customeroffer_offerid`
-    FOREIGN KEY (`offerid`)
-    REFERENCES `treaty`.`businessoffer` (`id`))
+    REFERENCES `treaty`.`businessdetail` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
