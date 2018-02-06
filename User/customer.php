@@ -1,3 +1,8 @@
+<?php
+	// Start the session
+	session_start();
+	 $userid = $_SESSION['userid'];
+?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 <head>
@@ -110,7 +115,7 @@
 									</div>
 								</div>
 							</div>
-		<!-- Customer Profile section -->
+							<!-- Customer Profile section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Profile</p>
 								<div class="w3l-sign-in">
