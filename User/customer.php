@@ -140,8 +140,6 @@
 								</div>
 							</div>
 							
-							
-							
 							<!--Change Password-->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Change Password</p>
