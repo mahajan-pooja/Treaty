@@ -204,10 +204,10 @@
 							});
 						});
 						function editBusiness(businessid){
-							window.location.assign("edit_business.php");
+							window.location.assign("edit_business.php?businessid="+businessid);
 						}
 						function editOffer(offerid){
-							window.location.assign("edit_offer.php");
+							window.location.assign("edit_offer.php?offerid="+offerid);
 						}
 					</script>
 					<div class="tabs">
