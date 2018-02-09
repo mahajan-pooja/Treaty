@@ -3,6 +3,7 @@ select * from user;
 select * from userdetail;
 
 select * from businessdetail;
+SELECT businessname, businesssector, address1, address2, city, state, country, zipcode FROM businessdetail WHERE id=21;
 
 select * from businessoffer;
 
@@ -23,3 +24,9 @@ select  DECODE(`encryptedpassword`, 'secret') as encryptedpassword from user;
 
 INSERT INTO user (email,role,encryptedpassword) VALUES ("test_123@gmail.com","Customer","test_123");
 INSERT INTO userdetail(userid, firstname, lastname, phonenumber, address1, address2, city, state, country, zipcode, modified, created) VALUES ("1","Tushar","Mhaskar","1234567890","1433 Cedarmeadow Ct","#1433" ,"San Jose","California","United States","95131", sysdate(), sysdate());
+INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode, modified, created) VALUES ("6","Subway","Food","5 Saurabh Apt, Mahatma Phule Road, Arunodaya Society, Arunodaya Society","Arunodaya Society" ,"Dombivli","Swami Vivekanand School(Arunodaya)","India","421202", sysdate(), sysdate());
+
+SELECT id, businessname, businesssector, address1, city
+            	 		  FROM businessdetail
+            			  WHERE userid=7
+                          LIMIT 1;

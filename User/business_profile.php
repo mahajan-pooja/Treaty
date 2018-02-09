@@ -1,6 +1,7 @@
 <?php
     // Start the session
     session_start();
+
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
@@ -80,7 +81,7 @@
 								<p class="secHead">Create Account</p>
 
 								<div class="w3l-sign-in">
-									<form action="#" method="post" class="agile_form">
+									<form method="post" class="agile_form">
 										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
 										<input type="text" placeholder="Last Name" name="lname" class="name agileits" required=""/>
 										<input type="text" placeholder="Phone Number" name="phone" class="name agileits" required=""/>
@@ -198,7 +199,6 @@
 	}
 
 	$userid = $_SESSION['userid'];
-    
 	if(!empty($fname)) {
 		//insert the entry in userdetail table
 		// insert into table
@@ -213,7 +213,7 @@
 			echo "Failed to update profile";
 		}
 	} else {
-		echo "emtpy";
+		echo "empty";
 	}
 	/* close connection */
 	$mysqli->close();

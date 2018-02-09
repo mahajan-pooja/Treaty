@@ -1,7 +1,7 @@
 <?php
 	// Start the session
 	session_start();
-?>
+?>  
 <!DOCTYPE html>
 <html>
 	<head>
@@ -94,7 +94,7 @@
                 if ($result) {
                     $_SESSION["businessname"]   = $fname;
                     $_SESSION["businesssector"] = $lname;
-                    echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
                 } else {
                     echo "Failed to update profile";
                 }
@@ -106,7 +106,7 @@
                         ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\",1, sysdate(), sysdate())";
                 $result = $mysqli->query($query);
                 if ($result) {
-                    echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+                    echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
                 } else {
                     echo "Failed to update profile";
                 }
@@ -128,7 +128,7 @@
                 //get the offer business details
                 $query = "SELECT id, address1, city
                                        FROM businessdetail
-                                      WHERE userid=\"" . $userid . "\"";
+                                      WHERE userid=\"" . $userid . "\" and isactive=1";
                 
                 $result = $mysqli->query($query);
                 if ($result->num_rows > 0) {
@@ -320,7 +320,7 @@
 											<input type="text" placeholder="Phone number" name="phone" class="name agileits" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
-												<input type="submit" value="Cancel" onClick="loadData()">
+												<input type="submit" value="Cancel">
 											</div>
 										</form>
 									</div>
@@ -329,7 +329,7 @@
 								<div class="tab-1 resp-tab-content gallery-images">
 									<p class="secHead">Create Offer For Your Business</p>
 									<div class="wthree-subscribe">
-										<form action="#" method="post" class="agile_form">
+										<form method="post" class="agile_form">
                                             <select class="name agileits" name="taskOption">
 												<?php foreach($resultset as $row) {
 													?>
@@ -339,8 +339,8 @@
 											<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
-											<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-											<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+											<input placeholder="Start Date" class="date" name="datepicker1" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+											<input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
 												<input type="submit" value="Cancel">
@@ -361,7 +361,9 @@
 		<script src="js/jquery-ui.js"></script>
 		<script>
 			$(function() {
-			$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
+			$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker(
+				{ dateFormat: 'yy-mm-dd' }
+			);
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
