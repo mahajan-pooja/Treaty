@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <?php 
-        
+        <?php
             include 'header.php';
-        
+            session_start();
         ?>
         <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
     </head>    
@@ -30,7 +29,7 @@
                             <li><a href="#clients">Clients</a></li>
                             <li><a href="#price">Price</a></li>
                             <li><a href="#contact">Contact</a></li>
-                            <li><a href="login.php">Login</a></li>
+                            <li><a href='login.php'>Login</a></li>
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -142,20 +141,6 @@
                     <h1>Businesses Like Yours Depend on Treaty</h1>
                     <p>Register your business and be a part of Treaty Community.</p>
                 </div>
-               <!--  <ul class="nav nav-pills">
-                    <li class="filter" data-filter="all">
-                        <a href="#noAction">All</a>
-                    </li>
-                    <li class="filter" data-filter="web">
-                        <a href="#noAction">Web</a>
-                    </li>
-                    <li class="filter" data-filter="photo">
-                        <a href="#noAction">Photo</a>
-                    </li>
-                    <li class="filter" data-filter="identity">
-                        <a href="#noAction">Identity</a>
-                    </li>
-                </ul> -->
                 <!-- Start details for portfolio project 1 -->
                 <div id="single-project">
                     <div id="slidingDiv" class="toggleDiv row-fluid single-project">

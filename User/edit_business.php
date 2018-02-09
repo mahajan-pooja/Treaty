@@ -52,7 +52,10 @@
 			if (isset($_POST['cancel'])) {
 				$cancel = $_POST['cancel'];
 			}
-			if(!empty($cancel)) {
+			if (isset($_POST['delete'])) {
+				$delete = $_POST['delete'];
+			}
+			if(!empty($delete)) {
 				$query = "UPDATE businessdetail
 						 SET isactive=0 
 						 WHERE id=".$businessid;
@@ -63,6 +66,8 @@
 	            } else {
 	                echo "Failed to delete profile";
 	            }
+			} else if(!empty($cancel)) {
+				echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
 			} else if(!empty($businessname)) {
 				$query = "UPDATE businessdetail
 						 SET businessname=\"".$businessname."\", businesssector=\"".$businesssector."\", address1=\"".$address1."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", modified=sysdate() 
@@ -178,8 +183,8 @@
 											<p class="b_name" style="color: white;text-align: center;">Click on below button to Delete your business.</p>
 											<br>	
 											<div class="submit"><br>
-												<input type="submit" value="Delete">
-												<input type="submit" value="Cancel">
+												<input name="delete" type="submit" value="Delete">
+												<input name="cancel" type="submit" value="Cancel">
 											</div>
 										</form>
 									</div>

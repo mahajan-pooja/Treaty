@@ -24,10 +24,10 @@ INSERT INTO `treaty`.`user` (id, email, phonenumber, role, encryptedpassword, is
     VALUES (3, 'koradepoona1008@students.itu.edu','1234567890', 'Customer', 'test1234', 1);
 
 INSERT INTO `treaty`.`user` (id, email, phonenumber, role, encryptedpassword, isactive)
-    VALUES (4, 'poojamahajan2092@gmail.com','1234567890', 'Owner', 'test1234', 1);
+    VALUES (4, 'poojamahajan2092@gmail.com','1234567890', 'Business Owner', 'test1234', 1);
 
 INSERT INTO `treaty`.`user` (id, email, phonenumber, role, encryptedpassword, isactive)
-    VALUES (5, 'rajeshwaripatil09@gmail.com','1234567890', 'Owner', 'test1234', 1);
+    VALUES (5, 'rajeshwaripatil09@gmail.com','1234567890', 'Business Owner', 'test1234', 1);
 
 -- insert script for userdetail
 INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
@@ -63,13 +63,13 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 
 -- insert script for businessoffer
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (1, 5, 4, 'Papaya-WINTER', '5 points per $ spent', 100, '2018-01-22 23:00:30', '2018-01-30 24:58:00',1);
+    VALUES (1, 5, 4, 'Papaya-WINTER', '5 points per $ spent', 100, '2018-01-22', '2018-01-30',1);
 
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (2, 5, 3, 'Subway-EATFREE', '1 point per $ spent', 20, '2018-01-23 23:00:30', '2018-02-25 24:58:00',1);
+    VALUES (2, 5, 3, 'Subway-EATFREE', '1 point per $ spent', 20, '2018-01-23', '2018-02-25',1);
 
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (3, 4, 2, 'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25 23:00:30', '2018-04-30 24:58:00',1);
+    VALUES (3, 4, 2, 'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
 -- insert script for customeroffer
 INSERT INTO `treaty`.`customeroffer` (id, userid, businessid, offerid, isactive)
