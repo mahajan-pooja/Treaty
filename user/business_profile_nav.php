@@ -1,3 +1,7 @@
+<?php
+    // Start the session
+    session_start();
+?>
 <link rel="stylesheet" type="text/css" href="css/navigation.css" />
 <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
 <style type="text/css">
@@ -27,7 +31,11 @@
 				<input type="checkbox" name="" id="open">
 				<nav style="padding-top: 2%;" >
 					<a href="../index.php">Home</a>
-					<a href="customer.php">Dashboard</a>
+					<?php
+						if(isset($_SESSION['displaydashboard'])){
+							echo "<a href='business.php'>Dashboard</a>";
+						}
+					?>
 					<a href="../index.php">Logout</a>
 				</nav>
 			</div>

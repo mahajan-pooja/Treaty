@@ -25,8 +25,8 @@ session_start();
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
 
-		<?php 
-			include 'header.php';			
+		<?php
+			include 'header.php';
 			require 'config.php';
 			require_once "social_login/fb_config.php";
 			require_once "social_login/google_config.php";
@@ -52,7 +52,7 @@ session_start();
 			}
 
 			if(isset($_POST['user'])){
-				$signUprole = $_POST['user'];					
+				$signUprole = $_POST['user'];
 			}
 
 			if(isset($_POST['signUpPhone'])){
@@ -77,13 +77,26 @@ session_start();
 
 					$row = $result->fetch_array();
 					//Store userid in Session
+					//Use $_SESSION['userid'] wherever u want to access the userid
 			        $_SESSION['userid'] = $row['id'];
-			        //Use $_SESSION['userid'] wherever u want to access the userid
-					
-					if(strcasecmp($row['role'], 'Business Owner') == 0) {
-						echo '<script>window.location.href = "User/business.php";</script>';
+					$role = $row['role'];
+					// check if there if exists an entry in user_detail table
+					$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
+					$result = $mysqli->query($query);
+					// if yes, do not take him to profile page
+					if ($result->num_rows > 0) {
+						if(strcasecmp($role, 'Business Owner') == 0) {
+							echo '<script>window.location.href = "User/business.php";</script>';
+						} else {
+							echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+						}
 					} else {
-						echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+						//if no, take him to profile page
+						if(strcasecmp($role, 'Business Owner') == 0) {
+							echo '<script>window.location.href = "User/business_profile.php";</script>';
+						} else {
+							echo '<script>window.location.href = "User/customer_profile.php";</script>';
+						}
 					}
 			    } else {
 			        $response="Invalid username/password";
@@ -117,21 +130,21 @@ session_start();
 			}
 
 			//Social Login
-			//Facebook Sign In			
+			//Facebook Sign In
 			if (isset($_POST['fb_signin_btn'])) {
 
 				$_SESSION['fb_signin_btn'] = $_POST['fb_signin_btn'];
 
 			    if (isset($_SESSION['fb_access_token'])) {
-					//Check user role				
+					//Check user role
 					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-					
+
 					$result = $mysqli->query($query);
 					if ($result->num_rows > 0) {
 
 						$row = $result->fetch_array();
-						$_SESSION['userid'] = $row['id']; 
-					      
+						$_SESSION['userid'] = $row['id'];
+
 						if(strcasecmp($row['role'], 'Business Owner') == 0) {
 							header('Location: User/business_profile.php');
 							exit();
@@ -140,25 +153,25 @@ session_start();
 							exit();
 						}
 					}
-				}				
+				}
 				$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
 				$permissions = ['email'];
 				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
-				    
+
 				header('Location:'.$fb_loginURL);
 				exit();
-				
+
 			}
-			
+
 			//Facebook Sign Up
 			if (isset($_POST['fb_signup_btn'])){
-				
-				
-				$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];				
-				
+
+
+				$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];
+
 			    if (isset($_SESSION['fb_access_token'])) {
-					//Check user exists				
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";					
+					//Check user exists
+					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
 					$result = $mysqli->query($query);
 					if ($result->num_rows > 0) {
 						 $signupresponse_social="User with email already exists. Please sign in.";
@@ -167,7 +180,7 @@ session_start();
 
 					}
 					else
-					{						
+					{
 						$signUpPhone = '1234567890';
 						$signUppassword = 'facebook';
 						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
@@ -179,43 +192,43 @@ session_start();
 							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
 								header('Location: User/business_profile.php');
 								exit();
-							} 
-							else 
+							}
+							else
 							{
 								header('Location: User/customer_profile.php');
 								exit();
 							}
 			            }
-			            else 
+			            else
 			            {
 			                $signupresponse_social="Failed to signup";
 			            }
 					}
-				}				
+				}
 				$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
 				$permissions = ['email'];
 				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
-				 
+
 				header('Location:'.$fb_loginURL);
 				exit();
-				
+
 			}
 
 			//Google Sign In
 			if (isset($_POST['google_signin_btn'])) {
-				
+
 				$_SESSION['google_signin_btn'] = $_POST['google_signin_btn'];
 
 				if(isset($_SESSION['google_access_token'])){
 
 					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-				    
+
 				    $result = $mysqli->query($query);
 				    if ($result->num_rows > 0) {
 
 						$row = $result->fetch_array();
-						$_SESSION['userid'] = $row['id']; 
-				        
+						$_SESSION['userid'] = $row['id'];
+
 						if(strcasecmp($row['role'], 'Business Owner') == 0) {
 							header('Location: User/business_profile.php');
 							exit();
@@ -227,18 +240,18 @@ session_start();
 				}
 				$google_loginURL = $gClient->createAuthUrl();
 				header('Location:'.$google_loginURL);
-				exit();				
-				
+				exit();
+
 			}
 
 			//Google Sign up
 			if (isset($_POST['google_signup_btn'])){
 
 				$_SESSION['google_signup_btn'] = $_POST['google_signup_btn'];
-				
+
 			    if (isset($_SESSION['google_access_token'])) {
-					//Check user exists				
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";					
+					//Check user exists
+					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
 					$result = $mysqli->query($query);
 					if ($result->num_rows > 0) {
 						 $signupresponse_social="User with email already exists. Please sign in.";
@@ -246,7 +259,7 @@ session_start();
 						 exit();
 					}
 					else
-					{						
+					{
 						$signUpPhone = '1234567890';
 						$signUppassword = 'google';
 						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
@@ -256,23 +269,23 @@ session_start();
 							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
 								header('Location: User/business_profile.php');
 								exit();
-							} 
-							else 
+							}
+							else
 							{
 								header('Location: User/customer_profile.php');
 								exit();
 							}
 			            }
-			            else 
+			            else
 			            {
 			                $signupresponse_social="Failed to signup";
 			            }
 					}
-				}				
+				}
 				$google_loginURL = $gClient->createAuthUrl();
-				header('Location:'.$google_loginURL);	
+				header('Location:'.$google_loginURL);
 				exit();
-				
+
 			}
 
 			?>
@@ -349,25 +362,25 @@ session_start();
 									</ul>
 									<div class="clear"></div>
 								</div>
-								<input class="button" type="submit" value="Sign In">                                
+								<input class="button" type="submit" value="Sign In">
 
 							</form>
 
 							<form method="post">
                                 <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
-                                    <div class="col-md-12">									
+                                    <div class="col-md-12">
                                         <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
                                         <input name="fb_signin_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign in with Facebook">
 
                                     </div>
                                 </div>
-                                
+
                                 <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
-                                    <div class="col-md-12">									
+                                    <div class="col-md-12">
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
                                         <input name="google_signin_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign in with Google">
                                     </div>
-                                </div>								
+                                </div>
 							</form>
 
 						</div>
@@ -400,7 +413,7 @@ session_start();
 									</ul>
 									<div class="clear"></div>
 								</div>
-                                
+
 								<input class="button" type="submit" value="Sign Up">
 								<br><br>
 							</form>
@@ -418,20 +431,20 @@ session_start();
 								</label>
 								<br><br>
 								<div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
-                                    <div class="col-md-12">									
+                                    <div class="col-md-12">
                                         <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
                                         <input name="fb_signup_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
                                     </div>
                                 </div>
-                                
+
                                 <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
-                                    <div class="col-md-12">									
+                                    <div class="col-md-12">
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
                                         <input name="google_signup_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
                                     </div>
                                 </div>
-							</form>						
-                            
+							</form>
+
 						</div>
 					</div>
 				</div>
