@@ -271,8 +271,7 @@ session_start();
 				}				
 				$google_loginURL = $gClient->createAuthUrl();
 				header('Location:'.$google_loginURL);	
-				exit();
-				
+				exit();				
 			}
 
 			?>
