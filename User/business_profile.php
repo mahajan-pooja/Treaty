@@ -5,7 +5,6 @@
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 <head>
-
 	<title>Business Owner Profile</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,18 +20,71 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
-
 	<?php
-		include 'business_profile_nav.html';
-		
+		include 'business_profile_nav.php';
+        require '../config.php';
+
 		$first_name = $_SESSION['first_name'];
 		$last_name = $_SESSION['last_name'];
 		$email_id = $_SESSION['email'];
+
+    	if(isset($_POST['fname'])){
+    		$fname = $_POST['fname'];
+    	}
+    	if(isset($_POST['lname'])){
+    		$lname = $_POST['lname'];
+    	}
+    	if(isset($_POST['phone'])){
+    		$phone = $_POST['phone'];
+    	}
+    	if(isset($_POST['street1'])){
+    		$street1= $_POST['street1'];
+    	}
+    	if(isset($_POST['street2'])){
+    		$street2 = $_POST['street2'];
+    	}
+    	if(isset($_POST['city'])){
+    		$city = $_POST['city'];
+    	}
+    	if(isset($_POST['state'])){
+    		$state = $_POST['state'];
+    	}
+    	if(isset($_POST['country'])){
+    		$country = $_POST['country'];
+    	}
+    	if(isset($_POST['zip'])){
+    		$zip = $_POST['zip'];
+    	}
+
+    	$userid = $_SESSION['userid'];
+    	if(!empty($fname)) {
+    		//insert the entry in userdetail table
+    		// insert into table
+    		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
+    			address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+    					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
+    		$result = $mysqli->query($query);
+    		if ($result) {
+    			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+    		} else {
+    			echo "Failed to update profile";
+    		}
+    	} else {
+            $query = "SELECT id FROM userdetail where userid=\"".$userid."\"";
+            $result = $mysqli->query($query);
+            // if yes, display dashboard link
+            if ($result->num_rows > 0) {
+                $_SESSION['displaydashboard'] = true;
+            } else {
+                // donot display dashboard link
+                $_SESSION['displaydashboard'] = false;
+            }
+        }
+    	/* close connection */
+    	$mysqli->close();
 	?>
 </head>
-
 <body>
-
 	<h1></h1>
 	<div class="container">
 		<div class="tab">
@@ -80,7 +132,7 @@
 								<p class="secHead">Create Account</p>
 
 								<div class="w3l-sign-in">
-									<form action="#" method="post" class="agile_form">
+									<form method="post" class="agile_form">
 										<input type="text" placeholder="First Name" name="fname" class="name agileits" required=""/>
 										<input type="text" placeholder="Last Name" name="lname" class="name agileits" required=""/>
 										<input type="text" placeholder="Phone Number" name="phone" class="name agileits" required=""/>
@@ -166,66 +218,16 @@
 		</div>
 	</div>
 	<?php
-	include 'footer.php';
-	require '../config.php';
-
-	if(isset($_POST['fname'])){
-		$fname = $_POST['fname'];
-	}
-	if(isset($_POST['lname'])){
-		$lname = $_POST['lname'];
-	}
-	if(isset($_POST['phone'])){
-		$phone = $_POST['phone'];
-	}
-	if(isset($_POST['street1'])){
-		$street1= $_POST['street1'];
-	}
-	if(isset($_POST['street2'])){
-		$street2 = $_POST['street2'];
-	}
-	if(isset($_POST['city'])){
-		$city = $_POST['city'];
-	}
-	if(isset($_POST['state'])){
-		$state = $_POST['state'];
-	}
-	if(isset($_POST['country'])){
-		$country = $_POST['country'];
-	}
-	if(isset($_POST['zip'])){
-		$zip = $_POST['zip'];
-	}
-
-	$userid = $_SESSION['userid'];
-    
-	if(!empty($fname)) {
-		//insert the entry in userdetail table
-		// insert into table
-		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-			address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-		echo $query;
-		$result = $mysqli->query($query);
-		if ($result) {
-			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-		} else {
-			echo "Failed to update profile";
-		}
-	} else {
-		echo "emtpy";
-	}
-	/* close connection */
-	$mysqli->close();
+	   include 'footer.php';
 	?>
 	<!--start-date-piker-->
-		<link rel="stylesheet" href="css/jquery-ui.css" />
-		<script src="js/jquery-ui.js"></script>
-			<script>
-				$(function() {
-				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
-				});
-			</script>
-<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+	<link rel="stylesheet" href="css/jquery-ui.css" />
+	<script src="js/jquery-ui.js"></script>
+	<script>
+		$(function() {
+		$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
+		});
+	</script>
+    <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
 </body>
 </html>

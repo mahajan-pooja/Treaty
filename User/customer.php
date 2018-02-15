@@ -1,3 +1,8 @@
+<?php
+	// Start the session
+	session_start();
+	$userid = $_SESSION['userid'];
+?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 <head>
@@ -9,7 +14,7 @@
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
 	<link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
-	<link href="css/font-awesome.css" rel="stylesheet"> 
+	<link href="css/font-awesome.css" rel="stylesheet">
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/user-dashboard.js"></script>
 
@@ -17,14 +22,14 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
-	<?php 
+	<?php
 		include 'customer_nav.html';
 	?>
 </head>
 
 <body>
 
-	<h1></h1> 
+	<h1></h1>
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
@@ -67,11 +72,11 @@
 						<div class="resp-tabs-container">
 							<!-- QR Code -->
 							<div class="tab-1 resp-tab-content gallery-images">
-								<div class="wthree-subscribe">	
+								<div class="wthree-subscribe">
 									<p class="secHead">Your QR Code</p><br>
-									<?php 
+									<?php
 										include 'GenerateQR/QRGenerator.php';
-										$ex1 = new QRGenerator(); 
+										$ex1 = new QRGenerator();
 										echo "<img style='max-width:100%;margin-left:25%;' src=".$ex1->generate().">";
 									?>
 								</div>
@@ -103,14 +108,14 @@
 												<button class="subscribe" value="Subscribe" name="subscribe">Subscribe</button>
 												<img class="downImg" id="offer_downImg" src="images/down.png" width="100" height="100" onclick="loadOffer();">
 											</div>
-											
-											
+
+
 											<div class="offer" id="offer">1 Sandwich free salad for 100 points</div>
 										</div>
 									</div>
 								</div>
 							</div>
-		<!-- Customer Profile section -->
+							<!-- Customer Profile section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Profile</p>
 								<div class="w3l-sign-in">
@@ -125,18 +130,16 @@
 										<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
 										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
-										
+
 										<div class="submit"><br>
 										  <input type="submit" value="Submit"><br><br>
 										  <input type="submit" value="Update Profile" onClick="loadData()"><br><br>
 										  <input type="submit" value="Delete Profile" onClick="deleteCustomer()">
-										</div>   
-									</form>	
+										</div>
+									</form>
 								</div>
 							</div>
-							
-							
-							
+
 							<!--Change Password-->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Change Password</p>
@@ -144,10 +147,10 @@
 									<form action="#" method="post" class="agile_form">
 										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
-										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>	
+										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>
 										<div class="submit"><br>
 										  <input type="submit" value="Submit">
-										</div>  
+										</div>
 									</form>
 								</div>
 							</div>
@@ -158,13 +161,13 @@
 			</div>
 		</div>
 	</div>
-	<?php 
-		
+	<?php
+
 		include 'footer.php';
 		require '../config.php';
-						
+
 		$query = "SELECT * FROM businessdetail";
-		
+
 		$result = $mysqli->query($query);
 		if ($result->num_rows > 0) {
 			$row = $result->fetch_array();
@@ -182,6 +185,6 @@
 				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
 				});
 			</script>
-<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->	
+<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
 </body>
 </html>

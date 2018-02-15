@@ -22,6 +22,69 @@
 	<!-- //Web-Fonts -->
 	<?php 
 		include 'business_nav.html';
+		require '../config.php';
+		$offerid = $_GET["offerid"];
+		
+		if (isset($_POST['oName'])) {
+			$oName = $_POST['oName'];
+		}
+		if (isset($_POST['oDesc'])) {
+			$oDesc = $_POST['oDesc'];
+		}
+		if (isset($_POST['oPoints'])) {
+			$oPoints = $_POST['oPoints'];
+		}
+		if (isset($_POST['datepicker1'])) {
+			$datepicker1 = $_POST['datepicker1'];
+		}
+		if (isset($_POST['datepicker2'])) {
+			$datepicker2 = $_POST['datepicker2'];
+		}
+		if (isset($_POST['cancel'])) {
+			$cancel = $_POST['cancel'];
+		}
+		if (isset($_POST['delete'])) {
+			$delete = $_POST['delete'];
+		}
+		if(!empty($delete)) {
+			$query = "UPDATE businessoffer
+					 SET isactive=0 
+					 WHERE id=".$offerid;
+			print $query;
+			$result = $mysqli->query($query);
+			if ($result) {
+				echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+			} else {
+				echo "Failed to delete profile";
+			}
+		} else if(!empty($cancel)){
+			echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+		} else if(!empty($oName)) {
+			$query = "UPDATE businessoffer
+					 SET offername=\"".$oName."\", offerdescription=\"".$oDesc."\", creditedpoints=\"".$oPoints."\", startdate=\"".$datepicker1."\", expirationdate=\"".$datepicker2."\", modified=sysdate() 
+					 WHERE id=".$offerid;
+			
+			$result = $mysqli->query($query);
+			if ($result) {
+				echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+			} else {
+				echo "Failed to update profile";
+			}
+		} else if(!empty($offerid)) {
+			$query = "SELECT offername, offerdescription, creditedpoints, startdate, expirationdate
+					  FROM businessoffer
+					  WHERE id=".$offerid;
+			$result = $mysqli->query($query);
+			$businessofferresultset = array();
+			if ($result->num_rows > 0) {
+				$row = $result->fetch_array();
+				array_push($businessofferresultset, $row["offername"]);
+				array_push($businessofferresultset, $row["offerdescription"]);
+				array_push($businessofferresultset, $row["creditedpoints"]);
+				array_push($businessofferresultset, $row["startdate"]);
+				array_push($businessofferresultset, $row["expirationdate"]);
+			}
+		}
 	?>
 </head>
 <body>
@@ -71,24 +134,25 @@
 					</div>
 					<div class="tab-right">
 						<div class="resp-tabs-container">
-							
-
-
-							
 							<!-- Create Offer section -->
 							<div class="tab-1 resp-tab-content gallery-images">
 								<p class="secHead">Edit Offer</p>
 								<div class="wthree-subscribe">	
 									<form action="#" method="post" class="agile_form">
-										<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
-										<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
-										<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
-										<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-										<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+										<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""
+										 	value="<?php echo !isset($businessofferresultset[0]) ? '' : $businessofferresultset[0] ?>" />
+										<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""
+											value="<?php echo !isset($businessofferresultset[1]) ? '' : $businessofferresultset[1] ?>" />
+										<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""
+											value="<?php echo !isset($businessofferresultset[2]) ? '' : $businessofferresultset[2] ?>" />
+										<input placeholder="Start Date" class="date" name="datepicker1" id="datepicker1" type="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""
+											value="<?php echo !isset($businessofferresultset[3]) ? '' : $businessofferresultset[3] ?>" />
+										<input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""
+											value="<?php echo !isset($businessofferresultset[4]) ? '' : $businessofferresultset[4] ?>" />
 										<div class="submit"><br>
 											<!--After click on save button redirect to offers page - http://localhost:8888/Treaty/User/business.php#horizontalTab2-->
 										  <input type="submit" value="Save">
-										  <input type="submit" value="Cancel">
+										  <input name="cancel" type="submit" value="Cancel">
 										</div>   
 									</form>
 								</div>
@@ -102,8 +166,8 @@
 									<form action="#" method="post" class="agile_form">
 										<p class="b_name" style="color: white;text-align: center;">Click on below button to Delete your Offer.</p><br>	
 										<div class="submit"><br>
-										  <input type="submit" value="Delete">
-										  <input type="submit" value="Cancel">
+										  <input name="delete" type="submit" value="Delete">
+										  <input name="cancel" type="submit" value="Cancel">
 										</div>  
 									</form>
 								</div>

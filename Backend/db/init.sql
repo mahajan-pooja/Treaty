@@ -105,8 +105,8 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   `offername` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   `offerdescription` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
   `creditedpoints` BIGINT(80) NOT NULL,
-  `startdate` TIMESTAMP NOT NULL,
-  `expirationdate` TIMESTAMP NOT NULL,
+  `startdate` DATE NOT NULL,
+  `expirationdate` DATE NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -139,16 +139,12 @@ CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_bcustomeroffer_userid_businessid_offerid` (`userid`, `businessid`, `offerid`),
   CONSTRAINT `fk_customeroffer_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`),
   CONSTRAINT `fk_customeroffer_businessid`
     FOREIGN KEY (`businessid`)
-    REFERENCES `treaty`.`businessdetail` (`id`),
-  CONSTRAINT `fk_customeroffer_offerid`
-    FOREIGN KEY (`offerid`)
-    REFERENCES `treaty`.`businessoffer` (`id`))
+    REFERENCES `treaty`.`businessdetail` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

@@ -1,7 +1,7 @@
 <?php
 	// Start the session
 	session_start();
-	?>
+?>  
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,6 +20,19 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
+		<?php 
+		if($_GET['flag'] == 'add'){ ?>
+		<script type="text/javascript">
+			alert("Rewards added successfully.");
+			window.location.href = "business.php";
+		</script>
+		<?php } else if($_GET['flag'] == 'redeem'){ ?>
+		<script type="text/javascript">
+			alert("Rewards redeemed successfully.");
+			window.location.href = "business.php";
+		</script>
+		<?php } ?>
+		
         <?php
             include 'business_nav.html';
             require '../config.php';
@@ -69,6 +82,7 @@
             if (isset($_POST['taskOption'])) {
                 $selectOption = $_POST['taskOption'];
             }
+            
             $userid = $_SESSION['userid'];
             if (!empty($fname)) {
                 //create business
@@ -80,7 +94,7 @@
                 if ($result) {
                     $_SESSION["businessname"]   = $fname;
                     $_SESSION["businesssector"] = $lname;
-                    echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
                 } else {
                     echo "Failed to update profile";
                 }
@@ -92,7 +106,7 @@
                         ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\",1, sysdate(), sysdate())";
                 $result = $mysqli->query($query);
                 if ($result) {
-                    echo '<script>window.location.href = "business.php#horizontalTab2";</script>';
+                    echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
                 } else {
                     echo "Failed to update profile";
                 }
@@ -114,7 +128,7 @@
                 //get the offer business details
                 $query = "SELECT id, address1, city
                                        FROM businessdetail
-                                      WHERE userid=\"" . $userid . "\"";
+                                      WHERE userid=\"" . $userid . "\" and isactive=1";
                 
                 $result = $mysqli->query($query);
                 if ($result->num_rows > 0) {
@@ -159,8 +173,6 @@
 					}
                 }
             }
-            /* close connection */
-            $mysqli->close();
         ?>
 	</head>
 	<body>
@@ -192,12 +204,11 @@
 							});
 						});
 						function editBusiness(businessid){
-							window.location.assign("edit_business.php");
+							window.location.assign("edit_business.php?businessid="+businessid);
 						}
 						function editOffer(offerid){
-							window.location.assign("edit_offer.php");
+							window.location.assign("edit_offer.php?offerid="+offerid);
 						}
-						
 					</script>
 					<div class="tabs">
 						<div class="tab-left">
@@ -218,15 +229,37 @@
 										<?php 
 											include 'qrscanner/qrscanner.php';
 											?>
-										<p class="b_name" style="color: white;font-size: 150%;">Customer have 100 Reward points.</p>
+										<p class="b_name" id="custPoints" style="color: white;font-size: 150%;">
+											 <?php
+											//get customer points for add redeem
+								            if(isset($_GET['custID'])){
+								            	echo "Customer Rewards : ";
+								            $query = "SELECT balance
+														  FROM customeroffer
+								                          WHERE userid=\"" . $_GET['custID'] . "\" and isactive = 1";
+								            $result = $mysqli->query($query);
+								                $offerlistresultset = array();
+								                if ($result->num_rows > 0) {
+													while($row = $result->fetch_assoc()) {
+														$points = $row["balance"];
+													}
+								                } 
+								                if($points == ''){ 
+								                	echo 0;
+								                }else{
+								                	echo $points;
+								                }
+								            }
+											?>
+										</p>
 										<br>
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Add Rewards ---</p>
 											<br>
-											<form action="#" method="post" class="agile_form">
+											<form action="addRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
 												<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
 												<div class="submitButton"><br>
-													<input type="submit" name="amount" value="Add Rewards" onclick="addPoints()"> 
+													<input type="submit" value="Add Rewards"> 
 												</div>
 											</form>
 										</div>
@@ -234,10 +267,10 @@
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p>
 											<br>
-											<form action="#" method="post" class="agile_form">
-												<input style="width: 50%;" type="text" name="amount" placeholder=" Rewards"><br>
+											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
+												<input style="width: 50%;" type="text" name="points" placeholder=" Rewards"><br>
 												<div class="submitButton"><br>
-													<input type="submit" name="amount" value="Redeem Rewards" onclick="redeemPoints()"> 
+													<input type="submit" value="Redeem Rewards"> 
 												</div>
 											</form>
 										</div>
@@ -287,7 +320,7 @@
 											<input type="text" placeholder="Phone number" name="phone" class="name agileits" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
-												<input type="submit" value="Cancel" onClick="loadData()">
+												<input type="submit" value="Cancel">
 											</div>
 										</form>
 									</div>
@@ -296,7 +329,7 @@
 								<div class="tab-1 resp-tab-content gallery-images">
 									<p class="secHead">Create Offer For Your Business</p>
 									<div class="wthree-subscribe">
-										<form action="#" method="post" class="agile_form">
+										<form method="post" class="agile_form">
                                             <select class="name agileits" name="taskOption">
 												<?php foreach($resultset as $row) {
 													?>
@@ -306,8 +339,8 @@
 											<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
-											<input placeholder="Start Date" class="date" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-											<input placeholder="End Date" class="date" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+											<input placeholder="Start Date" class="date" name="datepicker1" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
+											<input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
 												<input type="submit" value="Cancel">
@@ -328,9 +361,16 @@
 		<script src="js/jquery-ui.js"></script>
 		<script>
 			$(function() {
-			$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
+			$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker(
+				{ dateFormat: 'yy-mm-dd' }
+			);
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+		<?php 
+		/* close connection */
+            $mysqli->close();
+        ?>
+
 	</body>
 </html>
