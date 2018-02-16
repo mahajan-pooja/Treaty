@@ -56,8 +56,53 @@
 			$zip = $_POST['zip'];
 		}
 
+        if(isset($_POST['old-pwd'])){
+            $oldpwd = $_POST['old-pwd'];
+        }
+        if(isset($_POST['new-pwd'])){
+            $newpwd = $_POST['new-pwd'];
+        }
+        if(isset($_POST['conf-new-pwd'])){
+            $confnewpwd = $_POST['conf-new-pwd'];
+        }
+
+
         $userid = $_SESSION["userid"];
-		if(!empty($fname)) {
+        if(isset($_POST['save']) && !empty($oldpwd)){
+            if (strcmp($newpwd,$confnewpwd) != 0) {
+                $message = "New password and Confirm new password are not same";
+            } else {
+                //check if old password is correct
+                //get the userid from user table
+    			$query = "SELECT email FROM user where id=\"".$userid."\" and encryptedpassword=\"".$oldpwd."\"";
+    			// Sign In
+    			$result = $mysqli->query($query);
+                if ($result->num_rows > 0) {
+                    $query = "UPDATE user
+                              SET encryptedpassword = \"".$newpwd."\", modified = sysdate()
+                              WHERE id=".$userid;
+                              echo $query;
+                    $result = $mysqli->query($query);
+                    if ($result) {
+                        echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
+                    } else {
+                        $message = "Failed to update password";
+                    }
+                } else {
+                    $message = "Incorrect old password";
+                }
+            }
+        } else if(isset($_POST['deactivate'])) {
+            $query = "UPDATE user
+                      SET isactive = 0 , modified = sysdate()
+                      WHERE id=".$userid;
+            $result = $mysqli->query($query);
+            if ($result) {
+                echo '<script>window.location.href = "/Treaty/index.php";</script>';
+            } else {
+                $message = "Failed to update password";
+            }
+        } else if(!empty($fname)) {
 			//get the userid from user table
 			$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
 			// Sign In
@@ -66,7 +111,6 @@
             $query2 = "SELECT id FROM userdetail where userid=\"".$userid."\"";
             $result2 = $mysqli->query($query2);
 			// Sign In
-			$result = $mysqli->query($query);
 			if ($result2->num_rows == 0 && $result->num_rows > 0) {
 				$row = $result->fetch_array();
 				$user_id = $row["id"];
@@ -221,14 +265,23 @@
 										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
 										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>
+                                        <div>
+                                            <br>
+                                            <label style="color:red;font-weight:bold;">
+                                            <?php
+                                                if(isset($message)) {
+                                                    echo $message;
+                                                }
+                                            ?>
+                                            </label>
+                                        </div>
 										<div class="submit"><br>
-										  <input type="submit" value="Save">
-										  <input type="submit" value="Cancel">
+										  <input type="submit" name="save" value="Save">
+										  <input type="submit" name="cancel" value="Cancel">
 										</div>
 									</form>
 								</div>
 							</div>
-
 
 							<!-- Deactivate customer account -->
 							<div class="tab-1 resp-tab-content">
@@ -238,8 +291,8 @@
 									<form method="post" class="agile_form">
 										<p class="b_name" style="color: white;text-align: center;">Click on below button to Deactivate your account.</p><br>
 										<div class="submit"><br>
-										  <input type="submit" value="Deactivate">
-										  <input type="submit" value="Cancel">
+										  <input type="submit" name="deactivate" value="Deactivate">
+										  <input type="submit" name="cancel" value="Cancel">
 										</div>
 									</form>
 								</div>

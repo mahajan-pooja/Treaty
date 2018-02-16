@@ -70,7 +70,8 @@ session_start();
 
 			// database connection
 			if(!empty($signInemail)) {
-			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
+			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"
+				and isactive=1";
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {

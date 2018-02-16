@@ -4,9 +4,15 @@ select * from userdetail;
 
 select * from businessdetail;
 SELECT businessname, businesssector, address1, address2, city, state, country, zipcode FROM businessdetail WHERE id=21;
+UPDATE businessdetail 
+SET businessname="walmart", businesssector="retail", address1="60 pikes descanso", city="la", state="ca", zipcode="1111", modified=sysdate() 
+WHERE userid=22;
+
+SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode FROM userdetail WHERE userid="1";
 
 select * from businessoffer;
 
+desc businessoffer;
 select * from customeroffer;
 
 desc userdetail;
@@ -30,3 +36,8 @@ SELECT id, businessname, businesssector, address1, city
             	 		  FROM businessdetail
             			  WHERE userid=7
                           LIMIT 1;
+                          
+delete from userdetail where id=11;
+
+
+commit;
