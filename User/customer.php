@@ -2,6 +2,58 @@
 	// Start the session
 	session_start();
 	$userid = $_SESSION['userid'];
+	if(isset($_GET['businessid'])) {
+		print "1";
+		$businessid= $_GET['businessid'];
+		$query = "SELECT SUM(creditedpoints) as totalpoints
+				  FROM businessoffer
+				  WHERE businessid=".$sbusinessid;
+		$result = $mysqli->query($query);
+		print "2";
+  		if ($result->num_rows > 0) {
+			echo "3";
+			$totalpoints = $result->fetch_row()[0];
+		}
+		$query = "SELECT id as totalpoints
+		 		  FROM customerbusiness
+		 		  WHERE businessid=".$sbusinessid." and userid=".$userid;
+		$result = $mysqli->query($query);
+		echo "4";
+  		if ($result->num_rows = 0) {
+			echo "5";
+			//create offer
+			$query  = "INSERT INTO customerbusiness(userid, businessid, earnedpoints, isactive, modified, created)
+					VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
+			$result = $mysqli->query($query);
+		}
+	} else {
+		require '../config.php';
+		$query = "SELECT bd.id as businessid, bd.businessname, bd.businesssector, bo.offerdescription
+				  FROM businessdetail bd , businessoffer bo
+				  WHERE bd.id = bo.businessid and bd.isactive=1 and bo.isactive=1
+				  and bd.id NOT IN (select businessid from customerbusiness where userid=".$userid.")
+				  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription";
+
+		$result = $mysqli->query($query);
+		$resultset = array();
+		while ($row = $result->fetch_assoc()) {
+			$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
+		}
+		
+		$query = "SELECT earnedpoints, businessname 
+				  FROM customerbusiness cb, businessdetail bd  
+				  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
+		$result = $mysqli->query($query);
+		$rewardsset = array();
+		while($row = $result->fetch_assoc()) {
+			$address = $row["businessname"] . "-" . $row["earnedpoints"];
+			array_push($rewardsset, $address);
+		}
+	}
+	
+	
+	/* close connection */
+	$mysqli->close();
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
@@ -25,6 +77,12 @@
 	<?php
 		include 'customer_nav.html';
 	?>
+	
+	<script>
+	function subscribeBusiness(businessid) {
+		window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
+	}
+	</script>
 </head>
 
 <body>
@@ -55,6 +113,7 @@
 							width: 'auto',
 							fit: true
 						});
+						
 					});
 				</script>
 
@@ -85,34 +144,47 @@
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Reward Points</p>
 								<div class="register agileits">
-									<div class="business_name">
-										<span class="b_name">Walmart</span>
-										<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
-										<div class="pointsDiv" id="pointsDiv">
-										Reward Points - 20<br><br>
-										<a href="" style="color: brown;border:none;">View Details</a>
+									<?php foreach($rewardsset as $value): ?>
+										<div class="business_name">
+											<span class="b_name"><?php echo explode("-",$value)[0];?></span>
+											<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
+											<div class="pointsDiv" id="pointsDiv">
+												Reward Points - <?php echo explode("-",$value)[1];?><br><br>
+												<a href="" style="color: brown;border:none;">View Details</a>
+											</div>
 										</div>
-									</div>
+									<?php endforeach; ?>
+									
 								</div>
 							</div>
+							
 							<!-- Explore section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
 								<div class="agileinfo-recover">
-									<div class="business_cat_name">
-										<span class="b_name">Restaurant</span>
-										<img class="downImg" id="business_title_downImg" src="images/down.png" width="100" height="100" onclick="loadSubCat();"><br>
-										<div class="business_title" id="business_title">
-											<div>
-												<span class="bus_name"><a href="">Subway</a></span>
-												<button class="subscribe" value="Subscribe" name="subscribe">Subscribe</button>
-												<img class="downImg" id="offer_downImg" src="images/down.png" width="100" height="100" onclick="loadOffer();">
-											</div>
+									
+										<?php
+											foreach ($resultset as $i => $values) {
+												echo "<div class=\"business_cat_name\">";
+											    echo "<span class=\"b_name\">".$i."</span>";
+												echo "<img class=\"downImg\" id=\"business_title_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadSubCat();\"><br>";
+											    foreach ($values as $key => $value) {
+													echo "<div class=\"business_title\" id=\"business_title\">
+															<div>
+																<span class=\"bus_name\"><a href=\"\">".explode("-",$value)[0]."</a></span>
+																<button class=\"subscribe\" value=\"Subscribe\" name=\"subscribe\"
+																	 onclick=\"subscribeBusiness(".explode("-",$value)[2].");\">Subscribe</button>
+																<img class=\"downImg\" id=\"offer_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadOffer();\">
+															</div>
+															<div class=\"offer\" id=\"offer\">".explode("-",$value)[1]."</div>
+														</div>";
+											    }
+												echo "</div>";
+											}
+										?>
+										
+										
 
-
-											<div class="offer" id="offer">1 Sandwich free salad for 100 points</div>
-										</div>
-									</div>
 								</div>
 							</div>
 							<!-- Customer Profile section -->
@@ -164,18 +236,7 @@
 	<?php
 
 		include 'footer.php';
-		require '../config.php';
-
-		$query = "SELECT * FROM businessdetail";
-
-		$result = $mysqli->query($query);
-		if ($result->num_rows > 0) {
-			$row = $result->fetch_array();
-			// TODO :echo businessdetails list
-			printf($row);
-		}
-		/* close connection */
-		$mysqli->close();
+		
 	?>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />

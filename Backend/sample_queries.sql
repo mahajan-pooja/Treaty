@@ -13,7 +13,7 @@ SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, coun
 select * from businessoffer;
 
 desc businessoffer;
-select * from customeroffer;
+select * from customerbusiness;
 
 desc userdetail;
 
@@ -39,5 +39,15 @@ SELECT id, businessname, businesssector, address1, city
                           
 delete from userdetail where id=11;
 
-
+SELECT bd.businessname, bd.businesssector
+				  FROM businessdetail bd , businessoffer bo
+				  WHERE bd.id = bo.businessid and bd.isactive=1 and bo.isactive=1
+				  GROUP BY bd.businessname, bd.businesssector;
+                  
+                  
+  SELECT bd.businessname, bd.businesssector, bo.offerdescription, bo.creditedpoints
+			  FROM businessdetail bd , businessoffer bo
+			  WHERE bd.id = bo.businessid and bd.isactive=1 and bo.isactive=1
+			  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription, bo.creditedpoints;
+	select earnedpoints, businessname from customerbusiness cb, businessdetail bd  where cb.businessid=bd.id and cb.userid=2;
 commit;
