@@ -125,13 +125,12 @@ COLLATE = utf8_unicode_ci;
 -- -------------------------------------------------------------------------------------------------------
 -- Table treaty.customeroffer
 -- -------------------------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS `treaty`.`customeroffer`;
+DROP TABLE IF EXISTS `treaty`.`customerbusiness`;
 
-CREATE TABLE IF NOT EXISTS `treaty`.`customeroffer` (
+CREATE TABLE IF NOT EXISTS `treaty`.`customerbusiness` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
   `businessid` BIGINT(20) NOT NULL,
-  `offerid` BIGINT(20) NOT NULL,
   `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
   `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
   `balance` BIGINT(80) NULL DEFAULT NULL,
