@@ -1,7 +1,35 @@
-/*#181A1C #a9c750 old color theme*/
-body {
+/*
+ * A Design by GraphBerry
+ * Author: GraphBerry
+ * Author URL: http://graphberry.com
+ * License: http://graphberry.com/pages/license
+ */
+
+/* Table of content
+1.General - This is created general styles and overide some bootstrap classes.
+2.Layout
+ 2.1 Animations
+ 2.2 Buttons
+ 2.3 Thumbnail - overide bootstrap thumbnail and add mased efect
+ 2.4 Socail icons -style for social icons list
+3 Sections - definition for section and subsection
+ 3.1 Services
+ 3.2 Portfolio
+ 3.3 About
+ 3.4 Clients
+ 3.5 Price table
+ 3.6 Newsletter
+ 3.7 Contact
+ 3.8 Footer
+4 Responsive 
+**********************************************************************/
+
+/*
+1. General
+**********************************************************************/
+ body {
     font-family:'Roboto', sans-serif;
-    color: #000;
+    color: #FFF;
     line-height:1.2em;
     font-size:17px;
     line-height:20px;
@@ -11,8 +39,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    /*color: #a9c750;*/
-    color:#a9c750;
+    color: #FECE1A;
     text-decoration:none;
 }
 h1, h2, h3, h4, h5, h6 {
@@ -24,18 +51,12 @@ h1 {
 p {
     padding: 10px;
     font-weight: 100;
-    color: white;
-}
-.black{
-    color: black;
-    padding: 10px;
-    font-weight: 100;
+    color: #fff;
 }
 .navbar {
-    background: #a9c750;
+    background: #181A1C;
     margin-bottom:0;
-    min-height:40px;
-	padding:0px;
+    min-height:70px;
 }
 
 .navbar-fixed-top {
@@ -44,7 +65,6 @@ p {
     padding-top:0;
 }
 .navbar-inner {
-    /*background: #181A1C;*/
     background: #a9c750;
     border-radius:0;
     filter: none;
@@ -52,8 +72,8 @@ p {
     box-shadow: none;
 }
 .navbar .brand img {
-    width:127px;
-    height:auto;
+    width:120px;
+    height:40px;
 }
 .navbar .nav > li > a {
     text-transform:uppercase;
@@ -62,7 +82,7 @@ p {
     margin:10px 3px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
-    /*border: 1px solid #181A1C;*/
+    border: 1px solid #181A1C;
     box-shadow: none;
     font-size:15px;
     text-shadow: none;
@@ -70,10 +90,10 @@ p {
     transition: border-color 1s ease;
 }
 .navbar .nav > li:hover> a, .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus {
-    border: 1px solid white;
-    color: black;
-/*    background-color: #181A1C;
-*/    transition: border-color 1s ease;
+    border: 1px solid #FECE1A;
+    color: #fff;
+    background-color: #181A1C;
+    transition: border-color 1s ease;
 }
 .nav-pills {
     margin-bottom: 30px;
@@ -94,7 +114,7 @@ p {
 }
 .navbar .btn-navbar:hover, .navbar .btn-navbar {
     border-radius:0;
-    background:#a9c750;
+    background:#FECE1A;
     color: #000;
 }
 /******
@@ -122,7 +142,7 @@ p {
 .large-text {
     line-height:1.2em;
     font-size: 30px;
-    color: black;
+    color: #181A1C;
     padding:20px;
     margin-bottom:20px;
 }
@@ -156,27 +176,7 @@ p {
     text-align:center;
     width: 0;
     height: 0;
-    border-top: 30px solid #a9c750;
-    border-left: 585px outset transparent;
-    border-right: 585px outset transparent;
-    position: relative;
-}
-.triangleBlack {
-    margin: 0 auto;
-    text-align:center;
-    width: 0;
-    height: 0;
     border-top: 30px solid #181A1C;
-    border-left: 585px outset transparent;
-    border-right: 585px outset transparent;
-    position: relative;
-}
-.triangleGray {
-    margin: 0 auto;
-    text-align:center;
-    width: 0;
-    height: 0;
-    border-top: 30px solid #f1f1f2;
     border-left: 585px outset transparent;
     border-right: 585px outset transparent;
     position: relative;
@@ -208,31 +208,31 @@ p {
     display:inline-block;
     border:1px solid #181A1C;
     color:#181A1C;
-    background-color:#a9c750;
+    background-color:transparent;
     padding:15px 30px;
     font-size:17px;
     line-height:auto;
 }
 .button:hover, .button:active{
-    background-color:black;
-    color:#a9c750;
+    background-color:#181A1C;
+    color:#fff;
 }
 .button-sp, .button-sp:visited, .button-sp:focus {
     border:none;
-    background-color:#a9c750;
+    background-color:#FECE1A;
     color:#181A1C;
 }
 .button-sp:hover, .button-sp:active {
     background-color:#181A1C;
-    color:#a9c750;
+    color:#FECE1A;
 }
 .button-ps, .button-ps:visited, .button-ps:focus {
     border:none;
     background-color:#181A1C;
-    color:#a9c750;
+    color:#FECE1A;
 }
 .button-ps:hover, .button-ps:active {
-    background-color:#a9c750;
+    background-color:#FECE1A;
     color:#181A1C;
 }
 /*
@@ -283,8 +283,7 @@ p {
     z-index:4;
 }
 .thumbnail h3 {
-    /*color: #a9c750;*/
-    color: #a9c750;
+    color: #FECE1A;
     margin-top:10px;
     font-size:20px;
 }
@@ -330,7 +329,7 @@ p {
     padding:0;
     width:32px;
     height:32px;
-    color: white;
+    color: #FECE1A;
 }
 .social li a:hover {
     color:#181A1C;
@@ -363,40 +362,31 @@ p {
     background:#181A1C;
 }
 .primary-section .triangle {
-    border-top: 40px solid #a9c750;
+    border-top: 40px solid #FECE1A;
 }
 .primary-section .title {
     border-bottom: 1px solid #FFF;
 }
 .primary-section, .primary-section .title p, .primary-section h3 {
-    /*color: #a9c750;*/
-    color: #a9c750;
-}
-.primary-section h3{
-    color: #a9c750;
+    color: #FECE1A;
 }
 .primary-section h1 {
-    color:white;
+    color:#FFF;
 }
 .secondary-section {
-    /*background:#a9c750;*/
-    /*background: #a9c750;*/
-    background: #f1f1f2;
+    background:#FECE1A;
 }
 .secondary-section .title {
     border-bottom: 1px solid #181A1C;
 }
-.secondary-section h1 {
-    color: black;
-}
-.secondary-section .title p{
-    color: black;
+.secondary-section h1, .secondary-section .title p {
+    color: #181A1C;
 }
 /* Third section use bacground image */
 .third-section {
     padding-bottom: 70px;
     background: #181A1C url(../images/brand-bg.png) no-repeat center;
-    border-top:6px solid #a9c750;
+    border-top:6px solid #FECE1A;
 }
 .third-section .container {
     padding-top:20px;
@@ -404,7 +394,7 @@ p {
 }
 .third-section .title {
     border-bottom: 1px solid #A1AAB7;
-    
+    color: #FECE1A;
 }
 .sub-section {
     margin-top:30px;
@@ -448,7 +438,7 @@ p {
 .project-title {
     margin-top:15px;
     margin-bottom:15px;
-    border-bottom:1px solid #a9c750;
+    border-bottom:1px solid #FECE1A;
 }
 .project-title h3 {
     float:left;
@@ -457,11 +447,11 @@ p {
     width:80%;
 }
 .project-title .close {
-    color: #a9c750;
+    color: #FECE1A;
     margin-top:10px;
 }
 .project-info span, .project-title h3 {
-    color:#a9c750;
+    color:#FECE1A;
 }
 .project-info {
     font-weight:100;
@@ -501,7 +491,7 @@ p {
     color:#fff;
 }
 .team .thumbnail .mask {
-    background: #a9c750;
+    background: #FECE1A;
 }
 .team .thumbnail .mask h2 {
     margin-top:20%;
@@ -542,7 +532,7 @@ p {
 .skills li .bar {
     height:40px;
     position:absolute;
-    background-color: #a9c750;
+    background-color: #FECE1A;
 }
 /*
 3.4 Clients
@@ -551,7 +541,7 @@ p {
     border:1px solid white;
 }
 .client-slider img:hover {
-    background-color:#a9c750;
+    background-color:#FECE1A;
 }
 .client-nav {
     list-style:none;
@@ -565,7 +555,7 @@ p {
 .client-nav li a {
     display:inherit;
     padding:5px;
-    background:#a9c750;
+    background:#FECE1A;
     border-radius:3px;
     width:20px;
     height:20px;
@@ -575,16 +565,14 @@ p {
 }
 .testimonial p {
     color:#181A1C;
-    /*background:#a9c750;*/
-    background: #cfd2c7;
+    background:#FECE1A;
     padding:15px;
     margin:0;
 }
 .testimonial .arrow {
     margin-left:10px;
     width:0;
-    /*border-top:10px solid #a9c750;*/
-    border-top:10px solid #cfd2c7;
+    border-top:10px solid #FECE1A;
     border-left: 20px outset transparent;
     border-right: 20px outset transparent;
 }
@@ -636,7 +624,7 @@ p {
     background-color:#181A1C;
     text-transform:uppercase;
     text-align: center;
-    color:#a9c750;
+    color:#FECE1A;
     padding:40px 0px;
     font-size: 36px;
     margin-top:0px;
@@ -665,7 +653,7 @@ p {
 .price-text{
     margin:30px 0 20px;
     font-size:20px;
-    color: black;
+    color: #181A1C;
     font-weight:normal;
 }
 /*
@@ -680,7 +668,7 @@ p {
     margin:0;
 }
 .newsletter form {
-    text-align:left;
+    text-align:right;
 }
 .newsletter input {
     margin-top:10px;
@@ -699,10 +687,10 @@ p {
 3.7 Contact
 ********************************************************************/
  .contact {
-    background: #a9c750;
+    background: #FECE1A;
 }
 .contact h1, .contact h2, .contact h3, .contact h4, .contact h5, .contact h6, .contact .section .title > p, .contact .social > li > a {
-    /*color: #181A1C;*/
+    color: #181A1C;
 }
 .contact textarea, .contact input[type="text"], .contact input[type="email"] {
     padding: 10px;
@@ -762,8 +750,7 @@ p {
     -webkit-transition: margin 0.4s;
 }
 .contact .social li a {
-    /*color:#fff;*/
-    color: #a9c750;
+    color:#fff;
 }
 .contact .social li a:hover {
     color:#181A1C;
@@ -782,31 +769,27 @@ p {
 }
 .message-btn {
     border:1px solid #747C89;
-    color:black;
-    background-color:#a9c750;
+    color:#747C89;
+    background-color:transparent;
     padding:15px 30px;
     font-size:17px;
 }
 .message-btn:hover {
-    background-color:black;
-    color: white;
+    background-color:#FECE1A;
 }
 .contact-info {
     text-align:center;
     font-size:22px;
 }
 .info-mail {
-    border:1px solid #a9c750;
+    border:1px solid white;
     width:60%;
     margin:0 auto;
     padding:15px;
-    color:black;
+    color:#181A1C;
 }
 .black {
     color:#181A1C;
-}
-.contact h3{
-    color: #a9c750;
 }
 /*
 3.8 Footer
@@ -821,7 +804,7 @@ p {
 }
 
 .footer a{
-    color:#a9c750;
+    color:#FECE1A;
 }
 
 .footer a:hover, .footer a:focus{
@@ -840,7 +823,7 @@ p {
     right:20px;
 	border:1px solid #fff;
     display:none;
-    background: #a9c750;
+    background: #FECE1A;
 }
 .scrollup > a {
     position:relative;

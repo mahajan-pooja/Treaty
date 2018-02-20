@@ -242,9 +242,7 @@ h2.resp-accordion {
 /*-- agileits --*/
 /*-- //main --*/
 /*-- footer --*/
-.footer {
-    padding:2em 0 0;
-}
+
 .footer p{
     color: #fff;
     font-size: 1em;
@@ -266,16 +264,14 @@ h2.resp-accordion {
 
 /*-- //Social Sign in/up --*/
 .fb-img {
-	top: 3px;
-	left: 18px;
-	width: 36px;
-	position:absolute;
+    margin: 3px;
+    width: 36px;
+    position: absolute;
 }	
 .google-img {
-	top: 3px;
-	left: 18px;
-	width: 36px;
-	position:absolute;			
+    margin: 3px;
+    width: 36px;
+    position: absolute;			
 }
 .fb-btn-bg {
 	background: #3664a2!important;

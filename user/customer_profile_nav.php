@@ -3,7 +3,7 @@
     session_start();
 ?>
 <link rel="stylesheet" type="text/css" href="css/navigation.css" />
-<link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
+<link rel="icon" href="../images/favicon.png" type="image/png" sizes="16x16">
 <style type="text/css">
 .brand{
 	display: block;
@@ -20,7 +20,7 @@
     <div class="container">
 			<div class="header-left">
 				<a href="#" class="brand">
-                        <img src="images/logoIcon.png" width="120" height="40" alt="Logo" />
+                        <img src="../images/logoIcon.png" width="120" height="40" alt="Logo" />
                         <!-- This is website logo -->
                     </a>
 			</div>

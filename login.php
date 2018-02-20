@@ -5,25 +5,45 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>Login</title>
-		<!-- Meta tag Keywords -->
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="keywords" content="Classic Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
-		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-			function hideURLbar(){ window.scrollTo(0,1); }
-		</script>
-		<!-- Meta tag Keywords -->
-		<!-- css files -->
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
-		<link rel="stylesheet" href="css/font-awesome.css">
-		<!-- Font-Awesome-Icons-CSS -->
-		<!-- //css files -->
-		<!-- Web-Fonts -->
-		<link href="//fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+	<title>Login</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="keywords" content="Classic Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+
+	<link href="css/font-awesome.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
+    
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/user-dashboard.js"></script>
+
+	<!-- Web-Fonts -->
+		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-		<!-- //Web-Fonts -->
+	<!-- //Web-Fonts -->
+    <style>
+		.hr-sect {
+			display: flex;
+			flex-basis: 100%;
+			align-items: center;
+			color: #000;
+		}
+		.hr-sect::before,
+		.hr-sect::after {
+			content: "";
+			flex-grow: 1;
+			background: rgba(0, 0, 0, 0.35);
+			height: 1px;
+			font-size: 0px;
+			line-height: 0px;
+			margin: 0px 8px;
+		}	
+	</style>
+</head>
 
 		<?php
 			include 'header.php';
@@ -290,11 +310,12 @@ session_start();
 
 			?>
 	</head>
-	<body>
-		<div class="navbar" style="position: fixed;width: 100%;">
+	<body>   
+    
+		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
-					<a href="#" class="brand">
+					<a href="index.php" class="brand">
 						<img src="images/logoIcon.png" width="240" height="80" alt="Logo" />
 						<!-- This is website logo -->
 					</a>
@@ -305,23 +326,22 @@ session_start();
 					<!-- Main navigation -->
 					<div class="nav-collapse collapse pull-right">
 						<ul class="nav" id="top-navigation">
-							<li><a href="index.php">Home</a></li>
-							<li><a href="">Find Locations</a></li>
-							<li><a href="index.php#service">Services</a></li>
-							<li><a href="index.php#portfolio">Portfolio</a></li>
-							<li><a href="index.php#about">About</a></li>
-							<li><a href="index.php#clients">Clients</a></li>
-							<li><a href="index.php#price">Price</a></li>
-							<li><a href="index.php#contact">Contact</a></li>
-							<li class="active"><a href="login.php">Login</a></li>
+                            <li><a href="index.php">Home</a></li>
+                            <li><a href="index.php#service">Customer</a></li>
+                            <li><a href="index.php#portfolio">Businesses</a></li>
+                            <li><a href="index.php#about">About</a></li>
+                            <li><a href="index.php#clients">Clients</a></li>
+                            <li><a href="index.php#price">Price</a></li>
+                            <li><a href="index.php#contact">Contact</a></li>
+                            <li class="active"><a href='login.php'>Login</a></li>                        
 						</ul>
 					</div>
 					<!-- End main navigation -->
 				</div>
 			</div>
 		</div>
-		<br><br><br><br><br>
-		<h2>Welcome to Treaty</h2>
+		<br>
+		<h2 style="color:#000">Welcome to Treaty</h2>
 
 		<div class="main" style="margin-bottom: 2%;">
 			<div id="horizontalTab" style="display: block; width: 100%; ">
@@ -367,7 +387,7 @@ session_start();
 							</form>
 
 							<form method="post">
-                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                <div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
                                     <div class="col-md-12">
                                         <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
                                         <input name="fb_signin_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign in with Facebook">
@@ -375,7 +395,7 @@ session_start();
                                     </div>
                                 </div>
 
-                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                <div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
                                     <div class="col-md-12">
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
                                         <input name="google_signin_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign in with Google">
@@ -417,7 +437,9 @@ session_start();
 								<input class="button" type="submit" value="Sign Up">
 								<br><br>
 							</form>
-							<hr color = "black">
+                            
+                            <div class="hr-sect">OR</div>                            
+                            
 							<form method="post" style="color: black!important;">
 								<br>
 								<input type="radio" name="user_social" style="margin: 0px;" value="Customer" required checked="checked"> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -430,14 +452,14 @@ session_start();
 								?>
 								</label>
 								<br><br>
-								<div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+								<div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
                                     <div class="col-md-12">
                                         <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
                                         <input name="fb_signup_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
                                     </div>
                                 </div>
 
-                                <div id="social" class="row" style="margin-left: -15px; margin-bottom:10px">
+                                <div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
                                     <div class="col-md-12">
                                         <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
                                         <input name="google_signup_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
@@ -451,7 +473,8 @@ session_start();
 			</div>
 			<div class="clear"> </div>
 		</div>
-		<?php include 'footer.php'; ?>
+        <br><br>
+
 		<!-- js-scripts -->
 		<!-- js -->
 		<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
@@ -467,6 +490,20 @@ session_start();
 				});
 			});
 		</script>
+        
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/modernizr.custom.js"></script>
+
+
+        <!-- <script async="" defer="" type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initializeMap"></script> -->
+        <!-- css3-mediaqueries.js for IE8 or older -->
+        <!--[if lt IE 9]>
+            <script src="js/respond.min.js"></script>
+        <![endif]-->         
+    
+        <div class="footer">
+            <p style="color: white;">Treaty.com © copyright 2018</p>
+        </div>        
 		<!-- //tabs -->
 		<!-- //js-scripts -->
 	</body>
