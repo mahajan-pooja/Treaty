@@ -1,7 +1,7 @@
 use `treaty`;
 START TRANSACTION;
 
-DELETE FROM `treaty`.`customeroffer`;
+DELETE FROM `treaty`.`customerbusiness`;
 DELETE FROM `treaty`.`businessoffer`;
 DELETE FROM `treaty`.`businessdetail`;
 DELETE FROM `treaty`.`userdetail`;
@@ -72,13 +72,13 @@ INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerde
     VALUES (3, 4, 2, 'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
 -- insert script for customeroffer
-INSERT INTO `treaty`.`customeroffer` (id, userid, businessid, offerid, isactive)
-    VALUES (1, 2, 4, 1, 0);
+INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
+    VALUES (1, 2, 4, 0);
 
-INSERT INTO `treaty`.`customeroffer` (id, userid, businessid, offerid, isactive)
-    VALUES (2, 3, 3, 2, 1);
+INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
+    VALUES (2, 3, 3, 1);
 
-INSERT INTO `treaty`.`customeroffer` (id, userid, businessid, offerid, isactive)
-    VALUES (3, 2, 2, 3, 1);
+INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
+    VALUES (3, 2, 2, 1);
 
 COMMIT;

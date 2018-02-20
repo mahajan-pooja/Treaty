@@ -32,7 +32,7 @@
 				<nav style="padding-top: 2%;" >
 					<a href="../index.php">Home</a>
 					<?php
-						if(isset($_SESSION['displaydashboard'])){
+						if($_SESSION['displaydashboard']){
 							echo "<a href='business.php'>Dashboard</a>";
 						}
 					?>
