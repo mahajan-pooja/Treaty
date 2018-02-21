@@ -11,7 +11,7 @@ ALTER TABLE `treaty`.`user` AUTO_INCREMENT = 1;
 ALTER TABLE `treaty`.`userdetail` AUTO_INCREMENT = 1;
 ALTER TABLE `treaty`.`businessdetail` AUTO_INCREMENT = 1;
 ALTER TABLE `treaty`.`businessoffer` AUTO_INCREMENT = 1;
-ALTER TABLE `treaty`.`customeroffer` AUTO_INCREMENT = 1;
+ALTER TABLE `treaty`.`customerbusiness` AUTO_INCREMENT = 1;
 
 -- insert script for user
 INSERT INTO `treaty`.`user` (id, email, phonenumber, role, encryptedpassword, isactive)

@@ -4,7 +4,7 @@
 	$bid = $_GET['bid'];
 	$cid = $_GET['cid'];
 //get current balance rewards of customer
-	$query = "Select balance from customeroffer
+	$query = "Select balance from customerbusiness
 	 		where userid = ".$cid;
 	$result = $mysqli->query($query);
 	while($row = $result->fetch_assoc()){ 
@@ -13,7 +13,7 @@
 	$balance = $bal + $amount;
 
 //add rewards to customer account              
-	$qry  = "INSERT INTO customeroffer(userid, businessid,
+	$qry  = "INSERT INTO customerbusiness(userid, businessid,
 	         earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", \"" . $amount . "\", 0,\"" . $balance . "\", 1, sysdate(), sysdate())";
 	$res = $mysqli->query($qry);
