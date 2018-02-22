@@ -235,7 +235,7 @@
 								            if(isset($_GET['custID'])){
 								            	echo "Customer Rewards : ";
 								            $query = "SELECT balance
-														  FROM customeroffer
+														  FROM customerbusiness
 								                          WHERE userid=\"" . $_GET['custID'] . "\" and isactive = 1";
 								            $result = $mysqli->query($query);
 								                $offerlistresultset = array();

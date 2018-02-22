@@ -34,8 +34,10 @@
 	$resultset = array();
 	while ($row = $result->fetch_assoc()) {
 		$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
+
+
 	}
-	
+
 	$query = "SELECT earnedpoints, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
 			  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
@@ -50,7 +52,79 @@
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
-	<head>
+
+<head>
+<style>
+.accordion {
+    background-color: #A9C750;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    margin-top: 2%;
+}
+.accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+.active:after {
+    content: "\2212";
+}
+.panelAccordion{
+	background-color: #e6f7c1;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
+    margin-top: 1%;
+}
+.panelAccordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+.active:after {
+    content: "\2212";
+}
+.active, .panelAccordion:hover {
+    background-color: #A9C750; 
+
+}
+.active, .accordion:hover {
+    color: white;
+}
+.offerData{
+	display: none;
+	background-color: orange;
+	padding: 2%;
+	text-align: center;
+}
+.panelContainer{
+	display: none;
+}
+.panel {
+    padding: 0 18px;
+    display: block;
+    background-color: white;
+/*    overflow: hidden;
+*/}
+</style>
+
 	<title>Customer Dashboard</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -69,6 +143,7 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
 	<?php
+
 	include 'header.php';
 	?>
 	
@@ -185,25 +260,49 @@
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
 								<div class="agileinfo-recover">
 									
-										<?php
-											foreach ($resultset as $i => $values) {
-												echo "<div class=\"business_cat_name\">";
-											    echo "<span class=\"b_name\">".$i."</span>";
-												echo "<img class=\"downImg\" id=\"business_title_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadSubCat();\"><br>";
-											    foreach ($values as $key => $value) {
-													echo "<div class=\"business_title\" id=\"business_title\">
-															<div>
-																<span class=\"bus_name\"><a href=\"\">".explode("-",$value)[0]."</a></span>
-																<button class=\"subscribe\" value=\"Subscribe\" name=\"subscribe\"
-																	 onclick=\"subscribeBusiness(".explode("-",$value)[2].");\">Subscribe</button>
-																<img class=\"downImg\" id=\"offer_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadOffer();\">
-															</div>
-															<div class=\"offer\" id=\"offer\">".explode("-",$value)[1]."</div>
-														</div>";
-											    }
-												echo "</div>";
-											}
-										?>
+								<?php
+								//////////POOJA CODE////////////////
+								//print_r($resultset);
+								foreach ($resultset as $i => $values){
+									echo "<button class='accordion'>".$i."</button>";
+									echo "<div class='panelContainer'>";
+									for ($x = 0; $x < count($values); $x++) {
+									  echo "<button class='panelAccordion'>";
+									  		
+									  		echo explode("-",$values[$x])[0];
+									  		
+									  		$bid = explode("-",$values[$x])[2];
+									  		echo "<a class='subscribe' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
+
+									  echo "</button>";
+									  echo "<div class='offerData'>".explode("-",$values[$x])[1]."</div>";
+									} 
+									echo "</div>";
+									
+								}
+								////////////////////////////////////////
+
+
+
+
+									// foreach ($resultset as $i => $values) {
+									// 	echo "<div class=\"business_cat_name\">";
+									//     echo "<span class=\"b_name\">".$i."</span>";
+									// 	echo "<img class=\"downImg\" id=\"business_title_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadSubCat();\"><br>";
+									//     foreach ($values as $key => $value) {
+									// 		echo "<div class=\"business_title\" id=\"business_title\">
+									// 				<div>
+									// 					<span class=\"bus_name\"><a href=\"\">".explode("-",$value)[0]."</a></span>
+									// 					<button class=\"subscribe\" value=\"Subscribe\" name=\"subscribe\"
+									// 						 onclick=\"subscribeBusiness(".explode("-",$value)[2].");\">Subscribe</button>
+									// 					<img class=\"downImg\" id=\"offer_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadOffer();\">
+									// 				</div>
+									// 				<div class=\"offer\" id=\"offer\">".explode("-",$value)[1]."</div>
+									// 			</div>";
+									//     }
+									// 	echo "</div>";
+									// }
+								?>
 										
 										
 
@@ -271,5 +370,36 @@
         <script type="text/javascript" src="../js/bootstrap.js"></script>
         <script type="text/javascript" src="../js/modernizr.custom.js"></script>            
 <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panel = this.nextElementSibling;
+        if (panel.style.display === "block") {
+            panel.style.display = "none";
+        } else {
+            panel.style.display = "block";
+        }
+    });
+}
+
+var pAcc = document.getElementsByClassName("panelAccordion");
+var j;
+
+for (j = 0; j < pAcc.length; j++) {
+    pAcc[j].addEventListener("click", function() {
+        this.classList.toggle("active");
+        var panelAcc = this.nextElementSibling;
+        if (panelAcc.style.display === "block") {
+            panelAcc.style.display = "none";
+        } else {
+            panelAcc.style.display = "block";
+        }
+    });
+}
+</script>
 </body>
 </html>
