@@ -103,7 +103,7 @@
 	float: right;
 }
 .pointsDiv{
-	width: 100%;
+	/*width: 100%;*/
 	height: auto;
 	background-color: rgba(252, 250, 234,0.8);
 	padding: 2%;
@@ -220,11 +220,6 @@ h1 {
 	margin: 48px 0;
 }
 
-.container {
-	width: 36%;
-	margin: 0 auto;
-
-}
 .tabs {
     background-color: rgba(218, 239, 81,0.5);
     padding: 1.5em;
@@ -288,7 +283,7 @@ h1 {
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 	display: inline-block;
-	width: 24.7%;
+	width: 33%;
 }
 .resp-tab-item-business {
 	color: #ffffff;
@@ -670,7 +665,7 @@ input.name,input.date {
     outline: none;
     font-weight: 400;
     text-transform: capitalize;
-    width: 23%;
+    /*width: 23%;*/
     margin-right: 5%;
 
  
