@@ -109,7 +109,7 @@
                     success: function(data){
                         var obj = JSON.parse(data);
 						var detail="";
-						
+						// For every row build a marker.
 						for (var key in obj) {
 						  if (obj.hasOwnProperty(key)) {
 							var val = obj[key];

@@ -23,7 +23,8 @@
             $full_address = $row['address1'].",".$row['address2'].",".$row['city'].",".$row['state'].",".$row['country']." ".$row['zipcode'];
         }
         $tempArray=array();
-              
+        
+        //Build a array with all info
         array_push($tempArray,++$tagCount);
         array_push($tempArray,$row['latitude']);
         array_push($tempArray,$row['longitude']);
@@ -32,6 +33,7 @@
         array_push($tempArray,$row['distance']);
         array_push($markers, $tempArray);
     }
+    //Build a Json object
     $makersObject = (object) $markers;
     $markerJson = json_encode($makersObject);
 
