@@ -52,7 +52,6 @@
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
-
 <head>
 <style>
 .accordion {
@@ -125,16 +124,15 @@
 */}
 </style>
 
+
 	<title>Customer Dashboard</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="../images/favicon.ico">
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
+	<link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<link href="css/font-awesome.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/user-dashboard.js"></script>
 
@@ -143,8 +141,7 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
 	<?php
-
-	include 'header.php';
+		include 'customer_nav.html'; 
 	?>
 	
 	<script>
@@ -157,33 +154,6 @@
 
 <body>
 
-        <div class="navbar">
-            <div class="navbar-inner">
-                <div class="container">
-                    <a href="../index.php" class="brand">
-                        <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
-                        <!-- This is website logo -->
-                    </a>
-                    <!-- Navigation button, visible on small resolution -->
-                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                        <i class="icon-menu"></i>
-                    </button>
-                    <!-- Main navigation -->
-                    <div class="nav-collapse collapse pull-right">
-                        <ul class="nav">
-                            <li><a href="../index.php">Home</a></li>
-                            <li class="active"><a href="customer.php">Dashboard</a></li>
-                            <li><a href="find_location.php">Find Location</a></li>
-                            <li><a href="customer_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
-                        </ul>
-                    </div>
-                    <!-- End main navigation -->
-                </div>
-            </div>
-        </div>
-        <br><br>
-        
 	<h1></h1>
 	<div class="container">
 		<div class="tab">
@@ -231,7 +201,17 @@
 								<div class="wthree-subscribe">
 									<p class="secHead">Your QR Code</p><br>
 									<?php
-										include 'GenerateQR/QRGenerator.php';
+										include 'QRGenerator.php';
+
+										$query = "Select phonenumber from user
+							            where id = ".$userid;
+							            
+							            $result = $mysqli->query($query);
+							            while($row = $result->fetch_assoc()){ 
+							                $phone = $row['phonenumber'];
+							                $_SESSION["phone"] = $phone;
+							            }
+							            
 										$ex1 = new QRGenerator();
 										echo "<img style='max-width:100%;margin-left:25%;' src=".$ex1->generate().">";
 									?>
@@ -367,8 +347,6 @@
 				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
 				});
 			</script>
-        <script type="text/javascript" src="../js/bootstrap.js"></script>
-        <script type="text/javascript" src="../js/modernizr.custom.js"></script>            
 <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
 <script>
 var acc = document.getElementsByClassName("accordion");
