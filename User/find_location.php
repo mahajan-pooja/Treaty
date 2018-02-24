@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 	<head>
@@ -58,7 +59,26 @@
         <div class="container">
 			<div class="row">        
 
-               <div id="demo"></div>
+               <div align = "right">
+                
+                <?php
+                    require '../config.php';
+
+                    $query = "SELECT id , businesssector FROM businesssector;";
+                    $result = $mysqli->query($query); 
+                    $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'showSelected(this.value);'>";
+                    $show_select = $show_select . "<option value='all'>All</option>";
+                    
+                    while($row = mysqli_fetch_array($result)){
+                        $show_select = $show_select . "<option value='".$row['businesssector']."'>".$row['businesssector']."</option>";              
+                    }
+                    $show_select = $show_select . "</select><br><br>";
+                    echo $show_select; 
+                ?>
+                
+                </div> 
+               
+               <div id="error"></div>
                
                 <div class="col-md-8">
                     <div id="map" style="float:left;margin-right: 20px;margin-bottom: 20px;"></div>
@@ -71,10 +91,17 @@
         </div>                 
            
     <script type="text/javascript">
+
+        var selected_category = '';
+        function showSelected(selected_value){
+            selected_category = selected_value;  
+            initMap();          
+        }
+
         function initMap(){
             
             //Find user location
-            var x = document.getElementById("demo");
+            var x = document.getElementById("error");
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(userPosition, showError);
             } 
@@ -105,8 +132,9 @@
                 $.ajax({
                     url: "read_address.php", 
                     method: "POST", 
-                    data: { user_lat:user_lat,user_lon:user_lon},
+                    data: { user_lat:user_lat,user_lon:user_lon,selected_category:selected_category},
                     success: function(data){
+                        //alert (data)
                         var obj = JSON.parse(data);
 						var detail="";
 						// For every row build a marker.

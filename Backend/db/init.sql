@@ -150,4 +150,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
 -- -------------------------------------------------------------------------------------------------------
+-- Table treaty.businesssecotr
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`businessdector`;

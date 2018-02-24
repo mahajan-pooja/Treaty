@@ -223,4 +223,47 @@ INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
 INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
     VALUES (3, 2, 2, 1);
 
+-- Inserts for Business Categories
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (1, 'Restaurant');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (2, 'Cafe');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (3, 'Bar');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (4, 'Supermarket');    
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (5, 'Spa');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (6, 'Beauty Salon');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (7, 'Gym');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (8, 'Laundry');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (9, 'Cleaning Services');
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (10, 'Auto Repairs');
+    
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (11, 'Convenience & Gas');    
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (12, 'Florist');    
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (13, 'Pet Store');    
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (14, 'Tailoring Services');    
+
 COMMIT;
