@@ -38,13 +38,13 @@
 
 	}
 
-	$query = "SELECT earnedpoints, businessname 
+	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
-			  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
+			  WHERE cb.businessid=bd.id AND cb.userid=".$userid." order by cb.modified desc limit 1";
 	$result = $mysqli->query($query);
 	$rewardsset = array();
 	while($row = $result->fetch_assoc()) {
-		$address = $row["businessname"] . "-" . $row["earnedpoints"];
+		$address = $row["businessname"] . "-" . $row["balance"];
 		array_push($rewardsset, $address);
 	}
 	/* close connection */
@@ -231,7 +231,16 @@
 								<div class="wthree-subscribe">
 									<p class="secHead">Your QR Code</p><br>
 									<?php
-										include 'GenerateQR/QRGenerator.php';
+										include 'QRGenerator.php';
+										//code to get user mobile number
+							            $query = "Select phonenumber from user
+							            where id = ".$userid;
+							            
+							            $result = $mysqli->query($query);
+							            while($row = $result->fetch_assoc()){ 
+							                $phone = $row['phonenumber'];
+							                $_SESSION["phone"] = $phone;
+							            }
 										$ex1 = new QRGenerator();
 										echo "<img style='max-width:100%;margin-left:25%;' src=".$ex1->generate().">";
 									?>

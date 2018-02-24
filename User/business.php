@@ -234,14 +234,14 @@
 											//get customer points for add redeem
 								            if(isset($_GET['custID'])){
 								            	echo "Customer Rewards : ";
-								            $query = "SELECT balance
-														  FROM customerbusiness
-								                          WHERE userid=\"" . $_GET['custID'] . "\" and isactive = 1";
+								            	$decodePhn = base64_decode($_GET['custID']);
+								            $query = "Select u.id, c.balance from user u, customerbusiness c where u.phonenumber = \"" . $decodePhn . "\" and u.id = c.userid and u.isactive=1;";
 								            $result = $mysqli->query($query);
 								                $offerlistresultset = array();
 								                if ($result->num_rows > 0) {
 													while($row = $result->fetch_assoc()) {
-														$points = $row["balance"];
+														$points = $row["balance"]; 
+														$uid = $row["id"];
 													}
 								                } 
 								                if($points == ''){ 
@@ -256,7 +256,7 @@
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Add Rewards ---</p>
 											<br>
-											<form action="addRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
+											<form action="addRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
 												<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
 												<div class="submitButton"><br>
 													<input type="submit" value="Add Rewards"> 
@@ -267,7 +267,7 @@
 										<div class="addReward">
 											<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p>
 											<br>
-											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $_GET['custID'];?>" method="post" class="agile_form">
+											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
 												<input style="width: 50%;" type="text" name="points" placeholder=" Rewards"><br>
 												<div class="submitButton"><br>
 													<input type="submit" value="Redeem Rewards"> 
