@@ -21,8 +21,8 @@
     if ($res) {
         
         //send text message to customer
-            $queryPhone = "Select phonenumber from user
-                    where id = ".$cid;
+            $queryPhone = "Select phonenumber from userdetail
+                    where userid = ".$cid;
             $resultPhone = $mysqli->query($queryPhone);
             while($rowPhone = $resultPhone->fetch_assoc()){ 
                 $phone = $rowPhone['phonenumber'];

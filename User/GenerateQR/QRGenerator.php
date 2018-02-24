@@ -1,7 +1,4 @@
 <?php
-// Start the session
-    session_start();
-require '../config.php';
 class QRGenerator { 
 
     protected $size; 
@@ -12,8 +9,9 @@ class QRGenerator {
     protected $debug; 
 
     public function __construct($data='',$size='300',$encoding='UTF-8',$errorCorrectionLevel='L',$marginInRows=4,$debug=false) { 
-        $encPhone = base64_encode($_SESSION['phone']);
-        $this->data=urlencode($encPhone); 
+            session_start();
+            $userid = $_SESSION['userid'];
+        $this->data=urlencode($userid); 
         $this->size=($size>100 && $size<800)? $size : 300; 
         $this->encoding=($encoding == 'Shift_JIS' || $encoding == 'ISO-8859-1' || $encoding == 'UTF-8') ? $encoding : 'UTF-8'; 
         $this->errorCorrectionLevel=($errorCorrectionLevel == 'L' || $errorCorrectionLevel == 'M' || $errorCorrectionLevel == 'Q' || $errorCorrectionLevel == 'H') ?  $errorCorrectionLevel : 'L';

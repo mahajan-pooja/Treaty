@@ -66,6 +66,19 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 -- -------------------------------------------------------------------------------------------------------
+-- Table treaty.businesssecotr
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`businesssector`;
+CREATE TABLE IF NOT EXISTS `treaty`.`businesssector` (
+`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+`businesssector` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
+
+
+-- -------------------------------------------------------------------------------------------------------
 -- Table treaty.businessdetail
 -- -------------------------------------------------------------------------------------------------------
 DROP TABLE IF EXISTS `treaty`.`businessdetail`;
@@ -74,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
   `businessname` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
-  `businesssector` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+  `businesssector` BIGINT(20) NOT NULL,
   `address1` VARCHAR(100) CHARACTER SET `utf8` NOT NULL,
   `address2` VARCHAR(100) CHARACTER SET `utf8` NULL DEFAULT NULL,
   `city` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
@@ -90,7 +103,10 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   UNIQUE INDEX `ix_businessdetail_userid_businessname_businesssector_zip_addr1` (`userid`, `businessname`, `businesssector`, `zipcode`, `address1`),
   CONSTRAINT `fk_businessdetail_userid`
     FOREIGN KEY (`userid`)
-    REFERENCES `treaty`.`user` (`id`))
+    REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_businessdetail_businesssector`
+    FOREIGN KEY (`businesssector`)
+    REFERENCES `treaty`.`businesssector` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
@@ -151,7 +167,3 @@ DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
 
--- -------------------------------------------------------------------------------------------------------
--- Table treaty.businesssecotr
--- -------------------------------------------------------------------------------------------------------
-DROP TABLE IF EXISTS `treaty`.`businessdector`;

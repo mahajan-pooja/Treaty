@@ -104,7 +104,14 @@ function read(a)
     if(a.indexOf("http://") === 0 || a.indexOf("https://") === 0)
         html+="<a target='_blank' href='"+a+"'>"+a+"</a>";
     html+=""+htmlEntities(a)+"";
-    
+    //alert('html - '+html);
+    //This is the var HTML which has decoded data for qr code
+    //document.getElementById("result").innerHTML=html;
+     //document.cookie = "uid = "+ html;
+     //console.log(document.cookie);
+   //  sessionStorage.setItem("uId", html);
+    //var value = sessionStorage.getItem("uId");
+   // alert(value);
 
     window.location.replace("business.php?custID="+html);
 }	
