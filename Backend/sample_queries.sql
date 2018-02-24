@@ -51,3 +51,8 @@ SELECT bd.businessname, bd.businesssector
 			  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription, bo.creditedpoints;
 	select earnedpoints, businessname from customerbusiness cb, businessdetail bd  where cb.businessid=bd.id and cb.userid=2;
 commit;
+
+
+-- Location Query:
+SELECT id,businessname,businesssector,address1,address2,city,state,country,zipcode,isactive, round(( 3959 * acos( cos( radians(37.437041) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(-121.878849) ) + sin( radians(37.437041) ) * sin( radians( latitude ) ) ) ),1) AS distance 
+FROM treaty.businessdetail WHERE businesssector = "Restaurant" HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;

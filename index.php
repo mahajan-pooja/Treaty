@@ -5,7 +5,7 @@
             include 'header.php';
             session_start();
         ?>
-        <link rel="icon" href="images/favicon.png" type="image/png" sizes="16x16">
+        <link rel="icon" href="images/favicon.ico" type="icon">
     </head>    
     <body>
         <div class="navbar">
