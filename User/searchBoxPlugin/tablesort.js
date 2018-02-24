@@ -351,7 +351,7 @@
         countBadge =  $('<div class="table-sort-search-count"></div>');
         countBadge.appendTo(searchContainer);
       }
-      countBadge.html(total-1);
+      countBadge.html(total);
     }
   };
 

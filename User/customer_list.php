@@ -5,9 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 	<title>Your Customers</title>
-
 	<!-- For-Mobile-Apps -->
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -27,10 +25,8 @@
 	<!-- //Web-Fonts -->
 	<?php 
 		include 'business_edit_nav.html';
-		require '../config.php';
-		
-		?>
-			
+		require '../config.php';		
+	?>		
 	<style type="text/css">
 		.customerTable{
 			width: 100%;
@@ -57,10 +53,6 @@
 			font-size: 150%;
 			margin-bottom: 3%;
 		}
-		/*.customerTable td, th{
-			border: 1px solid green;
-			padding: 5%;
-		}*/
 	</style>
 </head>
 <body>
@@ -72,50 +64,38 @@
 			<?php 
 				$userid = $_SESSION['userid']; 
 
-		$query = "SELECT c.userid, c.balance, c.businessid, u.firstname, u.lastname, u.address1, u.address2, u.city, u.state, u.country, u.zipcode, u.phonenumber
+		$query = "SELECT c.userid, c.balance, c.businessid, u.firstname, u.lastname
 					  FROM customerbusiness c, userdetail u
-					  WHERE u.userid = c.userid and c.businessid = ".$userid;
+					  WHERE u.userid = c.userid and c.businessid = ".$userid." order by c.modified desc";
 			$result = $mysqli->query($query);
 			$last_id = $conn->insert_id;
 			echo $last_id;
 			?>
-			<table border='1' class="table-sort-search table-sort-show-search-count table-sort">
-									<tr>
+			<table border='1' class="table-sort table-sort-search table-sort-show-search-count">
+				<thead>
+						<tr>
 							<th>Name</th>
 							<th>Rewards</th>
-							<th>Phone</th>
-							<th>Address</th>
 						</tr>
+				</thead>
 				
 			<?php
 			if ($result->num_rows > 0) {
-				while($row = $result->fetch_array()){
-					
-					  
+				while($row = $result->fetch_array()){	  
 			?>
-					<tr>
-							<td><?php echo $row["firstname"]." ".$row["lastname"];?></td>
-							<td><?php echo $row["balance"];?></td>
-							<td><?php echo $row["phonenumber"];?></td>
-							<td><?php echo $row["address1"]. ", ".$row["address2"]. ", ".$row["city"]. ", ".$row["state"]. ", ".$row["country"]. ", ".$row["zipcode"];?></td>
-							
-						</tr>
-
-
-						
-					<?php
-					//echo $row["userid"]. "    ". $row["balance"]. "   ". $row["businessid"]. "<br>";
+				<tr>
+					<td><?php echo $row["firstname"]." ".$row["lastname"];?></td>
+					<td><?php echo $row["balance"];?></td>	
+				</tr>	
+					<?php	
 				}
 			}	
 			?>
-			
-		</table>
-			
+		</table>	
 		</div>
 	</div>
 	<?php include 'footer.php' ?>
 </div>
-	
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script> 
 <script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script> 
 <script type="text/javascript" src="searchBoxPlugin/tablesort.js"></script> 
@@ -125,5 +105,6 @@
                 $('table.table-sort').tablesort();
                 hljs.initHighlightingOnLoad(); // Syntax Hilighting
             });
-        </script></body>
+        </script>
+</body>
 </html>
