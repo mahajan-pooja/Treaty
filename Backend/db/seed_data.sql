@@ -48,35 +48,35 @@ INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber,
 -- insert script for businessdetail
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (1, 4, 'Dennys', 'Restaurant', '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131',37.384867,-121.927876, 1);
+    VALUES (1, 4, 'Dennys', 1, '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131',37.384867,-121.927876, 1);
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude,isactive)
-    VALUES (2, 5, 'Subway', 'Restaurant', '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',37.383142,-121.897038, 1);
+    VALUES (2, 5, 'Subway', 1, '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',37.383142,-121.897038, 1);
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (3, 5, 'Papaya', 'Retail', 'Great Mall, 447 Great Mall Dr', 'Milpitas', 'CA', 'USA', '95035',37.415738,-121.897412, 1);
+    VALUES (3, 5, 'Papaya', 15, 'Great Mall, 447 Great Mall Dr', 'Milpitas', 'CA', 'USA', '95035',37.415738,-121.897412, 1);
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (4, 5, 'T-Mobile', 'Telecom', '1095 E Brokaw Rd 50', 'San Jose', 'CA', 'USA', '95131',37.383100,-121.896945, 0);
+    VALUES (4, 5, 'Family Wash', 8, '1643 McKee Rd', 'San Jose', 'CA', 'USA', '95116',37.357269,-121.863172, 1);
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (5, 5, 'Pizza Hut', 'Restaurant', '102 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',37.434039,-121.883343, 1);
+    VALUES (5, 5, 'Pizza Hut', 1, '102 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',37.434039,-121.883343, 1);
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (6, 5, 'Omega', 'Restaurant', '90 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',37.434313,-121.883432, 1);
+    VALUES (6, 5, 'Omega', 1, '90 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',37.434313,-121.883432, 1);
     
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (7, 5, 'Naan n Masala', 'Restaurant', '94 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',37.433218,-121.885443, 1);  
+    VALUES (7, 5, 'Naan n Masala', 1, '94 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',37.433218,-121.885443, 1);  
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (8, 5, 'Hyderabad Dum Biryani', 'Restaurant', '55 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',37.435230,-121.884775, 1);  
+    VALUES (8, 5, 'Hyderabad Dum Biryani', 1, '55 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',37.435230,-121.884775, 1);  
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, latitude, longitude, isactive)
-    VALUES (9, 5, 'Juanita''s Polynesian Delights', 'Restaurant', '36601 Newark Blvd #87', 'Newark', 'CA', 'USA', '94560',37.538941,-122.034422, 1);  
+    VALUES (9, 5, 'Juanita''s Polynesian Delights', 1, '36601 Newark Blvd #87', 'Newark', 'CA', 'USA', '94560',37.538941,-122.034422, 1);  
 
-
-
+-- --------------------------------------------------------------------------------------------------
 -- Ignore no long lat maintained.
+-- --------------------------------------------------------------------------------------------------
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, isactive)
     VALUES (9, 5, 'Bambu Dessert & Drinks', 'Restaurant', '89 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035', 1);
   
@@ -201,7 +201,7 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode, isactive)
     VALUES (49, 3, 'HK Hair & Beauty', 'Salon', '1715 Lundy Ave', 'San Jose', 'CA', 'USA', '95131', 1);
-
+-- ---------------------------------------------------------------------------------------------------------------------
 
 -- insert script for businessoffer
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
@@ -265,5 +265,8 @@ INSERT INTO `treaty`.`businesssector` (id, businesssector)
 
 INSERT INTO `treaty`.`businesssector` (id, businesssector)
     VALUES (14, 'Tailoring Services');    
+
+INSERT INTO `treaty`.`businesssector` (id, businesssector)
+    VALUES (15, 'Clothing Retail');    
 
 COMMIT;

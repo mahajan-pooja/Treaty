@@ -6,15 +6,16 @@
 
     $user_lat = number_format(($_REQUEST['user_lat']),6);
     $user_lon = number_format(($_REQUEST['user_lon']),6);
-    $selected_category = $_REQUEST['selected_category'];
+    $businesssector_id = $_REQUEST['businesssector_id'];
     
        
     // Calculate the distance between user location and all businesses.
-    if ( $selected_category == "" or $selected_category == "all" ){
+    if ( $businesssector_id == "" or $businesssector_id == "all" ){
     	$query = "SELECT id,businessname,businesssector,address1,address2,city,state,country,zipcode,latitude,longitude,isactive, round(( 3959 * acos( cos( radians(".$user_lat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$user_lon.") ) + sin( radians(".$user_lat.") ) * sin( radians( latitude ) ) ) ),1) AS distance FROM treaty.businessdetail HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;";    
 	}
 	else{
-		$query = "SELECT id,businessname,businesssector,address1,address2,city,state,country,zipcode,latitude,longitude,isactive, round(( 3959 * acos( cos( radians(".$user_lat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$user_lon.") ) + sin( radians(".$user_lat.") ) * sin( radians( latitude ) ) ) ),1) AS distance FROM treaty.businessdetail WHERE businesssector =\"" . $selected_category . "\" HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;";
+
+		$query = "SELECT id,businessname,businesssector,address1,address2,city,state,country,zipcode,latitude,longitude,isactive, round(( 3959 * acos( cos( radians(".$user_lat.") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(".$user_lon.") ) + sin( radians(".$user_lat.") ) * sin( radians( latitude ) ) ) ),1) AS distance FROM treaty.businessdetail WHERE businesssector =" . $businesssector_id . " HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;";
 	}
      
     $result = $mysqli->query($query);       
