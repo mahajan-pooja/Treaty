@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 	<head>
@@ -58,7 +59,26 @@
         <div class="container">
 			<div class="row">        
 
-               <div id="demo"></div>
+               <div align = "right">
+                
+                <?php
+                    require '../config.php';
+
+                    $query = "SELECT id , businesssector FROM businesssector;";
+                    $result = $mysqli->query($query); 
+                    $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'showSelected(this.value);'>";
+                    $show_select = $show_select . "<option value='all'>All</option>";
+                    
+                    while($row = mysqli_fetch_array($result)){
+                        $show_select = $show_select . "<option value='".$row['businesssector']."'>".$row['businesssector']."</option>";              
+                    }
+                    $show_select = $show_select . "</select><br><br>";
+                    echo $show_select; 
+                ?>
+                
+                </div> 
+               
+               <div id="error"></div>
                
                 <div class="col-md-8">
                     <div id="map" style="float:left;margin-right: 20px;margin-bottom: 20px;"></div>
@@ -71,10 +91,17 @@
         </div>                 
            
     <script type="text/javascript">
+
+        var selected_category = '';
+        function showSelected(selected_value){
+            selected_category = selected_value;  
+            initMap();          
+        }
+
         function initMap(){
             
             //Find user location
-            var x = document.getElementById("demo");
+            var x = document.getElementById("error");
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(userPosition, showError);
             } 
@@ -100,35 +127,31 @@
                 //Center with user Location and place a marker on his position
                 var map = new google.maps.Map(document.getElementById('map'),options);
                 var marker = new google.maps.Marker({position:user_latlon,map:map,label:{text:"You",color:"#ffffff",fontWeight: "bold"}});
-
                 
-                //Ajax call to get city from lon lat
+                // Ajax Call to read locations from DB
                 $.ajax({
                     url: "read_address.php", 
                     method: "POST", 
-                    data: { user_lat:user_lat,user_lon:user_lon},
+                    data: { user_lat:user_lat,user_lon:user_lon,selected_category:selected_category},
                     success: function(data){
+                        //alert (data)
                         var obj = JSON.parse(data);
 						var detail="";
-						
+						// For every row build a marker.
 						for (var key in obj) {
 						  if (obj.hasOwnProperty(key)) {
 							var val = obj[key];
 							
 							var latlng = new google.maps.LatLng(val[1], val[2]);
-							var storeMarker = new google.maps.Marker({position:latlng,map:map,label:{text:val[0].toString(),color:"#FFF",fontWeight: "bold"}});
-							
-<?php /*?>							detail+="<table border='1' cellpaddind='5' style='margin:0 0 20px 0;'><tr><td>"+val[0]+"</td><td>"+val[3]+"</td><td>"+val[5]+" Miles</td></tr><tr><td colspan='3'>"+val[4]+"</td></tr><tr><td><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'>Get Direction</a></td><td></td><td></td></tr></table>";<?php */?>
-							
-							detail+="<div>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[5]+" Miles</span></div><div style='font-size: 14px;margin: 5px;'>"+val[4]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";							
-							
-							
+							var storeMarker = new google.maps.Marker({position:latlng,map:map,label:{text:val[0].toString(),color:"#FFF",fontWeight: "bold"}});							
+						
+							detail+="<div>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[5]+" Miles</span></div><div style='font-size: 14px;margin: 5px;'>"+val[4]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";	
 						  }
 						}   
 						$('#details_div').html(detail);
                     },
                     error: function() {
-                        x.innerHTML = "error occured. unable to call ajax."
+                        x.innerHTML = "Error occured. Unable to make a Ajax call."
 						//Add bootstrap to display error on page
                     } 
                 });

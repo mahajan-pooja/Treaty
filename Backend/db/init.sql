@@ -80,7 +80,9 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `city` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
   `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
-  `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
+  `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,  
+  `latitude` FLOAT(10,6) NOT NULL,
+  `longitude` FLOAT(10,6) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -148,4 +150,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+
 -- -------------------------------------------------------------------------------------------------------
+-- Table treaty.businesssecotr
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`businessdector`;
