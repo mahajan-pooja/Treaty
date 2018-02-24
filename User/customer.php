@@ -38,13 +38,13 @@
 
 	}
 
-	$query = "SELECT earnedpoints, businessname 
+	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
-			  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
+			  WHERE cb.businessid=bd.id AND cb.userid=".$userid." order by cb.modified desc limit 1";
 	$result = $mysqli->query($query);
 	$rewardsset = array();
 	while($row = $result->fetch_assoc()) {
-		$address = $row["businessname"] . "-" . $row["earnedpoints"];
+		$address = $row["businessname"] . "-" . $row["balance"];
 		array_push($rewardsset, $address);
 	}
 	/* close connection */
