@@ -66,11 +66,11 @@
 
                     $query = "SELECT id , businesssector FROM businesssector;";
                     $result = $mysqli->query($query); 
-                    $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'showSelected(this.value);'>";
+                    $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
                     $show_select = $show_select . "<option value='all'>All</option>";
                     
                     while($row = mysqli_fetch_array($result)){
-                        $show_select = $show_select . "<option value='".$row['businesssector']."'>".$row['businesssector']."</option>";              
+                        $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssector']."</option>";              
                     }
                     $show_select = $show_select . "</select><br><br>";
                     echo $show_select; 
@@ -92,9 +92,9 @@
            
     <script type="text/javascript">
 
-        var selected_category = '';
-        function showSelected(selected_value){
-            selected_category = selected_value;  
+        var businesssector_id = '';
+        function selectedSector(selected_value){
+            businesssector_id = selected_value;  
             initMap();          
         }
 
@@ -132,7 +132,7 @@
                 $.ajax({
                     url: "read_address.php", 
                     method: "POST", 
-                    data: { user_lat:user_lat,user_lon:user_lon,selected_category:selected_category},
+                    data: { user_lat:user_lat,user_lon:user_lon,businesssector_id:businesssector_id},
                     success: function(data){
                         //alert (data)
                         var obj = JSON.parse(data);
