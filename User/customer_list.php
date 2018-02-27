@@ -80,7 +80,7 @@
                                 }
                             ?> 
                             <li class="active"><a href="customer_list.php">Customers</a></li>                                                       
-                            <li><a href="customer_profile.php">Profile</a></li>
+                            <li><a href="business_profile.php">Profile</a></li>
                             <li><a href="../index.php">Logout</a></li>                           
                         </ul>
                     </div>

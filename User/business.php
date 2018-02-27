@@ -28,12 +28,12 @@
 </head>
 
 		<?php 
-		if($_GET['flag'] == 'add'){ ?>
+		if(isset($_GET['flag']) == 'add'){ ?>
 		<script type="text/javascript">
 			alert("Rewards added successfully.");
 			window.location.href = "business.php";
 		</script>
-		<?php } else if($_GET['flag'] == 'redeem'){ ?>
+		<?php } else if(isset($_GET['flag']) == 'redeem'){ ?>
 		<script type="text/javascript">
 			alert("Rewards redeemed successfully.");
 			window.location.href = "business.php";
@@ -202,7 +202,7 @@
                                 }
                             ?> 
                             <li><a href="customer_list.php">Customers</a></li>                                                       
-                            <li><a href="customer_profile.php">Profile</a></li>
+                            <li><a href="business_profile.php">Profile</a></li>
                             <li><a href="../index.php">Logout</a></li>                           
                         </ul>
                     </div>
