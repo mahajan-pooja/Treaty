@@ -126,7 +126,7 @@
                 
                 //Center with user Location and place a marker on his position
                 var map = new google.maps.Map(document.getElementById('map'),options);
-                var marker = new google.maps.Marker({position:user_latlon,map:map,label:{text:"You",color:"#ffffff",fontWeight: "bold"}});
+                var marker = new google.maps.Marker({animation: google.maps.Animation.DROP,position:user_latlon,map:map,label:{text:"You",color:"#ffffff",fontWeight: "bold"}});
                 
                 // Ajax Call to read locations from DB
                 $.ajax({
@@ -145,7 +145,7 @@
 							var latlng = new google.maps.LatLng(val[1], val[2]);
 							var storeMarker = new google.maps.Marker({position:latlng,map:map,label:{text:val[0].toString(),color:"#FFF",fontWeight: "bold"}});							
 						
-							detail+="<div>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[5]+" Miles</span></div><div style='font-size: 14px;margin: 5px;'>"+val[4]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";	
+							detail+="<div>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[6]+" Miles</span></div><div style='font-size: 14px;margin: 5px;'>"+val[4]+"<div style='font-size: 14px;margin: 5px;'>"+ val[5]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";	
 						  }
 						}   
 						$('#details_div').html(detail);

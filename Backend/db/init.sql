@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,  
+  `phonenumber` VARCHAR(11) NOT NULL,
   `latitude` FLOAT(10,6) NOT NULL,
   `longitude` FLOAT(10,6) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',

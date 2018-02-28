@@ -25,6 +25,22 @@
 	<?php
 	include 'header.php';
 	?>
+
+	<!-- Script for image display after selection -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function displayImage(input) {
+    		if (input.files && input.files[0]) {
+        	var reader = new FileReader();
+        	reader.onload = function (e) {
+        	$('#business_image').attr('src', e.target.result);
+       		}
+        reader.readAsDataURL(input.files[0]);
+       }
+    }
+	</script>
+	<!-- Script for image display after selection -->
+
 </head>
 
 		<?php 
@@ -346,7 +362,7 @@
                                         	<tr>
                                             <td style="padding-left: 16px;">
                                             <div style="width: 100px;height: 100px;border: 1px solid #ccc;">
-                                            <img src = "images/default-image.png" alt = "Upload Image" id = "image1" width="100px" />
+                                            <img src = "images/default-image.png" alt = "Upload Image" id = "business_image" width="100px" />
                                             </div>
                                             </td>
                                             <td style="vertical-align: bottom;width: 100%;">                                        
