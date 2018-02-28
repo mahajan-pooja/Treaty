@@ -357,6 +357,7 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Register Your Business</p>
 									<div class="register agileits">
+										<!-- Form for Image-->
                                         <form action ="#" method="POST" enctype="multipart/form-data" runat="server" class="agile_form" style="margin:0px;">
                                         <table style="width: 91.6%;">
                                         	<tr>

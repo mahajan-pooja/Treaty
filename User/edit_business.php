@@ -22,6 +22,22 @@
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
+
+	<!-- Script for image display after selection -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function displayImage(input) {
+    		if (input.files && input.files[0]) {
+        	var reader = new FileReader();
+        	reader.onload = function (e) {
+        	$('#business_image').attr('src', e.target.result);
+       		}
+        reader.readAsDataURL(input.files[0]);
+       }
+    }
+	</script>
+	<!-- Script for image display after selection -->
+	
 	<?php
 	include 'header.php';
 	?>
@@ -184,6 +200,22 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Edit Your Business</p>
 									<div class="register agileits">
+										<!-- Form for Image-->
+										<form action ="#" method="POST" enctype="multipart/form-data" runat="server" class="agile_form" style="margin:0px;">
+                                        <table style="width: 91.6%;">
+                                        	<tr>
+                                            <td style="padding-left: 6px;">
+                                            <div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
+                                            <img src = "images/default-image.png" alt = "Upload Image" id = "business_image" width="100px" />
+                                            </div>
+                                            </td>
+                                            <td style="vertical-align: bottom;width: 100%;">                                        
+                                            <input type="file" name="image" onchange= "displayImage(this)" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>                                                  
+                                            </td>
+                                            </tr>
+                                        </table>
+                                        </form>
+
 										<form method="post" class="agile_form">
 											<input type="text" placeholder="Business Name" name="businessname" class="name agileits" required="" 
 												value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>" readonly />
