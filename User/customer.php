@@ -40,7 +40,7 @@
 
 	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
-			  WHERE cb.businessid=bd.id AND cb.userid=".$userid." order by cb.modified desc limit 1";
+			  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
 	$result = $mysqli->query($query);
 	$rewardsset = array();
 	while($row = $result->fetch_assoc()) {
@@ -175,7 +175,7 @@
                             <li class="active"><a href="customer.php">Dashboard</a></li>
                             <li><a href="find_location.php">Find Location</a></li>
                             <li><a href="customer_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->

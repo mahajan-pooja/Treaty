@@ -16,6 +16,7 @@
 	$qry  = "INSERT INTO customerbusiness(userid, businessid,
 	         earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", \"" . $amount . "\", 0,\"" . $balance . "\", 1, sysdate(), sysdate())";
+	// $qry = "UPDATE customerbusiness SET userid=".$cid.", businessid= ".$bid.", earnedpoints= ".$amount.", redeemedpoints= "0", balance= ".$balance.", isactive= "1", modified = sysdate(), created = sysdate() WHERE userid=".$cid." and businessid=".$bid;
 	$res = $mysqli->query($qry);
     if ($res) {
     		//send text message to customer

@@ -68,8 +68,6 @@
 					  FROM customerbusiness c, userdetail u
 					  WHERE u.userid = c.userid and c.businessid = ".$userid." order by c.modified desc";
 			$result = $mysqli->query($query);
-			$last_id = $conn->insert_id;
-			echo $last_id;
 			?>
 			<table border='1' class="table-sort table-sort-search table-sort-show-search-count">
 				<thead>
