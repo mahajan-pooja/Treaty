@@ -71,7 +71,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `treaty`.`businesssector`;
 CREATE TABLE IF NOT EXISTS `treaty`.`businesssector` (
 `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-`businesssector` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+`businesssectortext` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
 PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -94,11 +94,11 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,  
-  `phonenumber` VARCHAR(11) NOT NULL,
+  `businessphonenumber` VARCHAR(11) NOT NULL,
   `latitude` FLOAT(10,6) NOT NULL,
   `longitude` FLOAT(10,6) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
- -- `businessimage` LONGBLOB NOT NULL,
+  `businessimage` LONGBLOB NOT NULL,
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

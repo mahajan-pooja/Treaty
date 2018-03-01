@@ -153,11 +153,13 @@
                                       WHERE userid=\"" . $userid . "\" and isactive=1";
                 
                 $result = $mysqli->query($query);
-                if ($result->num_rows > 0) {
+
+                if ($result->num_rows > 0) {                	
                     $businessrow = $result;
                     $resultset   = array();
                     while ($row = $businessrow->fetch_assoc()) {
-                        $addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                        //$addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                        $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
                         array_push($resultset, $addr);
                     }
                 } else {

@@ -56,3 +56,10 @@ commit;
 -- Location Query:
 SELECT id,businessname,businesssector,address1,address2,city,state,country,zipcode,isactive, round(( 3959 * acos( cos( radians(37.437041) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(-121.878849) ) + sin( radians(37.437041) ) * sin( radians( latitude ) ) ) ),1) AS distance 
 FROM treaty.businessdetail WHERE businesssector = "Restaurant" HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;
+
+-- business sector name and business detail table
+SELECT a.businessname, b.businesssector, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage
+						  FROM businessdetail as a
+                          JOIN businesssector as b
+                          ON a.businesssector = b.id
+						  WHERE a.id=1;
