@@ -201,7 +201,7 @@
                             ?>                                                        
                             <li><a href="find_location.php">Find Location</a></li>
                             <li class="active"><a href="customer_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->

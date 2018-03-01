@@ -1,22 +1,30 @@
 <?php
 	require '../config.php';
-	$amount = $_POST['amount'];
+	$amount = $_POST['amount']; 
 	$bid = $_GET['bid'];
 	$cid = $_GET['cid'];
 //get current balance rewards of customer
 	$query = "Select balance from customerbusiness
-	 		where userid = ".$cid;
+	 		where userid = ".$cid." and businessid=".$bid;
 	$result = $mysqli->query($query);
 	while($row = $result->fetch_assoc()){ 
 	    $bal = $row['balance'] . '<br />';
 	}
 	$balance = $bal + $amount;
 
-//add rewards to customer account              
-	$qry  = "INSERT INTO customerbusiness(userid, businessid,
+//add rewards to customer account  
+
+
+//old query that create new rows for every add reward activity.
+            
+	$qryTrans  = "INSERT INTO rewardtransaction(userid, businessid,
 	         earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", \"" . $amount . "\", 0,\"" . $balance . "\", 1, sysdate(), sysdate())";
-	// $qry = "UPDATE customerbusiness SET userid=".$cid.", businessid= ".$bid.", earnedpoints= ".$amount.", redeemedpoints= "0", balance= ".$balance.", isactive= "1", modified = sysdate(), created = sysdate() WHERE userid=".$cid." and businessid=".$bid;
+	$qryResult = $mysqli->query($qryTrans);
+
+
+	//query change from insert to update to make only one entry in customer business table with updated added balance
+	 $qry = "UPDATE customerbusiness SET earnedpoints= ".$amount.", redeemedpoints= 0, balance= ".$balance.", modified = sysdate() WHERE userid=".$cid." and businessid=".$bid;
 	$res = $mysqli->query($qry);
     if ($res) {
     		//send text message to customer

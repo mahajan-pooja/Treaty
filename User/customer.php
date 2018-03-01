@@ -40,7 +40,7 @@
 
 	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
-			  WHERE cb.businessid=bd.id AND cb.userid=".$userid;
+			  WHERE cb.businessid=bd.userid AND cb.userid=".$userid." group by bd.userid";
 	$result = $mysqli->query($query);
 	$rewardsset = array();
 	while($row = $result->fetch_assoc()) {
@@ -116,6 +116,7 @@
 }
 .panelContainer{
 	display: none;
+	text-align: center;
 }
 .panel {
     padding: 0 18px;
@@ -250,18 +251,28 @@
 							<!-- Customer Rewards section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Reward Points</p>
-								<div class="register agileits">
+
+								<div class="agileinfo-recover">
 									<?php foreach($rewardsset as $value): ?>
-										<div class="business_name">
-											<span class="b_name"><?php echo explode("-",$value)[0];?></span>
-											<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
-											<div class="pointsDiv" id="pointsDiv">
+										<button class='accordion'>
+											<?php echo explode("-",$value)[0];?></button>
+											<div class="panelContainer">
 												Reward Points - <?php echo explode("-",$value)[1];?><br><br>
 												<a href="" style="color: brown;border:none;">View Details</a>
 											</div>
-										</div>
+										
 									<?php endforeach; ?>
-									
+									<!-- <?php //foreach($rewardsset as $value): ?>
+										<div class="business_name">
+											<span class="b_name"><?php //echo explode("-",$value)[0];?></span>
+											<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
+											<div class="pointsDiv" id="pointsDiv">
+												Reward Points - <?php //echo explode("-",$value)[1];?><br><br>
+												<a href="" style="color: brown;border:none;">View Details</a>
+											</div>
+										</div>
+									<?php //endforeach; ?> -->
+								</div>	
 								</div>
 							</div>
 							

@@ -36,7 +36,7 @@
 		.customerTable{
 			width: 100%;
 			height: 400px;
-			background-color: #f1f1f2;
+			background-color: #ECF7A7;
 			padding: 3%;
 			overflow: auto;
 			text-align: center;
@@ -83,7 +83,7 @@
                             ?> 
                             <li class="active"><a href="customer_list.php">Customers</a></li>                                                       
                             <li><a href="business_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->
