@@ -168,4 +168,29 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.rewardtransaction
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`rewardtransaction`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`rewardtransaction` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `businessid` BIGINT(20) NOT NULL,
+  `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `balance` BIGINT(80) NULL DEFAULT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_customeroffer_userid_1`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_customeroffer_businessid_1`
+    FOREIGN KEY (`businessid`)
+    REFERENCES `treaty`.`businessdetail` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
 

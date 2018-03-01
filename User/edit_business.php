@@ -178,7 +178,7 @@ Chnages done on this page:
                             ?> 
                             <li><a href="customer_list.php">Customers</a></li>                                                       
                             <li><a href="business_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->
