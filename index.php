@@ -1,3 +1,8 @@
+<?php
+// Start the session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,7 +34,11 @@
                             <li><a href="#clients">Clients</a></li>
                             <li><a href="#price">Price</a></li>
                             <li><a href="#contact">Contact</a></li>
-                            <li><a href='login.php'>Login</a></li>
+                            <?php if(isset($_SESSION['userid'])): ?>
+                              <li><a href='logout.php'>Logout</a></li>
+                            <?php else: ?>
+                               <li><a href='login.php'>Login</a></li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -631,7 +640,7 @@
             <div class="triangleBlack"></div>
             <div class="container centered">
                 <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
-                <a href="#" class="button">Find Locations</a>
+                <a href="User/find_location.php" class="button">Find Locations</a>
             </div>
         </div>
         <!-- Client section start -->

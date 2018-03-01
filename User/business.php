@@ -44,17 +44,19 @@
 </head>
 
 		<?php 
-		if(isset($_GET['flag']) == 'add'){ ?>
-		<script type="text/javascript">
-			alert("Rewards added successfully.");
-			window.location.href = "business.php";
-		</script>
-		<?php } else if(isset($_GET['flag']) == 'redeem'){ ?>
-		<script type="text/javascript">
-			alert("Rewards redeemed successfully.");
-			window.location.href = "business.php";
-		</script>
-		<?php } ?>
+		if(isset($_GET['flag'])){
+			if($_GET['flag'] == 'add'){ ?>
+			<script type="text/javascript">
+				alert("Rewards added successfully.");
+				window.location.href = "business.php";
+			</script>
+			<?php } else if($_GET['flag'] == 'redeem'){ ?>
+			<script type="text/javascript">
+				alert("Rewards redeemed successfully.");
+				window.location.href = "business.php";
+			</script>
+			<?php } 
+		} ?>
 		
         <?php
             require '../config.php';
@@ -157,7 +159,8 @@
                     $businessrow = $result;
                     $resultset   = array();
                     while ($row = $businessrow->fetch_assoc()) {
-                        $addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                       // $addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                    	 $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
                         array_push($resultset, $addr);
                     }
                 } else {
@@ -219,7 +222,7 @@
                             ?> 
                             <li><a href="customer_list.php">Customers</a></li>                                                       
                             <li><a href="business_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -285,21 +288,28 @@
 											 <?php
 											//get customer points for add redeem
 								            if(isset($_GET['custID'])){
-								            	echo "Customer Rewards : ";
+								            	
 								            	$decodePhn = base64_decode($_GET['custID']);
-								            $query = "Select u.id, c.balance from user u, customerbusiness c where u.phonenumber = \"" . $decodePhn . "\" and u.id = c.userid and u.isactive=1;";
+								            $query = "Select u.id, c.balance, ud.firstname, ud.lastname from user u, customerbusiness c, userdetail ud where u.phonenumber = \"" . $decodePhn . "\" and u.id = c.userid and u.id = ud.userid and u.isactive=1 and c.businessid = ".$userid;
 								            $result = $mysqli->query($query);
 								                $offerlistresultset = array();
 								                if ($result->num_rows > 0) {
 													while($row = $result->fetch_assoc()) {
 														$points = $row["balance"]; 
 														$uid = $row["id"];
+														$uname = $row["firstname"]." ".$row["lastname"];
+
 													}
+													echo $uname. " have ";
 								                } 
 								                if($points == ''){ 
-								                	echo 0;
+								                	echo "<script>
+								                	alert('This is not your subscribed customer. QR code invalid.');
+								                	window.location.href = 'business.php';
+								                	</script>";
+
 								                }else{
-								                	echo $points;
+								                	echo $points. " Reward points.";
 								                }
 								            }
 											?>
@@ -309,7 +319,7 @@
 											<p style="font-size: 150%;color:black;">--- Add Rewards ---</p>
 											<br>
 											<form action="addRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
-												<input style="width: 50%;" type="text" name="amount" placeholder="Amount"><br>
+												<input style="width: 50%;" type="text" name="amount" id="amount" placeholder="Amount"><br>
 												<div class="submitButton"><br>
 													<input type="submit" value="Add Rewards"> 
 												</div>
@@ -320,11 +330,44 @@
 											<p style="font-size: 150%;color:black;">--- Redeem Rewards ---</p>
 											<br>
 											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
-												<input style="width: 50%;" type="text" name="points" placeholder=" Rewards"><br>
+												<?php 
+												$queryOffer = "select id, offername, offerdescription, creditedpoints from businessoffer where userid=".$userid." and creditedpoints <= ".$points;
+
+												$resultOffer = $mysqli->query($queryOffer); 
+								                if ($resultOffer->num_rows > 0) { ?>
+								                <select name="offerToRedeem" id="offerSelect" onchange="offerFunction(this)" style="width: 50%;">
+								                	<option>--Select Offer--</option>
+								                <?php 
+								                	while($row = $resultOffer->fetch_assoc()) { 
+								                    ?>
+								                    <option value = "<?php echo $row['creditedpoints'];?>"><?php echo $row['offername']." - ".$row['offerdescription']." - ".$row['creditedpoints'];?></option>
+								                    <?php
+								                	}
+								                	?></select><br>
+								                	<p style="width: 100%;display: none;margin-bottom: 0px; padding-bottom: 0px;" id="offerPoint"></p><br>
+								                	<input type="text" name="redeemPoints" id="redeemPoints" style="display: none;">
 												<div class="submitButton"><br>
 													<input type="submit" value="Redeem Rewards"> 
 												</div>
-											</form>
+											</form><?php
+								            	}else{
+								            		if(isset($_GET['custID'])){
+								            		echo "<p>No offers to redeem as customer has low reward balance.</p>";
+								            		}else{
+								            		echo "<p>Scan customer QR code to redeem offer.</p>";
+								            		}
+								            	}
+												
+												?>	
+												<script>
+												function offerFunction(data) {
+												    var x = document.getElementById("offerSelect").value;
+												    document.getElementById("offerPoint").style.display = 'block';
+												    document.getElementById("offerPoint").innerHTML = x+" Points will be redeemed.";
+												    document.getElementById("redeemPoints").value = data.value;
+												}
+												</script>
+												
 										</div>
                                         <br><br>
 									</div>
