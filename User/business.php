@@ -120,40 +120,38 @@ Changes done on this page by Rajeshwari:
             	//create business
             	// Find Lon and Lat of address
             	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
-				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-				$geo = json_decode($geo, true);
-				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-				}
+							$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+							$geo = json_decode($geo, true);
+							if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+							  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+							  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+							}
 
             	// Check if Image file is uploaded
             	if(!empty($_FILES['image']['name'])){  
 	            	$filename = addslashes($_FILES["image"]["name"]);
-					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-					$file_type = addslashes($_FILES["image"]["type"]);
-					$ext_array = array('jpg','jpeg','png');
-					$ext = pathinfo($filename,PATHINFO_EXTENSION);				
-					if(in_array($ext,$ext_array)){
-						$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+								$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+								$file_type = addslashes($_FILES["image"]["type"]);
+								$ext_array = array('jpg','jpeg','png');
+								$ext = pathinfo($filename,PATHINFO_EXTENSION);				
+								if(in_array($ext,$ext_array)){
+									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
 
-						$result = $mysqli->query($query);
-		                if($result){
-		                    $_SESSION["businessname"]   = $fname;
-		                    $_SESSION["businesssector"] = $lname;
-		                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-		                } else {
-		                    echo "Your Business could not be added. Please Try again.";		
-		                    echo $query;                    
-		                }
-					}
-					else{
-						echo 'Only JPEG and PNG Images can be uploaded';
-					}
-				}
-				else{
-					echo 'Please Select a Image for your Business';
-				}                              
+									$result = $mysqli->query($query);
+					                if($result){
+					                    $_SESSION["businessname"]   = $fname;
+					                    $_SESSION["businesssector"] = $lname;
+					                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+					                } else {
+					                    echo "Your Business could not be added. Please Try again.";		
+					                    echo $query;                    
+					                }
+								} else{
+									echo 'Only JPEG and PNG Images can be uploaded';
+								}
+							} else{
+								echo 'Please Select a Image for your Business';
+							}                              
                 
             } else if (!empty($oName)) {
                 //create offer
@@ -206,18 +204,18 @@ Changes done on this page by Rajeshwari:
 						  FROM businessdetail
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
-                $result = $mysqli->query($query);
-                $businesslistresultset = array();
-                if ($result->num_rows > 0) {
+        $result = $mysqli->query($query);
+        $businesslistresultset = array();
+        if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
 						$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
 						array_push($businesslistresultset, $address);
 					}
-                }
+        }
 				
 				//get offers list
-				$query = "SELECT id, offername, creditedpoints
+				$query = "SELECT id, offername, creditedpoints, offerdescription
 						  FROM businessoffer
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
@@ -226,7 +224,7 @@ Changes done on this page by Rajeshwari:
                 if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
-						$address = $row["offername"] . " - " . $row["creditedpoints"] . " points". "-" . $row["id"];;
+						$address = $row["offername"] . "@" . $row["creditedpoints"] . " points". "@" . $row["id"]. "@" . $row["offerdescription"];
 						array_push($offerlistresultset, $address);
 					}
                 }
@@ -413,8 +411,8 @@ Changes done on this page by Rajeshwari:
 									<div class="register agileits">
 										<?php foreach($offerlistresultset as $value): ?>
 											<div class="offerDiv">
-												<span class="offerDesc"><?php echo explode("-",$value)[0];echo "-"; echo explode("-",$value)[1]; ?></span>
-												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("-",$value)[2]; ?>)"></img>
+												<span class="offerDesc"><?php echo explode("@",$value)[0];echo "<br>"; echo explode("@",$value)[1]; echo "<br>";echo explode("@",$value)[3];?></span>
+												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></img>
 											</div>
 										<?php endforeach; ?>
 									</div>
