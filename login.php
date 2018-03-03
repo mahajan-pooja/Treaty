@@ -19,8 +19,8 @@ session_start();
     <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
     
 	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/user-dashboard.js"></script>
-
+<!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
+ -->
 	<!-- Web-Fonts -->
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -152,7 +152,7 @@ session_start();
 
 			//Social Login
 			//Facebook Sign In
-			if (isset($_POST['fb_signin_btn'])) {
+			if (isset($_POST['fb_signin_btn'])) { 
 
 				$_SESSION['fb_signin_btn'] = $_POST['fb_signin_btn'];
 
@@ -454,18 +454,18 @@ session_start();
 								</label>
 								<br><br>
 								<div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
-                                    <div class="col-md-12">
-                                        <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
-                                        <input name="fb_signup_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
-                                    </div>
-                                </div>
+                    <div class="col-md-12">
+                        <img src="images/fb.png" width="25px" height="25px" class="fb-img" alt="">
+                        <input name="fb_signup_btn" class="form-control btn btn-fb fb-btn-bg" type="submit" value="Sign up with Facebook">
+                    </div>
+                </div>
 
-                                <div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
-                                    <div class="col-md-12">
-                                        <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
-                                        <input name="google_signup_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
-                                    </div>
-                                </div>
+                <div id="social" class="row" style="margin-left: 0px; margin-bottom:10px">
+                    <div class="col-md-12">
+                        <img src="images/google.jpg" width="25px" height="25px" class="google-img" alt="">
+                        <input name="google_signup_btn" class="form-control btn btn-google google-btn-bg" type="submit" value="Sign up with Google">
+                    </div>
+                </div>
 							</form>
 
 						</div>

@@ -1,7 +1,6 @@
 
 <!DOCTYPE html>
-<html class=" js cssanimations csstransitions">
-	<head>
+<html class=" js cssanimations csstransitions"><head>
 	<title>Customer Dashboard</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -11,6 +10,7 @@
 
 	<link href="css/font-awesome.css" rel="stylesheet">
     <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/user-dashboard.js"></script>
 
@@ -19,7 +19,7 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
     <style>
-	.address-list{width: 30%;float: right;height: 690px;overflow-y: auto;} @media (max-width: 1200px) {.address-list{width: 30%;float: left;height: 1000px;overflow-y: auto;}}
+	.address-list{width: 40%;float: right;height: 690px;overflow-y: auto;} @media (max-width: 1200px) {.address-list{width: 40%;float: left;height: 1000px;overflow-y: auto;}}
 	</style>
 	<?php
 	include 'header.php';
@@ -38,7 +38,7 @@
                     <!-- Navigation button, visible on small resolution -->
                     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <i class="icon-menu"></i>
-                    </button>
+                    </button>                    
                     <!-- Main navigation -->
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
@@ -46,7 +46,7 @@
                             <li><a href="customer.php">Dashboard</a></li>
                             <li class="active"><a href="find_location.php">Find Location</a></li>
                             <li><a href="customer_profile.php">Profile</a></li>
-                            <li><a href="../index.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -64,13 +64,13 @@
                 <?php
                     require '../config.php';
 
-                    $query = "SELECT id , businesssector FROM businesssector;";
+                    $query = "SELECT id , businesssectortext FROM businesssector;";
                     $result = $mysqli->query($query); 
                     $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
                     $show_select = $show_select . "<option value='all'>All</option>";
                     
                     while($row = mysqli_fetch_array($result)){
-                        $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssector']."</option>";              
+                        $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
                     }
                     $show_select = $show_select . "</select><br><br>";
                     echo $show_select; 
@@ -122,11 +122,11 @@
                 }
                 var map = document.getElementById('map')
                 map.style.height = '700px';
-                map.style.width = '790px';
+                map.style.width = '670px';
                 
                 //Center with user Location and place a marker on his position
                 var map = new google.maps.Map(document.getElementById('map'),options);
-                var marker = new google.maps.Marker({position:user_latlon,map:map,label:{text:"You",color:"#ffffff",fontWeight: "bold"}});
+                var marker = new google.maps.Marker({animation: google.maps.Animation.DROP,position:user_latlon,map:map,label:{text:"You",color:"#ffffff",fontWeight: "bold"}});
                 
                 // Ajax Call to read locations from DB
                 $.ajax({
@@ -145,7 +145,7 @@
 							var latlng = new google.maps.LatLng(val[1], val[2]);
 							var storeMarker = new google.maps.Marker({position:latlng,map:map,label:{text:val[0].toString(),color:"#FFF",fontWeight: "bold"}});							
 						
-							detail+="<div>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[5]+" Miles</span></div><div style='font-size: 14px;margin: 5px;'>"+val[4]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";	
+							detail+="<table><tr><td><div style='width:100px;height:100px;border: 1px solid #ccc;margin-right: 20px;'><img src='data:image/jpeg;base64,"+ val[7] +"' width='100px' style='height:100px;' /></div></td><td><div style='font-size:18px;'>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[6]+" Miles</span></div><div style='font-size: 14px;margin: 5px 1px;'><i class='fa fa-map-marker' style='font-size: 17px;color: #006dcc;'></i>  "+val[4]+"<div style='margin: 5px 1px;'><i class='fa fa-phone' style='font-size: 17px;color: #006dcc;'></i>  "+ val[5]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div></td></tr></table><hr>";	
 						  }
 						}   
 						$('#details_div').html(detail);

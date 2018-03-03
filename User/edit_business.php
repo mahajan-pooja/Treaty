@@ -1,36 +1,64 @@
+<!-- 
+Changes done on this page:
+- Removed businessname and businesssector from update query as its not getting edited at all
+- Added code for Image and modified the Update query.
+- Added businessphonenumber on screen 
+- Lon and Lat of the address added to update query
+
+-->
 <?php
 	// Start the session
 	session_start();
 	?>
 <!DOCTYPE html>
-<html>
+<html class=" js cssanimations csstransitions">
 	<head>
-		<title>Business Dashboard</title>
-		<!-- For-Mobile-Apps -->
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
-		<!-- //For-Mobile-Apps -->
-		<!-- Style -->
-		<link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
-		<link href="css/font-awesome.css" rel="stylesheet">
-		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="js/user-dashboard.js"></script>
-		<!-- Web-Fonts -->
+	<title>Business Dashboard</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="../images/favicon.ico">
+	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+	<link href="css/font-awesome.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/user-dashboard.js"></script>
+
+	<!-- Web-Fonts -->
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-		<!-- //Web-Fonts -->
+	<!-- //Web-Fonts -->
+
+	<!-- Script for image display after selection -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		function displayImage(input) {
+    		if (input.files && input.files[0]) {
+        	var reader = new FileReader();
+        	reader.onload = function (e) {
+        	$('#image').attr('src', e.target.result);
+       		}
+        reader.readAsDataURL(input.files[0]);
+       }
+    }
+	</script>
+	<!-- Script for image display after selection -->
+	
+	<?php include 'header.php'; ?>
+</head>
 		<?php 
-			include 'business_nav.html';
+
 			require '../config.php';
 			$businessid = $_GET["businessid"];
 			
 			if (isset($_POST['businessname'])) {
                 $businessname = $_POST['businessname'];
             }
-            if (isset($_POST['businesssector'])) {
+            /*if (isset($_POST['businesssector'])) {
                 $businesssector = $_POST['businesssector'];
-            }
+            }*/
             if (isset($_POST['address1'])) {
                 $address1 = $_POST['address1'];
             }
@@ -69,9 +97,38 @@
 			} else if(!empty($cancel)) {
 				echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
 			} else if(!empty($businessname)) {
-				$query = "UPDATE businessdetail
-						 SET businessname=\"".$businessname."\", businesssector=\"".$businesssector."\", address1=\"".$address1."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", modified=sysdate() 
+				//Find Lon and Lat of the adrress.
+				$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
+				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+				$geo = json_decode($geo, true);
+				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+				}
+
+
+				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
+				if($_FILES['image']['error'] == 0){
+					$filename = addslashes($_FILES["image"]["name"]);
+					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+					$file_type = addslashes($_FILES["image"]["type"]);
+					$ext_array = array('jpg','jpeg','png');
+					$ext = pathinfo($filename,PATHINFO_EXTENSION);
+					if(in_array($ext,$ext_array)){
+
+						$query = "UPDATE businessdetail
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
 						 WHERE id=".$businessid;
+					}
+					else{
+						echo 'Only JPEG and PNG Images can be uploaded';
+					}
+				}
+				else{
+					$query = "UPDATE businessdetail
+						 SET address1=\"".$address1."\",address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\" ,latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+						 WHERE id=".$businessid;
+				}
 				
                 $result = $mysqli->query($query);
                 if ($result) {
@@ -80,26 +137,56 @@
                     echo "Failed to update profile";
                 }
 			} else if(!empty($businessid)) {
-				$query = "SELECT businessname, businesssector, address1, address2, city, state, country, zipcode
-						  FROM businessdetail
-						  WHERE id=".$businessid;
+				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
 				$result = $mysqli->query($query);
 				$businessresultset = array();
 				if ($result->num_rows > 0) {
 					$row = $result->fetch_array();
 					array_push($businessresultset, $row["businessname"]);
-					array_push($businessresultset, $row["businesssector"]);
+					array_push($businessresultset, $row["businesssectortext"]);
+					//array_push($businessresultset, $row["businesssector"]);
 					array_push($businessresultset, $row["address1"]);
 					array_push($businessresultset, $row["address2"]);
 					array_push($businessresultset, $row["city"]);
 					array_push($businessresultset, $row["state"]);
 					array_push($businessresultset, $row["country"]);
 					array_push($businessresultset, $row["zipcode"]);
+					array_push($businessresultset, $row["businessphonenumber"]);
+					array_push($businessresultset, base64_encode($row["businessimage"]));
 				}
 			}
 			?>
-	</head>
 	<body>
+            <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a href="../index.php" class="brand">
+                        <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
+                        <!-- This is website logo -->
+                    </a>
+                    <!-- Navigation button, visible on small resolution -->
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-menu"></i>
+                    </button>
+                    <!-- Main navigation -->
+                    <div class="nav-collapse collapse pull-right">
+                        <ul class="nav">
+                            <li><a href="../index.php">Home</a></li>
+							<?php
+                                if($_SESSION['displaydashboard']){
+                                    echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
+                                }
+                            ?> 
+                            <li><a href="customer_list.php">Customers</a></li>                                                       
+                            <li><a href="business_profile.php">Profile</a></li>
+                            <li><a href="../logout.php">Logout</a></li>                           
+                        </ul>
+                    </div>
+                    <!-- End main navigation -->
+                </div>
+            </div>
+        </div>
+        <br><br>
 		<h1></h1>
 		<div class="container">
 			<div class="tab">
@@ -126,9 +213,7 @@
 								width: 'auto',
 								fit: true
 							});
-						});
-						
-						
+						});					
 						
 						function editOffer(){
 							alert('hi');
@@ -149,14 +234,27 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Edit Your Business</p>
 									<div class="register agileits">
-										<form method="post" class="agile_form">
+										
+										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
+											<table style="width: 91.6%;">
+                                        	<tr>
+                                            	<td style="padding-left: 6px;">
+                                            		<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
+                                            		<img src = <?php if(isset($businessresultset[9])) echo 'data:image/jpeg;base64,'.$businessresultset[9] ?>  alt = "Image not Available" id = "image" width="100px" />
+                                            		</div>
+                                            	</td>
+                                            	<td style="vertical-align: bottom;width: 100%;">                                        
+                                            		<input type="file" name="image" onchange= "displayImage(this)" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>                                                  
+                                            	</td>
+                                            </tr>
+                                        	</table>
+
 											<input type="text" placeholder="Business Name" name="businessname" class="name agileits" required="" 
 												value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>" readonly />
-											<input type="text" placeholder="Business Sector" name="businesssector" class="name agileits" required=""
-												value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>" readonly />
+											<input type="text" placeholder="Business Sector" name="businesssectortext" class="name agileits" required="" value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>" readonly />
 											<input type="text" placeholder="Address : Street 1" name="address1" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[2]) ? '' : $businessresultset[2] ?>" />
-											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits" required=""
+											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits"
 												value="<?php echo !isset($businessresultset[3]) ? '' : $businessresultset[3] ?>" />
 											<input type="text" placeholder="City" name="city" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[4]) ? '' : $businessresultset[4] ?>" />
@@ -166,12 +264,14 @@
 												value="<?php echo !isset($businessresultset[6]) ? '' : $businessresultset[6] ?>" />
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[7]) ? '' : $businessresultset[7] ?>" />
+											<input type="text" placeholder="Business Phone Number" name="businessphonenumber" class="name agileits" required=""	value="<?php echo !isset($businessresultset[8]) ? '' : $businessresultset[8] ?>" />
 											<div class="submit"><br>
 												<input type="submit" value="Save">
 												<input name="cancel" type="submit" value="Cancel">
 											</div>
 										</form>
 									</div>
+                                    <br>
 								</div>
 								<!-- Delete business -->
 								<div class="tab-1 resp-tab-content">

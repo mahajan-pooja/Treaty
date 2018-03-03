@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `treaty`.`user`;
 CREATE TABLE IF NOT EXISTS `treaty`.`user` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(255) CHARACTER SET `utf8` NOT NULL,
-  `phonenumber` VARCHAR(10) NOT NULL,
+  `phonenumber` VARCHAR(11) NOT NULL,
   `role` VARCHAR(20) CHARACTER SET `utf8` NULL DEFAULT NULL,
   `lastlogintime` TIMESTAMP NULL DEFAULT NULL,
   `encryptedpassword` VARCHAR(255) NOT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`userdetail` (
   `userid` BIGINT(20) NOT NULL,
   `firstname` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
   `lastname` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
-  `phonenumber` VARCHAR(10) NOT NULL,
+  `phonenumber` VARCHAR(11) NOT NULL,
   `address1` VARCHAR(100) CHARACTER SET `utf8` NOT NULL,
   `address2` VARCHAR(100) CHARACTER SET `utf8` NULL DEFAULT NULL,
   `city` VARCHAR(80) CHARACTER SET `utf8` NOT NULL,
@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`userdetail` (
   `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `is_send_sms` BIGINT(20) NOT NULL DEFAULT '0',
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -71,7 +72,7 @@ COLLATE = utf8_unicode_ci;
 DROP TABLE IF EXISTS `treaty`.`businesssector`;
 CREATE TABLE IF NOT EXISTS `treaty`.`businesssector` (
 `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-`businesssector` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
+`businesssectortext` VARCHAR(50) CHARACTER SET 'utf8' NOT NULL,
 PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
@@ -94,9 +95,11 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `state` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `country` VARCHAR(50) CHARACTER SET `utf8` NOT NULL,
   `zipcode` MEDIUMINT(5) UNSIGNED ZEROFILL NOT NULL,  
+  `businessphonenumber` VARCHAR(11) NOT NULL,
   `latitude` FLOAT(10,6) NOT NULL,
   `longitude` FLOAT(10,6) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `businessimage` LONGBLOB NOT NULL,
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -166,4 +169,29 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;
 
+-- -------------------------------------------------------------------------------------------------------
+-- Table treaty.rewardtransaction
+-- -------------------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `treaty`.`rewardtransaction`;
+
+CREATE TABLE IF NOT EXISTS `treaty`.`rewardtransaction` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userid` BIGINT(20) NOT NULL,
+  `businessid` BIGINT(20) NOT NULL,
+  `earnedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `redeemedpoints` BIGINT(80) NULL DEFAULT NULL,
+  `balance` BIGINT(80) NULL DEFAULT NULL,
+  `isactive` BIGINT(20) NOT NULL DEFAULT '1',
+  `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_customeroffer_userid_1`
+    FOREIGN KEY (`userid`)
+    REFERENCES `treaty`.`user` (`id`),
+  CONSTRAINT `fk_customeroffer_businessid_1`
+    FOREIGN KEY (`businessid`)
+    REFERENCES `treaty`.`businessdetail` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_unicode_ci;
 

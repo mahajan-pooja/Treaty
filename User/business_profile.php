@@ -4,15 +4,17 @@
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
-<head>
+	<head>
 	<title>Business Owner Profile</title>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="../images/favicon.ico">
 	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-	<link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<link href="css/font-awesome.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
+    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/user-dashboard.js"></script>
 
@@ -21,7 +23,11 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
 	<?php
-		include 'business_profile_nav.php';
+	include 'header.php';
+	?>
+</head>
+
+	<?php
         require '../config.php';
 
 		$first_name = $_SESSION['first_name'];
@@ -55,16 +61,19 @@
     	if(isset($_POST['zip'])){
     		$zip = $_POST['zip'];
     	}
-        if(isset($_POST['old-pwd'])){
-            $oldpwd = $_POST['old-pwd'];
-        }
-        if(isset($_POST['new-pwd'])){
-            $newpwd = $_POST['new-pwd'];
-        }
-        if(isset($_POST['conf-new-pwd'])){
-            $confnewpwd = $_POST['conf-new-pwd'];
-        }
-
+      if(isset($_POST['old-pwd'])){
+          $oldpwd = $_POST['old-pwd'];
+      }
+      if(isset($_POST['new-pwd'])){
+          $newpwd = $_POST['new-pwd'];
+      }
+      if(isset($_POST['conf-new-pwd'])){
+          $confnewpwd = $_POST['conf-new-pwd'];
+      }
+      $notifyCheck = 0;
+      if(isset($_POST['notifyCheck'])) {
+        $notifyCheck = 1;
+      }
     	$userid = $_SESSION['userid'];
         if(isset($_POST['save']) && !empty($oldpwd)){
             if (strcmp($newpwd,$confnewpwd) != 0) {
@@ -111,23 +120,24 @@
             $result2 = $mysqli->query($query2);
 
             if ($result2->num_rows == 0 && $result->num_rows > 0) {
-				$row = $result->fetch_array();
-				$user_id = $row["id"];
-        		//insert the entry in userdetail table
-        		// insert into table
-        		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-        			address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-        					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-        		$result = $mysqli->query($query);
-        		if ($result) {
-        			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-        		} else {
-        			echo "Failed to update profile";
-        		}
+        				$row = $result->fetch_array();
+        				$user_id = $row["id"];
+            		//insert the entry in userdetail table
+            		// insert into table
+            		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
+            			address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+            					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\",". $notifyCheck .", sysdate(), sysdate())";
+            		$result = $mysqli->query($query);
+            		if ($result) {
+            			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+            		} else {
+            			echo "Failed to update profile";
+            		}
             } else {
                 $query = "UPDATE userdetail
                           SET firstname = \"".$fname."\", lastname = \"".$lname."\",  phonenumber= \"".$phone."\", address1 = \"".$street1."\",
                              address2 = \"".$street2."\", city = \"".$city."\", state = \"".$state."\", country = \"".$country."\", zipcode = \"".$zip."\",
+                             is_send_sms = ".$notifyCheck.",
                              modified = sysdate()
                           WHERE userid=".$userid;
                 $result = $mysqli->query($query);
@@ -138,7 +148,7 @@
                 }
             }
     	} else {
-            $query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode
+            $query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode, is_send_sms
 					  FROM userdetail
 					  WHERE userid=\"".$userid."\"";
             $result = $mysqli->query($query);
@@ -157,6 +167,7 @@
     			array_push($profileresultset, $row["state"]);
     			array_push($profileresultset, $row["country"]);
     			array_push($profileresultset, $row["zipcode"]);
+          array_push($profileresultset, $row["is_send_sms"]);
             } else {
                 // donot display dashboard link
                 $_SESSION['displaydashboard'] = false;
@@ -165,8 +176,39 @@
     	/* close connection */
     	$mysqli->close();
 	?>
-</head>
+
 <body>
+        <div class="navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a href="../index.php" class="brand">
+                        <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
+                        <!-- This is website logo -->
+                    </a>
+                    <!-- Navigation button, visible on small resolution -->
+                    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <i class="icon-menu"></i>
+                    </button>
+                    <!-- Main navigation -->
+                    <div class="nav-collapse collapse pull-right">
+                        <ul class="nav">
+                            <li><a href="../index.php">Home</a></li>
+							<?php
+                                if($_SESSION['displaydashboard']){
+                                    echo "<li><a href='business.php'>Dashboard</a></li>";
+                                }
+                            ?> 
+                            <li><a href="customer_list.php">Customers</a></li>                                                       
+                            <li class="active"><a href="business_profile.php">Profile</a></li>
+                            <li><a href="../logout.php">Logout</a></li>                           
+                        </ul>
+                    </div>
+                    <!-- End main navigation -->
+                </div>
+            </div>
+        </div>
+        <br><br>
+
 	<h1></h1>
 	<div class="container">
 		<div class="tab">
@@ -244,10 +286,11 @@
                                               value="<?php echo !isset($profileresultset[7]) ? '' : $profileresultset[7]; ?>" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits"
                                               value="<?php echo !isset($profileresultset[8]) ? '' : $profileresultset[8]; ?>" required=""/>
-										<p class="notPara"><br>Do you want offer notifications?&nbsp&nbsp&nbsp<input type="checkbox" name="notifyCheck" checked></p>
+                                        <p class="notPara"><br><input type="checkbox" name="notifyCheck" <?php echo ($profileresultset[9]==1 ? 'checked' : '');?>>&nbsp&nbsp&nbspDo you want offer notifications?</p>
 										<div class="submit"><br>
 										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
+                                          <br><br>
 										</div>
 									</form>
 								</div>
