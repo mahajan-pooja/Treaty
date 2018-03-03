@@ -19,7 +19,7 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
     <style>
-	.address-list{width: 30%;float: right;height: 690px;overflow-y: auto;} @media (max-width: 1200px) {.address-list{width: 30%;float: left;height: 1000px;overflow-y: auto;}}
+	.address-list{width: 40%;float: right;height: 690px;overflow-y: auto;} @media (max-width: 1200px) {.address-list{width: 40%;float: left;height: 1000px;overflow-y: auto;}}
 	</style>
 	<?php
 	include 'header.php';
@@ -38,7 +38,7 @@
                     <!-- Navigation button, visible on small resolution -->
                     <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                         <i class="icon-menu"></i>
-                    </button>
+                    </button>                    
                     <!-- Main navigation -->
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
@@ -64,13 +64,13 @@
                 <?php
                     require '../config.php';
 
-                    $query = "SELECT id , businesssector FROM businesssector;";
+                    $query = "SELECT id , businesssectortext FROM businesssector;";
                     $result = $mysqli->query($query); 
                     $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
                     $show_select = $show_select . "<option value='all'>All</option>";
                     
                     while($row = mysqli_fetch_array($result)){
-                        $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssector']."</option>";              
+                        $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
                     }
                     $show_select = $show_select . "</select><br><br>";
                     echo $show_select; 
@@ -122,7 +122,7 @@
                 }
                 var map = document.getElementById('map')
                 map.style.height = '700px';
-                map.style.width = '790px';
+                map.style.width = '670px';
                 
                 //Center with user Location and place a marker on his position
                 var map = new google.maps.Map(document.getElementById('map'),options);
@@ -145,7 +145,7 @@
 							var latlng = new google.maps.LatLng(val[1], val[2]);
 							var storeMarker = new google.maps.Marker({position:latlng,map:map,label:{text:val[0].toString(),color:"#FFF",fontWeight: "bold"}});							
 						
-							detail+="<div style='font-size:18px;'>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[6]+" Miles</span></div><div style='font-size: 14px;margin: 5px 1px;'><i class='fa fa-map-marker' style='font-size: 17px;color: #006dcc;'></i>  "+val[4]+"<div style='margin: 5px 1px;'><i class='fa fa-phone' style='font-size: 17px;color: #006dcc;'></i>  "+ val[5]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div><hr>";	
+							detail+="<table><tr><td><div style='width:100px;height:100px;border: 1px solid #ccc;margin-right: 20px;'><img src='data:image/jpeg;base64,"+ val[7] +"' width='100px' style='height:100px;' /></div></td><td><div style='font-size:18px;'>"+val[0]+". "+val[3]+"&nbsp;&nbsp;&nbsp;&nbsp;<span class='pull-right' style='font-size:14px;'>"+val[6]+" Miles</span></div><div style='font-size: 14px;margin: 5px 1px;'><i class='fa fa-map-marker' style='font-size: 17px;color: #006dcc;'></i>  "+val[4]+"<div style='margin: 5px 1px;'><i class='fa fa-phone' style='font-size: 17px;color: #006dcc;'></i>  "+ val[5]+"</div><div><a class='btn btn-primary btn-xs' target='_blank' href='https://www.google.com/maps/dir/"+user_lat+","+user_lon+"/"+val[1]+","+val[2]+"'style='padding: 0px 5px;font-size: 12px;'>Get Direction</a></div></td></tr></table><hr>";	
 						  }
 						}   
 						$('#details_div').html(detail);

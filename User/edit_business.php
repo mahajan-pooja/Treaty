@@ -1,3 +1,11 @@
+<!-- 
+Changes done on this page:
+- Removed businessname and businesssector from update query as its not getting edited at all
+- Added code for Image and modified the Update query.
+- Added businessphonenumber on screen 
+- Lon and Lat of the address added to update query
+
+-->
 <?php
 	// Start the session
 	session_start();
@@ -30,7 +38,7 @@
     		if (input.files && input.files[0]) {
         	var reader = new FileReader();
         	reader.onload = function (e) {
-        	$('#business_image').attr('src', e.target.result);
+        	$('#image').attr('src', e.target.result);
        		}
         reader.readAsDataURL(input.files[0]);
        }
@@ -38,9 +46,7 @@
 	</script>
 	<!-- Script for image display after selection -->
 	
-	<?php
-	include 'header.php';
-	?>
+	<?php include 'header.php'; ?>
 </head>
 		<?php 
 
@@ -50,9 +56,9 @@
 			if (isset($_POST['businessname'])) {
                 $businessname = $_POST['businessname'];
             }
-            if (isset($_POST['businesssector'])) {
+            /*if (isset($_POST['businesssector'])) {
                 $businesssector = $_POST['businesssector'];
-            }
+            }*/
             if (isset($_POST['address1'])) {
                 $address1 = $_POST['address1'];
             }
@@ -91,9 +97,38 @@
 			} else if(!empty($cancel)) {
 				echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
 			} else if(!empty($businessname)) {
-				$query = "UPDATE businessdetail
-						 SET businessname=\"".$businessname."\", businesssector=\"".$businesssector."\", address1=\"".$address1."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", modified=sysdate() 
+				//Find Lon and Lat of the adrress.
+				$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
+				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+				$geo = json_decode($geo, true);
+				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+				}
+
+
+				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
+				if($_FILES['image']['error'] == 0){
+					$filename = addslashes($_FILES["image"]["name"]);
+					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+					$file_type = addslashes($_FILES["image"]["type"]);
+					$ext_array = array('jpg','jpeg','png');
+					$ext = pathinfo($filename,PATHINFO_EXTENSION);
+					if(in_array($ext,$ext_array)){
+
+						$query = "UPDATE businessdetail
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
 						 WHERE id=".$businessid;
+					}
+					else{
+						echo 'Only JPEG and PNG Images can be uploaded';
+					}
+				}
+				else{
+					$query = "UPDATE businessdetail
+						 SET address1=\"".$address1."\",address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\" ,latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+						 WHERE id=".$businessid;
+				}
 				
                 $result = $mysqli->query($query);
                 if ($result) {
@@ -102,21 +137,22 @@
                     echo "Failed to update profile";
                 }
 			} else if(!empty($businessid)) {
-				$query = "SELECT businessname, businesssector, address1, address2, city, state, country, zipcode
-						  FROM businessdetail
-						  WHERE id=".$businessid;
+				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
 				$result = $mysqli->query($query);
 				$businessresultset = array();
 				if ($result->num_rows > 0) {
 					$row = $result->fetch_array();
 					array_push($businessresultset, $row["businessname"]);
-					array_push($businessresultset, $row["businesssector"]);
+					array_push($businessresultset, $row["businesssectortext"]);
+					//array_push($businessresultset, $row["businesssector"]);
 					array_push($businessresultset, $row["address1"]);
 					array_push($businessresultset, $row["address2"]);
 					array_push($businessresultset, $row["city"]);
 					array_push($businessresultset, $row["state"]);
 					array_push($businessresultset, $row["country"]);
 					array_push($businessresultset, $row["zipcode"]);
+					array_push($businessresultset, $row["businessphonenumber"]);
+					array_push($businessresultset, base64_encode($row["businessimage"]));
 				}
 			}
 			?>
@@ -177,9 +213,7 @@
 								width: 'auto',
 								fit: true
 							});
-						});
-						
-						
+						});					
 						
 						function editOffer(){
 							alert('hi');
@@ -200,30 +234,27 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Edit Your Business</p>
 									<div class="register agileits">
-										<!-- Form for Image-->
-										<form action ="#" method="POST" enctype="multipart/form-data" runat="server" class="agile_form" style="margin:0px;">
-                                        <table style="width: 91.6%;">
+										
+										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
+											<table style="width: 91.6%;">
                                         	<tr>
-                                            <td style="padding-left: 6px;">
-                                            <div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
-                                            <img src = "images/default-image.png" alt = "Upload Image" id = "business_image" width="100px" />
-                                            </div>
-                                            </td>
-                                            <td style="vertical-align: bottom;width: 100%;">                                        
-                                            <input type="file" name="image" onchange= "displayImage(this)" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>                                                  
-                                            </td>
+                                            	<td style="padding-left: 6px;">
+                                            		<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
+                                            		<img src = <?php if(isset($businessresultset[9])) echo 'data:image/jpeg;base64,'.$businessresultset[9] ?>  alt = "Image not Available" id = "image" width="100px" />
+                                            		</div>
+                                            	</td>
+                                            	<td style="vertical-align: bottom;width: 100%;">                                        
+                                            		<input type="file" name="image" onchange= "displayImage(this)" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>                                                  
+                                            	</td>
                                             </tr>
-                                        </table>
-                                        </form>
+                                        	</table>
 
-										<form method="post" class="agile_form">
 											<input type="text" placeholder="Business Name" name="businessname" class="name agileits" required="" 
 												value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>" readonly />
-											<input type="text" placeholder="Business Sector" name="businesssector" class="name agileits" required=""
-												value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>" readonly />
+											<input type="text" placeholder="Business Sector" name="businesssectortext" class="name agileits" required="" value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>" readonly />
 											<input type="text" placeholder="Address : Street 1" name="address1" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[2]) ? '' : $businessresultset[2] ?>" />
-											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits" required=""
+											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits"
 												value="<?php echo !isset($businessresultset[3]) ? '' : $businessresultset[3] ?>" />
 											<input type="text" placeholder="City" name="city" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[4]) ? '' : $businessresultset[4] ?>" />
@@ -233,6 +264,7 @@
 												value="<?php echo !isset($businessresultset[6]) ? '' : $businessresultset[6] ?>" />
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[7]) ? '' : $businessresultset[7] ?>" />
+											<input type="text" placeholder="Business Phone Number" name="businessphonenumber" class="name agileits" required=""	value="<?php echo !isset($businessresultset[8]) ? '' : $businessresultset[8] ?>" />
 											<div class="submit"><br>
 												<input type="submit" value="Save">
 												<input name="cancel" type="submit" value="Cancel">
