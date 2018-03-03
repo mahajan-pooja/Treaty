@@ -58,8 +58,14 @@ SELECT id,businessname,businesssector,address1,address2,city,state,country,zipco
 FROM treaty.businessdetail WHERE businesssector = "Restaurant" HAVING distance < 8 ORDER BY distance LIMIT 0 , 20;
 
 -- business sector name and business detail table
+use `treaty`;
 SELECT a.businessname, b.businesssector, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage
 						  FROM businessdetail as a
                           JOIN businesssector as b
                           ON a.businesssector = b.id
-						  WHERE a.id=1;
+						  WHERE a.id=4;
+                          
+INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) 
+VALUES ("5","Family Wash","8","1543 East Calaveras Blvd","11","Milpitas","California","United States","95035",12345678901,37.538941,-122.034422,LOAD_FILE('C:/Treaty_Images/Replace.jpg'),sysdate(),sysdate());                          
+
+SELECT a.businessname, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=5 LIMIT 1;

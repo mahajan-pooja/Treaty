@@ -1,8 +1,9 @@
 <!-- 
-Chnages done on this page:
+Changes done on this page:
 - Removed businessname and businesssector from update query as its not getting edited at all
 - Added code for Image and modified the Update query.
 - Added businessphonenumber on screen 
+- Lon and Lat of the address added to update query
 
 -->
 <?php
