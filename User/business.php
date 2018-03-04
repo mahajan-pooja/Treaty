@@ -141,7 +141,29 @@ Changes done on this page by Rajeshwari:
 					                if($result){
 					                    $_SESSION["businessname"]   = $fname;
 					                    $_SESSION["businesssector"] = $lname;
-					                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+															//send email
+											        $subject = "You have registered a new business!!";
+											        //$message = "Please use this password to login ".$password."<br> Please click on this link";
+											        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+											                       <html xmlns="http://www.w3.org/1999/xhtml">
+											                       <head>
+											                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+											                       </head>
+											                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+											                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+											                       <div>
+											                               <p> You have registered your business </p>
+																										 <p> Business Name : '.$fname.'</p> 
+																										 <p> Business Sector : '.$lname.'</p>
+											                       </div>
+											                       </body>
+											                       </html>';
+											        $headers = "From : poonam.6788@gmail.com";
+											        $headers = 'MIME-Version: 1.0' . "\r\n";
+											        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+											        if(mail($email, $subject, $message, $headers)){ 
+					                    	echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+															}
 					                } else {
 					                    echo "Your Business could not be added. Please Try again.";		
 					                    echo $query;                    
@@ -161,7 +183,29 @@ Changes done on this page by Rajeshwari:
                         ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\",1, sysdate(), sysdate())";
                 $result = $mysqli->query($query);
                 if ($result) {
+									//send email
+									$subject = "You have registered a new offer!!";
+									$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+																 <html xmlns="http://www.w3.org/1999/xhtml">
+																 <head>
+																 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+																 </head>
+																 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+																 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+																 <div>
+																				 <p> You have registered your business </p>
+																				 <p> Offer Name : '.$oName.'</p> 
+																				 <p> Offer Desc : '.$oDesc.'</p>
+																				 <p> Offer Points : '.$oPoints.'</p>
+																 </div>
+																 </body>
+																 </html>';
+									$headers = "From : poonam.6788@gmail.com";
+									$headers = 'MIME-Version: 1.0' . "\r\n";
+									$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+									if(mail($email, $subject, $message, $headers)) {
                     echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
+									}
                 } else {
                     echo "Failed to update profile";
                 }

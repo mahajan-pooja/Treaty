@@ -109,20 +109,19 @@ Changes done on this page:
 
 				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
 				if($_FILES['image']['error'] == 0){
-					$filename = addslashes($_FILES["image"]["name"]);
-					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-					$file_type = addslashes($_FILES["image"]["type"]);
-					$ext_array = array('jpg','jpeg','png');
-					$ext = pathinfo($filename,PATHINFO_EXTENSION);
-					if(in_array($ext,$ext_array)){
-
-						$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
-						 WHERE id=".$businessid;
-					}
-					else{
-						echo 'Only JPEG and PNG Images can be uploaded';
-					}
+						$filename = addslashes($_FILES["image"]["name"]);
+						$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+						$file_type = addslashes($_FILES["image"]["type"]);
+						$ext_array = array('jpg','jpeg','png');
+						$ext = pathinfo($filename,PATHINFO_EXTENSION);
+						if(in_array($ext,$ext_array)){
+								$query = "UPDATE businessdetail
+								 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+								 WHERE id=".$businessid;
+						}
+						else{
+								echo 'Only JPEG and PNG Images can be uploaded';
+						}
 				}
 				else{
 					$query = "UPDATE businessdetail
@@ -130,33 +129,52 @@ Changes done on this page:
 						 WHERE id=".$businessid;
 				}
 				
-                $result = $mysqli->query($query);
-                if ($result) {
-                    echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-                } else {
-                    echo "Failed to update profile";
-                }
+        $result = $mysqli->query($query);
+        if ($result) {
+						//send email
+						$subject = "You have updated business details!!";
+						$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+													 <html xmlns="http://www.w3.org/1999/xhtml">
+													 <head>
+													 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+													 </head>
+													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+													 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+													 <div>
+																	 <p> You have updated your business </p>
+													 </div>
+													 </body>
+													 </html>';
+						$headers = "From : poonam.6788@gmail.com";
+						$headers = 'MIME-Version: 1.0' . "\r\n";
+						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						if(mail($email, $subject, $message, $headers)) {
+	            echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+						}
+        } else {
+            echo "Failed to update profile";
+        }
 			} else if(!empty($businessid)) {
-				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
-				$result = $mysqli->query($query);
-				$businessresultset = array();
-				if ($result->num_rows > 0) {
-					$row = $result->fetch_array();
-					array_push($businessresultset, $row["businessname"]);
-					array_push($businessresultset, $row["businesssectortext"]);
-					//array_push($businessresultset, $row["businesssector"]);
-					array_push($businessresultset, $row["address1"]);
-					array_push($businessresultset, $row["address2"]);
-					array_push($businessresultset, $row["city"]);
-					array_push($businessresultset, $row["state"]);
-					array_push($businessresultset, $row["country"]);
-					array_push($businessresultset, $row["zipcode"]);
-					array_push($businessresultset, $row["businessphonenumber"]);
-					array_push($businessresultset, base64_encode($row["businessimage"]));
-				}
+					$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
+					$result = $mysqli->query($query);
+					$businessresultset = array();
+					if ($result->num_rows > 0) {
+							$row = $result->fetch_array();
+							array_push($businessresultset, $row["businessname"]);
+							array_push($businessresultset, $row["businesssectortext"]);
+							//array_push($businessresultset, $row["businesssector"]);
+							array_push($businessresultset, $row["address1"]);
+							array_push($businessresultset, $row["address2"]);
+							array_push($businessresultset, $row["city"]);
+							array_push($businessresultset, $row["state"]);
+							array_push($businessresultset, $row["country"]);
+							array_push($businessresultset, $row["zipcode"]);
+							array_push($businessresultset, $row["businessphonenumber"]);
+							array_push($businessresultset, base64_encode($row["businessimage"]));
+					}
 			}
-			?>
-	<body>
+		?>
+		<body>
             <div class="navbar">
             <div class="navbar-inner">
                 <div class="container">
@@ -172,7 +190,7 @@ Changes done on this page:
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
-							<?php
+														<?php
                                 if($_SESSION['displaydashboard']){
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }

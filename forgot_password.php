@@ -62,11 +62,8 @@
 			        $headers = 'MIME-Version: 1.0' . "\r\n";
 			        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			        if(mail($email, $subject, $message, $headers)){ 
-			        				        	//echo "email".$headers;die;
-
 			            echo '<script>window.location.href = "reset_password.php";</script>';
 			        }
-			        
 			    } else {
 			        $emailresponse = "User does not exist. Please signup.";
 			    }
