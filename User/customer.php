@@ -9,7 +9,7 @@
 					  FROM businessoffer
 					  WHERE businessid=".$sbusinessid;
 			$result = $mysqli->query($query);
-	  		if ($result->num_rows > 0) {
+	  	if ($result->num_rows > 0) {
 				$totalpoints = $result->fetch_row()[0];
 			}
 			$query = "SELECT id as totalpoints
