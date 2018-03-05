@@ -28,8 +28,7 @@
 			if(isset($_POST['email'])){
 				$email = $_POST['email'];
 
-			}		
-			
+			}
 				
 			//send email
 			if(!empty($email)) {

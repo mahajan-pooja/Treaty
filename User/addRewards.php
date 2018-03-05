@@ -24,7 +24,7 @@
 	if ($qryResult) {
 			//send mail to business owner
 			$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
-			$email = $mysqli->query($query)->fetch_object()->email;  
+			$email = $mysqli->query($query)->fetch_object()->email;
 			//send email
 			$subject = "You have redeemed an offer!!";
 			$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
