@@ -91,34 +91,33 @@ session_start();
 			// database connection
 			if(!empty($signInemail)) {
 			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"
-				and isactive=1";
+										and isactive=1";
 			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
-
-					$row = $result->fetch_array();
-					//Store userid in Session
-					//Use $_SESSION['userid'] wherever u want to access the userid
-			        $_SESSION['userid'] = $row['id'];
-					$role = $row['role'];
-					// check if there if exists an entry in user_detail table
-					$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
-					$result = $mysqli->query($query);
-					// if yes, do not take him to profile page
-					if ($result->num_rows > 0) {
-						if(strcasecmp($role, 'Business Owner') == 0) {
-							echo '<script>window.location.href = "User/business.php";</script>';
-						} else {
-							echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
-						}
-					} else {
-						//if no, take him to profile page
-						if(strcasecmp($role, 'Business Owner') == 0) {
-							echo '<script>window.location.href = "User/business_profile.php";</script>';
-						} else {
-							echo '<script>window.location.href = "User/customer_profile.php";</script>';
-						}
-					}
+							$row = $result->fetch_array();
+							//Store userid in Session
+							//Use $_SESSION['userid'] wherever u want to access the userid
+					        $_SESSION['userid'] = $row['id'];
+							$role = $row['role'];
+							// check if there if exists an entry in user_detail table
+							$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
+							$result = $mysqli->query($query);
+							// if yes, do not take him to profile page
+							if ($result->num_rows > 0) {
+									if(strcasecmp($role, 'Business Owner') == 0) {
+											echo '<script>window.location.href = "User/business.php";</script>';
+									} else {
+											echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+									}
+							} else {
+									//if no, take him to profile page
+									if(strcasecmp($role, 'Business Owner') == 0) {
+											echo '<script>window.location.href = "User/business_profile.php";</script>';
+									} else {
+											echo '<script>window.location.href = "User/customer_profile.php";</script>';
+									}
+							}
 			    } else {
 			        $response="Invalid username/password";
 			    }
@@ -138,11 +137,30 @@ session_start();
 			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 			            $result = $mysqli->query($query);
 			            if ($result) {
-							if(strcasecmp($signUprole, 'Business Owner') == 0) {
-								echo '<script>window.location.href = "User/business_profile.php";</script>';
-							} else {
-								echo '<script>window.location.href = "User/customer_profile.php";</script>';
-							}
+											//send email
+											$subject = "Congratulations!!Welcome to Treaty!!";
+											$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+																		 <html xmlns="http://www.w3.org/1999/xhtml">
+																		 <head>
+																		 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+																		 </head>
+																		 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+																		 		<img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+																				 <div>
+																						 <p> Thanks for creating an acount on treaty. </p>
+																				 </div>
+																		 </body>
+																		 </html>';
+											$headers = "From : poonam.6788@gmail.com";
+											$headers = 'MIME-Version: 1.0' . "\r\n";
+											$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+											if(mail($signUpemail, $subject, $message, $headers)){
+													if(strcasecmp($signUprole, 'Business Owner') == 0) {
+															echo '<script>window.location.href = "User/business_profile.php";</script>';
+													} else {
+															echo '<script>window.location.href = "User/customer_profile.php";</script>';
+													}
+											}
 			            } else {
 			                $signupresponse="Failed to signup";
 			            }

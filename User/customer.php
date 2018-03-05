@@ -4,24 +4,47 @@
 	$userid = $_SESSION['userid'];
 	require '../config.php';
 	if(isset($_GET['businessid'])) {
-		$businessid= $_GET['businessid'];
-		$query = "SELECT SUM(creditedpoints) as totalpoints
-				  FROM businessoffer
-				  WHERE businessid=".$sbusinessid;
-		$result = $mysqli->query($query);
-  		if ($result->num_rows > 0) {
-			$totalpoints = $result->fetch_row()[0];
-		}
-		$query = "SELECT id as totalpoints
-		 		  FROM customerbusiness
-		 		  WHERE businessid=".$sbusinessid." and userid=".$userid;
-		$result = $mysqli->query($query);
-  		if ($result->num_rows = 0) {
-			//create offer
-			$query  = "INSERT INTO customerbusiness(userid, businessid, earnedpoints, isactive, modified, created)
-					VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
+			$businessid= $_GET['businessid'];
+			$query = "SELECT SUM(creditedpoints) as totalpoints
+					  FROM businessoffer
+					  WHERE businessid=".$sbusinessid;
 			$result = $mysqli->query($query);
-		}
+	  		if ($result->num_rows > 0) {
+				$totalpoints = $result->fetch_row()[0];
+			}
+			$query = "SELECT id as totalpoints
+			 		  FROM customerbusiness
+			 		  WHERE businessid=".$sbusinessid." and userid=".$userid;
+			$result = $mysqli->query($query);
+  		if ($result->num_rows = 0) {
+					//create offer
+					$query  = "INSERT INTO customerbusiness(userid, businessid, earnedpoints, isactive, modified, created)
+							VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
+					$result = $mysqli->query($query);
+					if ($result) {
+							//send mail to business owner
+							$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
+							$email = $mysqli->query($query)->fetch_object()->email;  
+							//send email
+							$subject = "You have subscribed to a new business!!";
+							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+														 <html xmlns="http://www.w3.org/1999/xhtml">
+														 <head>
+														 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+														 </head>
+														 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+														 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+														 <div>
+																 <p> You have subscribed to a new business </p>
+														 </div>
+														 </body>
+														 </html>';
+							$headers = "From : poonam.6788@gmail.com";
+							$headers = 'MIME-Version: 1.0' . "\r\n";
+							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+							mail($email, $subject, $message, $headers);
+					}
+			}
 	}
 	
 	$query = "SELECT bd.id as businessid, bd.businessname, bd.businesssector, bo.offerdescription
@@ -34,8 +57,6 @@
 	$resultset = array();
 	while ($row = $result->fetch_assoc()) {
 		$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
-
-
 	}
 
 	$query = "SELECT balance, businessname 
@@ -280,7 +301,6 @@
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
 								<div class="agileinfo-recover">
-									
 								<?php
 								//////////POOJA CODE////////////////
 								//print_r($resultset);
