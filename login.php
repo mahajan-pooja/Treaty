@@ -17,7 +17,7 @@ session_start();
 	<link href="css/font-awesome.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
     <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
-    
+
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
  -->
@@ -41,7 +41,7 @@ session_start();
 			font-size: 0px;
 			line-height: 0px;
 			margin: 0px 8px;
-		}	
+		}
 	</style>
 </head>
 
@@ -144,10 +144,9 @@ session_start();
 																		 <head>
 																		 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 																		 </head>
-																		 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-																		 		<img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+																		 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding:5%;">
 																				 <div>
-																						 <p> Thanks for creating an acount on treaty. </p>
+																						 <p> Thank you for creating an acount with Treaty. We are here to serve you better!! </p>
 																				 </div>
 																		 </body>
 																		 </html>';
@@ -170,7 +169,7 @@ session_start();
 
 			//Social Login
 			//Facebook Sign In
-			if (isset($_POST['fb_signin_btn'])) { 
+			if (isset($_POST['fb_signin_btn'])) {
 
 				$_SESSION['fb_signin_btn'] = $_POST['fb_signin_btn'];
 
@@ -329,8 +328,8 @@ session_start();
 
 			?>
 	</head>
-	<body>   
-    
+	<body>
+
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
@@ -352,7 +351,7 @@ session_start();
                             <li><a href="index.php#clients">Clients</a></li>
                             <li><a href="index.php#price">Price</a></li>
                             <li><a href="index.php#contact">Contact</a></li>
-                            <li class="active"><a href='login.php'>Login</a></li>                        
+                            <li class="active"><a href='login.php'>Login</a></li>
 						</ul>
 					</div>
 					<!-- End main navigation -->
@@ -456,9 +455,9 @@ session_start();
 								<input class="button" type="submit" value="Sign Up">
 								<br><br>
 							</form>
-                            
-                            <div class="hr-sect">OR</div>                            
-                            
+
+                            <div class="hr-sect">OR</div>
+
 							<form method="post" style="color: black!important;">
 								<br>
 								<input type="radio" name="user_social" style="margin: 0px;" value="Customer" required checked="checked"> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -509,7 +508,7 @@ session_start();
 				});
 			});
 		</script>
-        
+
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/modernizr.custom.js"></script>
 
@@ -518,11 +517,11 @@ session_start();
         <!-- css3-mediaqueries.js for IE8 or older -->
         <!--[if lt IE 9]>
             <script src="js/respond.min.js"></script>
-        <![endif]-->         
-    
+        <![endif]-->
+
         <div class="footer">
             <p style="color: white;">Treaty.com © copyright 2018</p>
-        </div>        
+        </div>
 		<!-- //tabs -->
 		<!-- //js-scripts -->
 	</body>
