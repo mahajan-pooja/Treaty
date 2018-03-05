@@ -1,3 +1,11 @@
+<!-- 
+Changes done on this page by Rajeshwari:
+- Image Logic added
+- Logic for Lon and Lat added
+- Business Phoe number added on screen
+- Facing Prob for Business Sector number -> replaced with business sector name, Not yet completed
+-->
+
 <?php
 	// Start the session
 	session_start();
@@ -33,7 +41,7 @@
     		if (input.files && input.files[0]) {
         	var reader = new FileReader();
         	reader.onload = function (e) {
-        	$('#business_image').attr('src', e.target.result);
+        	$('#image').attr('src', e.target.result);
        		}
         reader.readAsDataURL(input.files[0]);
        }
@@ -65,16 +73,16 @@
                 $fname = $_POST['fname'];
             }
             if (isset($_POST['lname'])) {
-                $lname = $_POST['lname'];
+               $lname = $_POST['lname'];               
             }
-            if (isset($_POST['phone'])) {
-                $phone = $_POST['phone'];
+            if (isset($_POST['businessphonenumber'])) {
+                $businessphonenumber = $_POST['businessphonenumber'];
             }
-            if (isset($_POST['street1'])) {
-                $street1 = $_POST['street1'];
+            if (isset($_POST['address1'])) {
+                $address1 = $_POST['address1'];
             }
-            if (isset($_POST['street2'])) {
-                $street2 = $_POST['street2'];
+            if (isset($_POST['address2'])) {
+                $address2 = $_POST['address2'];
             }
             if (isset($_POST['city'])) {
                 $city = $_POST['city'];
@@ -85,8 +93,8 @@
             if (isset($_POST['country'])) {
                 $country = $_POST['country'];
             }
-            if (isset($_POST['zip'])) {
-                $zip = $_POST['zip'];
+            if (isset($_POST['zipcode'])) {
+                $zipcode = $_POST['zipcode'];
             }
             if (isset($_POST['oName'])) {
                 $oName = $_POST['oName'];
@@ -109,19 +117,42 @@
             
             $userid = $_SESSION['userid'];
             if (!empty($fname)) {
-                //create business
-                $query  = "INSERT INTO businessdetail(userid, businessname, businesssector,
-                        address1, address2, city, state, country, zipcode, modified, created)
-                        VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $street1 . "\",\"" . $street2 . "\"
-                        ,\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zip . "\", sysdate(), sysdate())";
-                $result = $mysqli->query($query);
-                if ($result) {
-                    $_SESSION["businessname"]   = $fname;
-                    $_SESSION["businesssector"] = $lname;
-                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-                } else {
-                    echo "Failed to update profile";
-                }
+            	//create business
+            	// Find Lon and Lat of address
+            	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
+							$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+							$geo = json_decode($geo, true);
+							if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+							  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+							  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+							}
+
+            	// Check if Image file is uploaded
+            	if(!empty($_FILES['image']['name'])){  
+	            	$filename = addslashes($_FILES["image"]["name"]);
+								$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+								$file_type = addslashes($_FILES["image"]["type"]);
+								$ext_array = array('jpg','jpeg','png');
+								$ext = pathinfo($filename,PATHINFO_EXTENSION);				
+								if(in_array($ext,$ext_array)){
+									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+
+									$result = $mysqli->query($query);
+					                if($result){
+					                    $_SESSION["businessname"]   = $fname;
+					                    $_SESSION["businesssector"] = $lname;
+					                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+					                } else {
+					                    echo "Your Business could not be added. Please Try again.";		
+					                    echo $query;                    
+					                }
+								} else{
+									echo 'Only JPEG and PNG Images can be uploaded';
+								}
+							} else{
+								echo 'Please Select a Image for your Business';
+							}                              
+                
             } else if (!empty($oName)) {
                 //create offer
                 $query  = "INSERT INTO businessoffer(userid, businessid, offername,
@@ -137,9 +168,7 @@
             } else {
                 //TODO : this should be called on tab change
                 //load businessname and sector
-                $query = "SELECT businessname, businesssector
-                                       FROM businessdetail
-                                      WHERE userid=\"" . $userid . "\" LIMIT 1";
+                $query = "SELECT a.businessname, a.businesssector,b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=\"" . $userid . "\" LIMIT 1";
                 
                 $result = $mysqli->query($query);
                 $businessresultset = array();
@@ -147,6 +176,7 @@
                     $row = $result->fetch_array();
                     array_push($businessresultset, $row["businessname"]);
                     array_push($businessresultset, $row["businesssector"]);
+                    array_push($businessresultset, $row["businesssectortext"]);
                 }
                 
                 //get the offer business details
@@ -155,12 +185,13 @@
                                       WHERE userid=\"" . $userid . "\" and isactive=1";
                 
                 $result = $mysqli->query($query);
-                if ($result->num_rows > 0) {
+
+                if ($result->num_rows > 0) {                	
                     $businessrow = $result;
                     $resultset   = array();
                     while ($row = $businessrow->fetch_assoc()) {
-                       // $addr = $row[0] . "-" . $row[1] . ", " . $row[2];
-                    	 $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
+                        //$addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                        $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
                         array_push($resultset, $addr);
                     }
                 } else {
@@ -173,18 +204,18 @@
 						  FROM businessdetail
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
-                $result = $mysqli->query($query);
-                $businesslistresultset = array();
-                if ($result->num_rows > 0) {
+        $result = $mysqli->query($query);
+        $businesslistresultset = array();
+        if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
 						$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
 						array_push($businesslistresultset, $address);
 					}
-                }
+        }
 				
 				//get offers list
-				$query = "SELECT id, offername, creditedpoints
+				$query = "SELECT id, offername, creditedpoints, offerdescription
 						  FROM businessoffer
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
@@ -193,7 +224,7 @@
                 if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
-						$address = $row["offername"] . " - " . $row["creditedpoints"] . " points". "-" . $row["id"];;
+						$address = $row["offername"] . "@" . $row["creditedpoints"] . " points". "@" . $row["id"]. "@" . $row["offerdescription"];
 						array_push($offerlistresultset, $address);
 					}
                 }
@@ -356,6 +387,8 @@
 								            		}else{
 								            		echo "<p>Scan customer QR code to redeem offer.</p>";
 								            		}
+													//*****Need to close form tag here*****
+													echo '</form';
 								            	}
 												
 												?>	
@@ -378,8 +411,8 @@
 									<div class="register agileits">
 										<?php foreach($offerlistresultset as $value): ?>
 											<div class="offerDiv">
-												<span class="offerDesc"><?php echo explode("-",$value)[0];echo "-"; echo explode("-",$value)[1]; ?></span>
-												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("-",$value)[2]; ?>)"></img>
+												<span class="offerDesc"><?php echo explode("@",$value)[0];echo "<br>"; echo explode("@",$value)[1]; echo "<br>";echo explode("@",$value)[3];?></span>
+												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></img>
 											</div>
 										<?php endforeach; ?>
 									</div>
@@ -400,36 +433,29 @@
 								<div class="tab-1 resp-tab-content">
 									<p class="secHead">Register Your Business</p>
 									<div class="register agileits">
-										<!-- Form for Image-->
-                                        <form action ="#" method="POST" enctype="multipart/form-data" runat="server" class="agile_form" style="margin:0px;">
-                                        <table style="width: 91.6%;">
+										                                                                                                          
+										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
+											<table style="width: 91.6%;">
                                         	<tr>
-                                            <td style="padding-left: 16px;">
-                                            <div style="width: 100px;height: 100px;border: 1px solid #ccc;">
-                                            <img src = "images/default-image.png" alt = "Upload Image" id = "business_image" width="100px" />
-                                            </div>
-                                            </td>
-                                            <td style="vertical-align: bottom;width: 100%;">                                        
-                                            <input type="file" name="image" onchange= "displayImage(this)" />                                                  
-                                            </td>
+                                            	<td style="padding-left: 16px;">
+	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;">
+	                                            	<img src = "images/default-image.png" alt = "Upload Image" id = "image" width="100px" />
+	                                            	</div>
+                                            	</td>
+                                            	<td style="vertical-align: bottom;width: 100%;">                                        
+                                            		<input type="file" name="image" onchange= "displayImage(this)" required="" />
+                                            	</td>
                                             </tr>
-                                        </table>
-                                        </form>
-                                                                    
-										<form action="#" method="post" class="agile_form">                                        
-                                            <input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>"
-                                                    value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>">
-                                            <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits"
-													placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>"
-                                                    value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
-											<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits" required=""/>
-											<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits" required=""/>
+                                        	</table>
+                                            <input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>" value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>">
+                                            <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>" value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
+											<input type="text" placeholder="Address : Street 1" name="address1" class="name agileits" required=""/>
+											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits"/>
 											<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
 											<input type="text" placeholder="State" name="state" class="name agileits" required=""/>
 											<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
-											<input type="text" placeholder="Zip" name="zip" class="name agileits" required=""/>
-											<input type="text" placeholder="Phone number" name="phone" class="name agileits" required=""/>
+											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""/>
+											<input type="text" placeholder="Business Phone number" name="businessphonenumber" class="name agileits" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
 												<input type="submit" value="Cancel">
