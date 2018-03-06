@@ -30,9 +30,8 @@ Changes done on this page by Rajeshwari:
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
-	<?php
-	include 'header.php';
-	?>
+    
+	<?php include 'header.php'; ?>
 
 	<!-- Script for image display after selection -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -44,36 +43,42 @@ Changes done on this page by Rajeshwari:
         	$('#image').attr('src', e.target.result);
        		}
         reader.readAsDataURL(input.files[0]);
-       }
-    }
+       }       
+    }    
 	</script>
-	<!-- Script for image display after selection -->
-
+	<script type="text/javascript">
+		function resetImage(){    		
+	        document.getElementById('image').src="images/default-image.png";  
+	    }
+    </script>
 </head>
-
-		<?php 
+		
+	<?php 
 		if(isset($_GET['flag'])){
 			if($_GET['flag'] == 'add'){ ?>
 			<script type="text/javascript">
 				alert("Rewards added successfully.");
 				window.location.href = "business.php";
 			</script>
-			<?php } else if($_GET['flag'] == 'redeem'){ ?>
+	 <?php } else if($_GET['flag'] == 'redeem'){ ?>
 			<script type="text/javascript">
 				alert("Rewards redeemed successfully.");
 				window.location.href = "business.php";
 			</script>
-			<?php } 
+	<?php } 
 		} ?>
 		
-        <?php
-            require '../config.php';
+    <?php
+        require '../config.php';
 
             if (isset($_POST['fname'])) {
                 $fname = $_POST['fname'];
             }
             if (isset($_POST['lname'])) {
                $lname = $_POST['lname'];               
+            }
+            if (isset($_POST['businessSector'])) {
+               $lname = $_POST['businessSector'];               
             }
             if (isset($_POST['businessphonenumber'])) {
                 $businessphonenumber = $_POST['businessphonenumber'];
@@ -95,7 +100,7 @@ Changes done on this page by Rajeshwari:
             }
             if (isset($_POST['zipcode'])) {
                 $zipcode = $_POST['zipcode'];
-            }
+            }            
             if (isset($_POST['oName'])) {
                 $oName = $_POST['oName'];
             }
@@ -127,8 +132,8 @@ Changes done on this page by Rajeshwari:
 							  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
 							}
 
-            	// Check if Image file is uploaded
-            	if(!empty($_FILES['image']['name'])){  
+				// If Image is selected
+				if(!empty($_FILES['image']['name'])){
 	            	$filename = addslashes($_FILES["image"]["name"]);
 								$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
 								$file_type = addslashes($_FILES["image"]["type"]);
@@ -137,23 +142,24 @@ Changes done on this page by Rajeshwari:
 								if(in_array($ext,$ext_array)){
 									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
 
-									$result = $mysqli->query($query);
-					                if($result){
-					                    $_SESSION["businessname"]   = $fname;
-					                    $_SESSION["businesssector"] = $lname;
-					                    echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-					                } else {
-					                    echo "Your Business could not be added. Please Try again.";		
-					                    echo $query;                    
-					                }
-								} else{
-									echo 'Only JPEG and PNG Images can be uploaded';
-								}
-							} else{
-								echo 'Please Select a Image for your Business';
-							}                              
-                
-            } else if (!empty($oName)) {
+
+						$result = $mysqli->query($query);
+			            if($result){
+			                // Dont know the purpose yet hence just commenting it out
+			                //$_SESSION["businessname"]   = $fname;
+			                //$_SESSION["businesssector"] = $lname;
+			                echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+			            } else {
+			                echo "Your Business could not be added. Please Try again.";		
+			                //echo $query;                    
+			            }
+					}
+					else{
+						echo 'Only JPEG and PNG Images can be uploaded';
+					}
+				}
+            }else if (!empty($oName)) {
+
                 //create offer
                 $query  = "INSERT INTO businessoffer(userid, offername,
                         offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
@@ -217,8 +223,9 @@ Changes done on this page by Rajeshwari:
                         array_push($resultset, $addr);
                     }
                 } else {
-                    unset($_SESSION["businessname"]);
-                    unset($_SESSION["businesssector"]);
+                	// Dont know the purpose yet hence just commenting it out
+                    //unset($_SESSION["businessname"]);
+                    //unset($_SESSION["businesssector"]);
                 }
 				
 				//get business list
@@ -409,8 +416,8 @@ Changes done on this page by Rajeshwari:
 								            		}else{
 								            		echo "<p>Scan customer QR code to redeem offer.</p>";
 								            		}
-													//*****Need to close form tag here*****
 													echo '</form>';
+
 								            	}
 												
 												?>	
@@ -459,18 +466,54 @@ Changes done on this page by Rajeshwari:
 										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
 											<table style="width: 91.6%;">
                                         	<tr>
-                                            	<td style="padding-left: 16px;">
-	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;">
-	                                            	<img src = "images/default-image.png" alt = "Upload Image" id = "image" width="100px" />
+                                            	<td style="padding-left: 6px;">
+	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
+	                                            	<img src = "images/default-image.jpg" alt = "Upload Image" id = "image" width="100px" />
 	                                            	</div>
                                             	</td>
                                             	<td style="vertical-align: bottom;width: 100%;">                                        
-                                            		<input type="file" name="image" onchange= "displayImage(this)" required="" />
+                                            		<input type="file" name="image" onchange= "displayImage(this)" required="" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>
                                             	</td>
                                             </tr>
                                         	</table>
                                             <input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>" value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>">
-                                            <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>" value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
+                                            
+                                            <!-- Logic to populate select option from DB. -->
+                                           <?php
+                                           		// If first bussiness is getting added.
+                                           		$query = "SELECT id , businesssectortext FROM businesssector;";
+							                    $result = $mysqli->query($query); 
+							                    if(!isset($businessresultset[2])){
+							                    	
+							                    	$show_select = "<select name='businessSector' class='name agileits'>";
+							                    	$show_select = $show_select . "<option value='0'>Select Business Sector</option>";
+							                    
+							                    	while($row = mysqli_fetch_array($result)){
+							                        	$show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
+							                    	}							                    								             
+							                    }
+							                    else{
+							                    	//If business already exists and another business is to be added
+							                    	$show_select = "<select name='businessSector' class='name agileits'>";
+							                    	$show_select = $show_select . "<option value='0' disabled>Select Business Sector</option>";
+							                    
+							                    	while($row = mysqli_fetch_array($result)){
+							                    		if(strcasecmp($businessresultset[2], $row['businesssectortext']) == 0){
+							                    			$show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>"; 
+							                    		}
+							                    		else{
+							                    			$show_select = $show_select . "<option value='".$row['id']."' disabled>".$row['businesssectortext']."</option>"; 
+							                    		}
+							                        	             
+							                    	}							                  						                    	
+							                    }
+							                    $show_select = $show_select . "</select>";
+							                    echo $show_select;
+							                ?>
+
+                                            <!-- Instead of text box Select option given for businessSector
+                                            <input <?php //echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits" placeholder="<?php //echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>" value="<?php //echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
+                                            -->	
 											<input type="text" placeholder="Address : Street 1" name="address1" class="name agileits" required=""/>
 											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits"/>
 											<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
@@ -478,9 +521,9 @@ Changes done on this page by Rajeshwari:
 											<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""/>
 											<input type="text" placeholder="Business Phone number" name="businessphonenumber" class="name agileits" required=""/>
-											<div class="submitBtn"><br>
+											<div class="submit" style="margin-left: 0px;"><br>
 												<input type="submit" value="Save">
-												<input type="submit" value="Cancel">
+												<input type="reset" value="Cancel" name="RegBusiCancel" onclick="resetImage();" formnovalidate>
                                                 <br><br>
 											</div>
 										</form>
