@@ -3,7 +3,8 @@
 	session_start();
 	$userid = $_SESSION['userid'];
 	require '../config.php';
-	if(isset($_GET['businessid'])) {
+	
+	if(isset($_GET['businessid'])) { 
 		$businessid= $_GET['businessid'];
 		$query = "SELECT SUM(creditedpoints) as totalpoints
 				  FROM businessoffer
@@ -24,9 +25,9 @@
 		}
 	}
 	
-	$query = "SELECT bd.id as businessid, bd.businessname, bd.businesssector, bo.offerdescription
+	$query = "SELECT bd.userid as businessid, bd.businessname, bd.businesssector, bo.offerdescription
 			  FROM businessdetail bd , businessoffer bo
-			  WHERE bd.id = bo.businessid and bd.isactive=1 and bo.isactive=1
+			  WHERE bd.userid = bo.userid and bd.isactive=1 and bo.isactive=1
 			  and bd.id NOT IN (select businessid from customerbusiness where userid=".$userid.")
 			  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription";
 
@@ -34,8 +35,6 @@
 	$resultset = array();
 	while ($row = $result->fetch_assoc()) {
 		$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
-
-
 	}
 
 	$query = "SELECT balance, businessname 
@@ -149,10 +148,11 @@
 	?>
 	
 	<script>
-	function subscribeBusiness(businessid) {
-		window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
+		//this logic is handled in subscribe.php file instead of refresh
+	//function subscribeBusiness(businessid) {
+	//	window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
 		//TODO REFRESH PAGE
-	}
+	//}
 	</script>
 </head>
 
