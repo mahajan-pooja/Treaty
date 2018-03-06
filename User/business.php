@@ -125,22 +125,23 @@ Changes done on this page by Rajeshwari:
             	//create business
             	// Find Lon and Lat of address
             	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
-				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-				$geo = json_decode($geo, true);
-				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-				}
+							$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+							$geo = json_decode($geo, true);
+							if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+							  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+							  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+							}
 
 				// If Image is selected
 				if(!empty($_FILES['image']['name'])){
 	            	$filename = addslashes($_FILES["image"]["name"]);
-					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-					$file_type = addslashes($_FILES["image"]["type"]);
-					$ext_array = array('jpg','jpeg','png');
-					$ext = pathinfo($filename,PATHINFO_EXTENSION);				
-					if(in_array($ext,$ext_array)){
-						$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+								$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+								$file_type = addslashes($_FILES["image"]["type"]);
+								$ext_array = array('jpg','jpeg','png');
+								$ext = pathinfo($filename,PATHINFO_EXTENSION);				
+								if(in_array($ext,$ext_array)){
+									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+
 
 						$result = $mysqli->query($query);
 			            if($result){
@@ -158,13 +159,36 @@ Changes done on this page by Rajeshwari:
 					}
 				}
             }else if (!empty($oName)) {
+
                 //create offer
-                $query  = "INSERT INTO businessoffer(userid, businessid, offername,
+                $query  = "INSERT INTO businessoffer(userid, offername,
                         offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
-                        VALUES (\"" . $userid . "\",\"" . $selectOption . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\"
+                        VALUES (\"" . $userid . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\"
                         ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\",1, sysdate(), sysdate())";
                 $result = $mysqli->query($query);
                 if ($result) {
+                	//send sms to customers subscribed to the business when offer is created.
+                	$qry = "SELECT cb.userid, u.phonenumber FROM customerbusiness cb, user u WHERE cb.businessid=" . $userid . " and cb.userid = u.id";
+	                $resultQry = $mysqli->query($qry);
+	                
+	                if ($resultQry->num_rows > 0) {
+	                    while($row = $resultQry->fetch_assoc()){
+	                    	
+	                   	$text = "New offer created.";
+	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
+						        'api_key' => d0fbd93d,
+						        'api_secret' => bcaca354e0887dd9,
+						        'to' => $row['phonenumber'],
+						        'from' => 12034089447,
+						        'text' => $text
+						    ]);
+							$ch = curl_init($url);
+							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+							$response = curl_exec($ch);
+							curl_close($ch);
+	                	} 
+	                } 
+                //redirect to business.php page after sending sms to customers
                     echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
                 } else {
                     echo "Failed to update profile";
@@ -209,18 +233,18 @@ Changes done on this page by Rajeshwari:
 						  FROM businessdetail
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
-                $result = $mysqli->query($query);
-                $businesslistresultset = array();
-                if ($result->num_rows > 0) {
+        $result = $mysqli->query($query);
+        $businesslistresultset = array();
+        if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
 						$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
 						array_push($businesslistresultset, $address);
 					}
-                }
+        }
 				
 				//get offers list
-				$query = "SELECT id, offername, creditedpoints
+				$query = "SELECT id, offername, creditedpoints, offerdescription
 						  FROM businessoffer
                           WHERE userid=\"" . $userid . "\" and isactive = 1";
                 
@@ -229,7 +253,7 @@ Changes done on this page by Rajeshwari:
                 if ($result->num_rows > 0) {
 					// output data of each row
 					while($row = $result->fetch_assoc()) {
-						$address = $row["offername"] . " - " . $row["creditedpoints"] . " points". "-" . $row["id"];;
+						$address = $row["offername"] . "@" . $row["creditedpoints"] . " points". "@" . $row["id"]. "@" . $row["offerdescription"];
 						array_push($offerlistresultset, $address);
 					}
                 }
@@ -367,8 +391,8 @@ Changes done on this page by Rajeshwari:
 											<br>
 											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
 												<?php 
-												$queryOffer = "select id, offername, offerdescription, creditedpoints from businessoffer where userid=".$userid." and creditedpoints <= ".$points;
-
+												$current_date = date("Y/m/d");
+												$queryOffer = "select id, offername, offerdescription, creditedpoints from businessoffer where userid=".$userid." and creditedpoints <= ".$points." and expirationdate >= '".$current_date."'";
 												$resultOffer = $mysqli->query($queryOffer); 
 								                if ($resultOffer->num_rows > 0) { ?>
 								                <select name="offerToRedeem" id="offerSelect" onchange="offerFunction(this)" style="width: 50%;">
@@ -392,8 +416,8 @@ Changes done on this page by Rajeshwari:
 								            		}else{
 								            		echo "<p>Scan customer QR code to redeem offer.</p>";
 								            		}
-													//*****Need to close form tag here*****
-											echo '</form>';
+													echo '</form>';
+
 								            	}
 												
 												?>	
@@ -416,15 +440,15 @@ Changes done on this page by Rajeshwari:
 									<div class="register agileits">
 										<?php foreach($offerlistresultset as $value): ?>
 											<div class="offerDiv">
-												<span class="offerDesc"><?php echo explode("-",$value)[0];echo "-"; echo explode("-",$value)[1]; ?></span>
-												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("-",$value)[2]; ?>)"></img>
+												<span class="offerDesc"><?php echo explode("@",$value)[0];echo "<br>";echo explode("@",$value)[3];?></span>
+												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></img>
 											</div>
 										<?php endforeach; ?>
 									</div>
 								</div>
 								<!-- All Business section -->
 								<div class="tab-1 resp-tab-content">
-									<p class="secHead">Your Business List</p>
+									<p class="secHead">Your Business Branch List</p>
 									<div class="register agileits">
 										<?php foreach($businesslistresultset as $value): ?>
 											<div class="offerDiv">
@@ -510,12 +534,6 @@ Changes done on this page by Rajeshwari:
 									<p class="secHead">Create Offer For Your Business</p>
 									<div class="wthree-subscribe">
 										<form method="post" class="agile_form">
-                                            <select class="name agileits" name="taskOption">
-												<?php foreach($resultset as $row) {
-													?>
-													<option value="<?php echo explode("-",$row)[0];?>"><?php echo explode("-",$row)[1];?></option>
-												<?php } ?>
-											</select><br>
 											<input type="text" placeholder="Offer Name" name="oName" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Description" name="oDesc" class="name agileits" required=""/>
 											<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>

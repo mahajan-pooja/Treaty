@@ -30,20 +30,20 @@ INSERT INTO `treaty`.`user` (id, email, phonenumber, role, encryptedpassword, is
     VALUES (5, 'rajeshwaripatil09@gmail.com','1234567890', 'Business Owner', 'test1234', 1);
 
 -- insert script for userdetail
-INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
-    VALUES (1, 1, 'test1', 'test2', '1234567890', 'ITU1234', 'San Jose', 'CA', 'USA', '95134', 1);
+INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive, is_send_sms)
+    VALUES (1, 1, 'test1', 'test2', '1234567890', 'ITU1234', 'San Jose', 'CA', 'USA', '95134', 1, 0);
 
-INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
-    VALUES (2, 2, 'Poonam', 'Korade', '4242909770', '2711 N 1st St.', 'San Jose', 'CA', 'USA', '95134', 1);
+INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive, is_send_sms)
+    VALUES (2, 2, 'Poonam', 'Korade', '4242909770', '2711 N 1st St.', 'San Jose', 'CA', 'USA', '95134', 1, 0);
 
-INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
-    VALUES (3, 4, 'Pooja', 'Mahajan', '6072329877', '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131', 1);
+INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive, is_send_sms)
+    VALUES (3, 4, 'Pooja', 'Mahajan', '6072329877', '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131', 1, 0);
 
-INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
-    VALUES (4, 5, 'Rajeshwari', 'Patil', '9096728817', '2077 N 1st St', 'San Jose', 'CA', 'USA', '95131', 1);
+INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive, is_send_sms)
+    VALUES (4, 5, 'Rajeshwari', 'Patil', '9096728817', '2077 N 1st St', 'San Jose', 'CA', 'USA', '95131', 1, 0);
 
-INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive)
-    VALUES (5, 3, 'Poonam', 'Mhaskar', '0987654321', 'ITU4321', 'San Jose', 'CA', 'USA', '95131', 1);
+INSERT INTO `treaty`.`userdetail` (id, userid, firstname, lastname, phonenumber, address1, city, state, country, zipcode, isactive, is_send_sms)
+    VALUES (5, 3, 'Poonam', 'Mhaskar', '0987654321', 'ITU4321', 'San Jose', 'CA', 'USA', '95131', 1, 0);
 
 -- Inserts for Business Categories
 INSERT INTO `treaty`.`businesssector` (id, businesssectortext)
@@ -126,11 +126,11 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
     VALUES (1, 4, 'Dennys', 1, '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131',12345678901,37.384867,-121.927876, 1,LOAD_FILE('C:/Treaty_Images/image1.jpg'));
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude,isactive,businessimage)
-    VALUES (2, 5, 'Subway', 1, '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',12345678901,37.383142,-121.897038, 1,LOAD_FILE('C:/Treaty_Images/image2.jpg'));
+    VALUES (2, 5, 'Subway', 1, '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',12345678901,37.383142,-121.897038, 1, LOAD_FILE('C:/Treaty_Images/image2.jpg'));
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage)
     VALUES (3, 5, 'Papaya', 15, 'Great Mall, 447 Great Mall Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.415738,-121.897412, 1,LOAD_FILE('C:/Treaty_Images/image3.jpg'));
-    
+
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage)
     VALUES (4, 5, 'Family Wash', 8, '1643 McKee Rd', 'San Jose', 'CA', 'USA', '95116',12345678901,37.357269,-121.863172, 1,LOAD_FILE('C:/Treaty_Images/image4.jpg'));
 
@@ -139,7 +139,7 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage)
     VALUES (6, 5, 'Omega', 1, '90 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.434313,-121.883432, 1,LOAD_FILE('C:/Treaty_Images/image6.jpg'));
-    
+
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage)
     VALUES (7, 5, 'Naan n Masala', 1, '94 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.433218,-121.885443, 1,LOAD_FILE('C:/Treaty_Images/image7.jpg'));  
 
@@ -152,19 +152,19 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 
 -- insert script for businessoffer
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (1, 5, 4, 'Papaya-WINTER', '5 points per $ spent', 100, '2018-01-22', '2018-01-30',1);
+    VALUES (1, 5, 'Papaya-WINTER', '5 points per $ spent', 100, '2018-01-22', '2018-01-30',1);
 
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (2, 5, 3, 'Subway-EATFREE', '1 point per $ spent', 20, '2018-01-23', '2018-02-25',1);
+    VALUES (2, 5, 'Subway-EATFREE', '1 point per $ spent', 20, '2018-01-23', '2018-02-25',1);
 
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (3, 4, 2, 'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
+    VALUES (3, 4,  'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
 INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
-    VALUES (4, 5, 4, 'Family Wash-Free', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
+    VALUES (4, 5, 'Family Wash-Free', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
 
--- insert script for customeroffer
+-- insert script for customerbusiness
 INSERT INTO `treaty`.`customerbusiness` (id, userid, businessid, isactive)
     VALUES (1, 2, 4, 0);
 

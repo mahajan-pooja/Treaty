@@ -61,16 +61,19 @@
     	if(isset($_POST['zip'])){
     		$zip = $_POST['zip'];
     	}
-        if(isset($_POST['old-pwd'])){
-            $oldpwd = $_POST['old-pwd'];
-        }
-        if(isset($_POST['new-pwd'])){
-            $newpwd = $_POST['new-pwd'];
-        }
-        if(isset($_POST['conf-new-pwd'])){
-            $confnewpwd = $_POST['conf-new-pwd'];
-        }
-
+      if(isset($_POST['old-pwd'])){
+          $oldpwd = $_POST['old-pwd'];
+      }
+      if(isset($_POST['new-pwd'])){
+          $newpwd = $_POST['new-pwd'];
+      }
+      if(isset($_POST['conf-new-pwd'])){
+          $confnewpwd = $_POST['conf-new-pwd'];
+      }
+      $notifyCheck = 0;
+      if(isset($_POST['notifyCheck'])) {
+        $notifyCheck = 1;
+      }
     	$userid = $_SESSION['userid'];
         if(isset($_POST['save']) && !empty($oldpwd)){
             if (strcmp($newpwd,$confnewpwd) != 0) {
@@ -117,23 +120,24 @@
             $result2 = $mysqli->query($query2);
 
             if ($result2->num_rows == 0 && $result->num_rows > 0) {
-				$row = $result->fetch_array();
-				$user_id = $row["id"];
-        		//insert the entry in userdetail table
-        		// insert into table
-        		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-        			address1, address2, city, state, country, zipcode, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-        					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\", sysdate(), sysdate())";
-        		$result = $mysqli->query($query);
-        		if ($result) {
-        			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-        		} else {
-        			echo "Failed to update profile";
-        		}
+        				$row = $result->fetch_array();
+        				$user_id = $row["id"];
+            		//insert the entry in userdetail table
+            		// insert into table
+            		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
+            			address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+            					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\",". $notifyCheck .", sysdate(), sysdate())";
+            		$result = $mysqli->query($query);
+            		if ($result) {
+            			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+            		} else {
+            			echo "Failed to update profile";
+            		}
             } else {
                 $query = "UPDATE userdetail
                           SET firstname = \"".$fname."\", lastname = \"".$lname."\",  phonenumber= \"".$phone."\", address1 = \"".$street1."\",
                              address2 = \"".$street2."\", city = \"".$city."\", state = \"".$state."\", country = \"".$country."\", zipcode = \"".$zip."\",
+                             is_send_sms = ".$notifyCheck.",
                              modified = sysdate()
                           WHERE userid=".$userid;
                 $result = $mysqli->query($query);
@@ -144,7 +148,7 @@
                 }
             }
     	} else {
-            $query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode
+            $query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode, is_send_sms
 					  FROM userdetail
 					  WHERE userid=\"".$userid."\"";
             $result = $mysqli->query($query);
@@ -163,6 +167,7 @@
     			array_push($profileresultset, $row["state"]);
     			array_push($profileresultset, $row["country"]);
     			array_push($profileresultset, $row["zipcode"]);
+          array_push($profileresultset, $row["is_send_sms"]);
             } else {
                 // donot display dashboard link
                 $_SESSION['displaydashboard'] = false;
@@ -281,7 +286,7 @@
                                               value="<?php echo !isset($profileresultset[7]) ? '' : $profileresultset[7]; ?>" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits"
                                               value="<?php echo !isset($profileresultset[8]) ? '' : $profileresultset[8]; ?>" required=""/>
-                                        <p class="notPara"><br><input type="checkbox" name="notifyCheck" checked>&nbsp&nbsp&nbspDo you want offer notifications?</p>
+                                        <p class="notPara"><br><input type="checkbox" name="notifyCheck" <?php echo ($profileresultset[9]==1 ? 'checked' : '');?>>&nbsp&nbsp&nbspDo you want offer notifications?</p>
 										<div class="submit"><br>
 										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
