@@ -173,10 +173,7 @@
                 $_SESSION['displaydashboard'] = false;
             }
         }
-    	/* close connection */
-    	$mysqli->close();
 	?>
-
 <body>
         <div class="navbar">
             <div class="navbar-inner">
@@ -207,6 +204,18 @@
                 </div>
             </div>
         </div>
+        <span class="loginName">
+            <?php 
+                $Qry = "SELECT firstname, lastname
+                          FROM userdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                $result = $mysqli->query($Qry);
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_assoc();
+                    echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                }
+            ?>      
+        </span>
         <br><br>
 
 	<h1></h1>
@@ -346,6 +355,8 @@
 	</div>
 	<?php
 	   include 'footer.php';
+       /* close connection */
+        $mysqli->close();
 	?>
 	<!--start-date-piker-->
 	<link rel="stylesheet" href="css/jquery-ui.css" />

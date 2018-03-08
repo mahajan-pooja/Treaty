@@ -113,7 +113,7 @@ function read(a)
     //var value = sessionStorage.getItem("uId");
    // alert(value);
 
-    window.location.replace("business.php?custID="+html);
+    window.location.replace("business.php?apcm="+html);
 }	
 
 function isCanvasSupported(){

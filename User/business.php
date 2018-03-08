@@ -52,24 +52,8 @@ Changes done on this page by Rajeshwari:
 	    }
     </script>
 </head>
-		
-	<?php 
-		if(isset($_GET['flag'])){
-			if($_GET['flag'] == 'add'){ ?>
-			<script type="text/javascript">
-				alert("Rewards added successfully.");
-				window.location.href = "business.php";
-			</script>
-	 <?php } else if($_GET['flag'] == 'redeem'){ ?>
-			<script type="text/javascript">
-				alert("Rewards redeemed successfully.");
-				window.location.href = "business.php";
-			</script>
-	<?php } 
-		} ?>
-		
-    <?php
-        require '../config.php';
+        <?php
+            require '../config.php';
 
             if (isset($_POST['fname'])) {
                 $fname = $_POST['fname'];
@@ -168,13 +152,13 @@ Changes done on this page by Rajeshwari:
                 $result = $mysqli->query($query);
                 if ($result) {
                 	//send sms to customers subscribed to the business when offer is created.
-                	$qry = "SELECT cb.userid, u.phonenumber FROM customerbusiness cb, user u WHERE cb.businessid=" . $userid . " and cb.userid = u.id";
+                	$qry = "SELECT cb.userid, u.phonenumber,bd.businessname FROM customerbusiness cb, user u, businessdetail bd WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
 	                $resultQry = $mysqli->query($qry);
 	                
 	                if ($resultQry->num_rows > 0) {
 	                    while($row = $resultQry->fetch_assoc()){
 	                    	
-	                   	$text = "New offer created.";
+	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
 	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
 						        'api_key' => d0fbd93d,
 						        'api_secret' => bcaca354e0887dd9,
@@ -289,6 +273,19 @@ Changes done on this page by Rajeshwari:
                 </div>
             </div>
         </div>
+        <span class="loginName">
+        	<?php 
+        		$loginNameQry = "SELECT firstname, lastname
+						  FROM userdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                
+                $resultName = $mysqli->query($loginNameQry);
+                if ($resultName->num_rows > 0) {
+                	$row = $resultName->fetch_assoc();
+                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                }
+        	?>    	
+        </span>
         <br><br>
     
 		<h1></h1>
@@ -347,9 +344,9 @@ Changes done on this page by Rajeshwari:
 												<p class="b_name" id="custPoints" style="color: white;font-size: 150%;">
 											 <?php
 											//get customer points for add redeem
-								            if(isset($_GET['custID'])){
+								            if(isset($_GET['apcm'])){
 								            	
-								            	$decodePhn = base64_decode($_GET['custID']);
+								            	$decodePhn = base64_decode($_GET['apcm']);
 								            $query = "Select u.id, c.balance, ud.firstname, ud.lastname from user u, customerbusiness c, userdetail ud where u.phonenumber = \"" . $decodePhn . "\" and u.id = c.userid and u.id = ud.userid and u.isactive=1 and c.businessid = ".$userid;
 								            $result = $mysqli->query($query);
 								                $offerlistresultset = array();
@@ -363,11 +360,15 @@ Changes done on this page by Rajeshwari:
 													echo $uname. " have ";
 								                } 
 								                if($points == ''){ 
-								                	echo "<script>
-								                	alert('This is not your subscribed customer. QR code invalid.');
-								                	window.location.href = 'business.php';
-								                	</script>";
-
+								                ?>
+								                <div id="invalidCust" class="modal" style="display: block;">
+													<p class="modal-content">This is not your subscribed customer. QR code invalid.</p>
+													<button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+												</div>
+								                <script>
+								                document.getElementById('invalidCust').style.display='block';
+								                </script>
+								            <?php
 								                }else{
 								                	echo $points. " Reward points.";
 								                }
@@ -411,7 +412,7 @@ Changes done on this page by Rajeshwari:
 												</div>
 											</form><?php
 								            	}else{
-								            		if(isset($_GET['custID'])){
+								            		if(isset($_GET['apcm'])){
 								            		echo "<p>No offers to redeem as customer has low reward balance.</p>";
 								            		}else{
 								            		echo "<p>Scan customer QR code to redeem offer.</p>";
@@ -570,6 +571,26 @@ Changes done on this page by Rajeshwari:
 		/* close connection */
             $mysqli->close();
         ?>
-
+        <!-- Popup box modal -->
+		<div id="add" class="modal">
+		  <p class="modal-content">Rewards Added successfully.</p>
+		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+		</div>
+		<div id="redeem" class="modal">
+		  <p class="modal-content">Rewards Redeemed successfully.</p>
+		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+		</div>
+		<?php 
+		if(isset($_GET['flag'])){
+			if($_GET['flag'] == 'add'){ ?>
+			<script type="text/javascript">
+				document.getElementById('add').style.display='block';
+			</script>
+			<?php } else if($_GET['flag'] == 'redeem'){ ?>
+			<script type="text/javascript">
+				document.getElementById('redeem').style.display='block';
+			</script>
+			<?php } 
+		} ?>
 	</body>
 </html>
