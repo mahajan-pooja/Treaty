@@ -135,10 +135,10 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   UNIQUE INDEX `ix_businessoffer_userid_businessid_offername` (`userid`, `businessid`, `offername`),
   CONSTRAINT `fk_businessoffer_userid`
     FOREIGN KEY (`userid`)
-    REFERENCES `treaty`.`user` (`id`),
-  CONSTRAINT `fk_businessoffer_businessid`
-    FOREIGN KEY (`businessid`)
-    REFERENCES `treaty`.`businessdetail` (`id`))
+    REFERENCES `treaty`.`user` (`id`))
+--  CONSTRAINT `fk_businessoffer_businessid`
+--    FOREIGN KEY (`businessid`)
+--    REFERENCES `treaty`.`businessdetail` (`id`)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

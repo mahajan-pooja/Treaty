@@ -151,16 +151,16 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 
 
 -- insert script for businessoffer
-INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
+INSERT INTO `treaty`.`businessoffer` (id, userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
     VALUES (1, 5, 'Papaya-WINTER', '5 points per $ spent', 100, '2018-01-22', '2018-01-30',1);
 
-INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
+INSERT INTO `treaty`.`businessoffer` (id, userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
     VALUES (2, 5, 'Subway-EATFREE', '1 point per $ spent', 20, '2018-01-23', '2018-02-25',1);
 
-INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
+INSERT INTO `treaty`.`businessoffer` (id, userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
     VALUES (3, 4,  'Dennys-JIYO', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
-INSERT INTO `treaty`.`businessoffer` (id, userid, businessid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
+INSERT INTO `treaty`.`businessoffer` (id, userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
     VALUES (4, 5, 'Family Wash-Free', '50 points per $ spent', 200, '2018-01-25', '2018-04-30',1);
 
 
