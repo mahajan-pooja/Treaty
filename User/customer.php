@@ -25,18 +25,41 @@
 		}
 	}
 	
-	$query = "SELECT bd.userid as businessid, bd.businessname, bd.businesssector, bo.offerdescription
-			  FROM businessdetail bd , businessoffer bo
-			  WHERE bd.userid = bo.userid and bd.isactive=1 and bo.isactive=1
-			  and bd.id NOT IN (select businessid from customerbusiness where userid=".$userid.")
-			  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription";
+	// All business Unique
+	$query = "SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage,a.businessdescription FROM businessdetail as a JOIN businesssector as b ON 
+			a.businesssector = b.id GROUP BY userid ORDER BY userid";
 
 	$result = $mysqli->query($query);
-	$resultset = array();
+	$business_array = array();	
+	$index = 0;
 	while ($row = $result->fetch_assoc()) {
-		$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
+		$business_array[$index] = array($row["userid"],$row["businessname"],$row["businesssectortext"],base64_encode($row["businessimage"]),$row["businessdescription"]);
+		$index++;		 
 	}
 
+	//All offers
+	$query = "SELECT userid, offername, offerdescription, startdate, expirationdate FROM businessoffer ORDER BY userid";
+
+	$result = $mysqli->query($query);
+	$offers_array = array();	
+	$index = 0;
+	while ($row = $result->fetch_assoc()) {
+		$offers_array[$index] = array($row["userid"],$row["offername"],$row["offerdescription"],$row["startdate"],$row["expirationdate"]);
+		$index++;		 
+	}
+
+	// All cities
+	$query = "SELECT DISTINCT userid ,city FROM businessdetail ORDER BY userid";
+
+	$result = $mysqli->query($query);
+	$city_array = array();
+	$index = 0;
+	while ($row = $result->fetch_assoc()) {
+		$city_array[$index] = array($row["userid"],$row["city"]);
+		$index++;			 
+	}
+
+	// Rewards Point section
 	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
 			  WHERE cb.businessid=bd.userid AND cb.userid=".$userid." group by bd.userid";
@@ -51,6 +74,7 @@
 <html class=" js cssanimations csstransitions">
 
 <head>
+
 <style>
 .accordion {
     background-color: #A9C750;
@@ -120,8 +144,8 @@
     display: block;
     background-color: white;
 /*    overflow: hidden;
-*/}
-</style>
+*/} 
+</style> 
 
 	<title>Customer Dashboard</title>
 
@@ -289,32 +313,66 @@
 							<!-- Explore section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
-								<div class="agileinfo-recover">
-									
+								<div class="agileinfo-recover">								
 								<?php
+
+								//------------------------------RAJ Code ---------------------------------
+								
+								//print_r($business_array);	
+								$temp_array = array();
+								foreach ($business_array as $key => $bd_value) {
+									
+									echo "<img src='data:image/jpeg;base64,".$bd_value[3] ."' width='100px' style='height:100px;' />";
+									echo $bd_value[1];
+									echo $bd_value[2];
+									echo $bd_value[4];
+									
+									//Collect all Locations
+									$branches = "";
+									foreach ($city_array as $key1 => $c_value) {
+										if($bd_value[0] == $c_value[0]){
+
+											$branches = $branches . "," .$c_value[1];
+										}
+									}									
+									echo 'Locations : ' . ltrim($branches,",");								
+									
+									//Collect offer details
+									echo '<ul>';
+									foreach ($offers_array as $key2 => $o_value) {
+										if($bd_value[0] == $o_value[0]){
+											echo "<li>" .$o_value[1] . " ".$o_value[2]." ".$o_value[3] . "</li>";									
+										}
+									}
+									echo '</ul>';
+									echo '<br>';
+								}
+
+								//--------------------------------------------------------------------------------
+
+
+
 								//////////POOJA CODE////////////////
 								//print_r($resultset);
-								foreach ($resultset as $i => $values){
-									echo "<button class='accordion'>".$i."</button>";
-									echo "<div class='panelContainer'>";
-									for ($x = 0; $x < count($values); $x++) {
-									  echo "<button class='panelAccordion'>";
+								//foreach ($resultset as $i => $values){
+								//	echo "<button class='accordion'>".$i."</button>";
+								//	echo "<div class='panelContainer'>";
+								//	for ($x = 0; $x < count($values); $x++) {
+								//	  echo "<button class='panelAccordion'>";
 									  		
-									  		echo explode("-",$values[$x])[0];
+								//	  		echo explode("-",$values[$x])[0];
 									  		
-									  		$bid = explode("-",$values[$x])[2];
-									  		echo "<a class='subscribe' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
+								//	  		$bid = explode("-",$values[$x])[2];
+								//	  		echo "<a class='subscribe' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
 
-									  echo "</button>";
-									  echo "<div class='offerData'>".explode("-",$values[$x])[1]."</div>";
-									} 
-									echo "</div>";
+								//	  echo "</button>";
+								//	  echo "<div class='offerData'>".explode("-",$values[$x])[1]."</div>";
+								//	} 
+								//	echo "</div>";
 									
-								}
+								//}
+
 								////////////////////////////////////////
-
-
-
 
 									// foreach ($resultset as $i => $values) {
 									// 	echo "<div class=\"business_cat_name\">";
@@ -333,8 +391,8 @@
 									//     }
 									// 	echo "</div>";
 									// }
-								?>
-										
+								?> 
+							
 										
 
 								</div>

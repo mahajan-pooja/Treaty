@@ -65,7 +65,22 @@ SELECT a.businessname, b.businesssector, a.address1, a.address2, a.city, a.state
                           ON a.businesssector = b.id
 						  WHERE a.id=4;
                           
-INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) 
-VALUES ("5","Family Wash","8","1543 East Calaveras Blvd","11","Milpitas","California","United States","95035",12345678901,37.538941,-122.034422,LOAD_FILE('C:/Treaty_Images/Replace.jpg'),sysdate(),sysdate());                          
-
 SELECT a.businessname, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=5 LIMIT 1;
+
+-- All busi
+SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id GROUP BY userid; 
+
+-- All offers
+SELECT userid ,offername,offerdescription,startdate,expirationdate FROM businessoffer ORDER BY userid;
+
+-- All cities
+SELECT DISTINCT userid ,city FROM businessdetail ORDER BY userid;
+
+
+-- Not used
+SELECT a. userid ,a.businessname,c.businesssectortext,a.businessimage,a.businessdescription, b.offername,b.offerdescription, b.startdate, b.expirationdate
+FROM businessdetail as a JOIN businessoffer as b  ON a.userid = b.userid INNER JOIN businesssector as c ON a.businesssector = c.id GROUP BY offername ORDER BY userid; 
+
+
+
+
