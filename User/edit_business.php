@@ -77,6 +77,12 @@ Changes done on this page:
             if (isset($_POST['zipcode'])) {
                 $zipcode = $_POST['zipcode'];
             }
+            if (isset($_POST['businessphonenumber'])) {
+                $businessphonenumber = $_POST['businessphonenumber'];
+            }
+            if (isset($_POST['businessdescription'])) {
+                $businessdescription = $_POST['businessdescription'];
+            }
 			if (isset($_POST['cancel'])) {
 				$cancel = $_POST['cancel'];
 			}
@@ -117,8 +123,7 @@ Changes done on this page:
 					if(in_array($ext,$ext_array)){
 
 						$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
-						 WHERE id=".$businessid;
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.", businessimage=\"".$tmp_name."\",businessdescription=\"".$businessdescription."\",modified=sysdate() WHERE id=".$businessid;
 					}
 					else{
 						echo 'Only JPEG and PNG Images can be uploaded';
@@ -126,8 +131,7 @@ Changes done on this page:
 				}
 				else{
 					$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\",address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\" ,latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
-						 WHERE id=".$businessid;
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.",businessdescription=\"".$businessdescription."\",modified=sysdate() WHERE id=".$businessid;
 				}
 				
                 $result = $mysqli->query($query);
@@ -137,7 +141,7 @@ Changes done on this page:
                     echo "Failed to update profile";
                 }
 			} else if(!empty($businessid)) {
-				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
+				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage,a.businessdescription, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
 				$result = $mysqli->query($query);
 				$businessresultset = array();
 				if ($result->num_rows > 0) {
@@ -153,6 +157,7 @@ Changes done on this page:
 					array_push($businessresultset, $row["zipcode"]);
 					array_push($businessresultset, $row["businessphonenumber"]);
 					array_push($businessresultset, base64_encode($row["businessimage"]));
+					array_push($businessresultset, $row["businessdescription"]);
 				}
 			}
 			?>
@@ -265,6 +270,7 @@ Changes done on this page:
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[7]) ? '' : $businessresultset[7] ?>" />
 											<input type="text" placeholder="Business Phone Number" name="businessphonenumber" class="name agileits" required=""	value="<?php echo !isset($businessresultset[8]) ? '' : $businessresultset[8] ?>" />
+											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescription" rows="4" columns ="500" maxlength="200" class="name agileits" required="" <?php echo !isset($businessresultset[10]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[10]) ? '' : $businessresultset[10] ?></textarea>
 											<div class="submit"><br>
 												<input type="submit" value="Save">
 												<input name="cancel" type="submit" value="Cancel">

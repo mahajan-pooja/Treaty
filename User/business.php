@@ -4,6 +4,7 @@ Changes done on this page by Rajeshwari:
 - Logic for Lon and Lat added
 - Business Phoe number added on screen
 - Facing Prob for Business Sector number -> replaced with business sector name, Not yet completed
+- Added textarea for business description
 -->
 
 <?php
@@ -101,6 +102,9 @@ Changes done on this page by Rajeshwari:
             if (isset($_POST['zipcode'])) {
                 $zipcode = $_POST['zipcode'];
             }            
+            if (isset($_POST['businessdescription'])) {
+                $businessdescription = $_POST['businessdescription'];
+            }
             if (isset($_POST['oName'])) {
                 $oName = $_POST['oName'];
             }
@@ -140,8 +144,7 @@ Changes done on this page by Rajeshwari:
 								$ext_array = array('jpg','jpeg','png');
 								$ext = pathinfo($filename,PATHINFO_EXTENSION);				
 								if(in_array($ext,$ext_array)){
-									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
-
+									$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage,businessdescription, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\",\"".$businessdescription."\", sysdate(), sysdate())";
 
 						$result = $mysqli->query($query);
 			            if($result){
@@ -196,7 +199,7 @@ Changes done on this page by Rajeshwari:
             } else {
                 //TODO : this should be called on tab change
                 //load businessname and sector
-                $query = "SELECT a.businessname, a.businesssector,b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=\"" . $userid . "\" LIMIT 1";
+                $query = "SELECT a.businessname, a.businesssector,a.businessdescription,b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=\"" . $userid . "\" LIMIT 1";
                 
                 $result = $mysqli->query($query);
                 $businessresultset = array();
@@ -205,6 +208,7 @@ Changes done on this page by Rajeshwari:
                     array_push($businessresultset, $row["businessname"]);
                     array_push($businessresultset, $row["businesssector"]);
                     array_push($businessresultset, $row["businesssectortext"]);
+                    array_push($businessresultset, $row["businessdescription"]);              		
                 }
                 
                 //get the offer business details
@@ -521,6 +525,7 @@ Changes done on this page by Rajeshwari:
 											<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""/>
 											<input type="text" placeholder="Business Phone number" name="businessphonenumber" class="name agileits" required=""/>
+											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescriptions" rows="4" columns ="500" maxlength="200" class="name agileits" required="" <?php echo !isset($businessresultset[3]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[3]) ? '' : $businessresultset[3] ?></textarea>
 											<div class="submit" style="margin-left: 0px;"><br>
 												<input type="submit" value="Save">
 												<input type="reset" value="Cancel" name="RegBusiCancel" onclick="resetImage();" formnovalidate>
