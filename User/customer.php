@@ -3,12 +3,13 @@
 	session_start();
 	$userid = $_SESSION['userid'];
 	require '../config.php';
+
 	if(isset($_GET['businessid'])) {
-			$businessid= $_GET['businessid'];
-			$query = "SELECT SUM(creditedpoints) as totalpoints
-					  FROM businessoffer
-					  WHERE businessid=".$sbusinessid;
-			$result = $mysqli->query($query);
+		$businessid= $_GET['businessid'];
+		$query = "SELECT SUM(creditedpoints) as totalpoints
+				  FROM businessoffer
+				  WHERE businessid=".$sbusinessid;
+		$result = $mysqli->query($query);
 	  	if ($result->num_rows > 0) {
 				$totalpoints = $result->fetch_row()[0];
 			}
@@ -17,39 +18,39 @@
 			 		  WHERE businessid=".$sbusinessid." and userid=".$userid;
 			$result = $mysqli->query($query);
   		if ($result->num_rows = 0) {
-					//create offer
-					$query  = "INSERT INTO customerbusiness(userid, businessid, earnedpoints, isactive, modified, created)
-							VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
-					$result = $mysqli->query($query);
-					if ($result) {
-							//send mail to business owner
-							$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
-							$email = $mysqli->query($query)->fetch_object()->email;  
-							//send email
-							$subject = "You have subscribed to a new business!!";
-							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-														 <html xmlns="http://www.w3.org/1999/xhtml">
-														 <head>
-														 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-														 </head>
-														 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-														 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-														 <div>
-																 <p> You have subscribed to a new business </p>
-														 </div>
-														 </body>
-														 </html>';
-							$headers = "From : poonam.6788@gmail.com";
-							$headers = 'MIME-Version: 1.0' . "\r\n";
-							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-							mail($email, $subject, $message, $headers);
-					}
+			//create offer
+			$query  = "INSERT INTO customerbusiness(userid, businessid, earnedpoints, isactive, modified, created)
+					VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
+			$result = $mysqli->query($query);
+			if ($result) {
+					//send mail to business owner
+					$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
+					$email = $mysqli->query($query)->fetch_object()->email;
+					//send email
+					$subject = "You have subscribed to a new business!!";
+					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+												 <html xmlns="http://www.w3.org/1999/xhtml">
+												 <head>
+												 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+												 </head>
+												 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+												 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+												 <div>
+														 <p> You have subscribed to a new business </p>
+												 </div>
+												 </body>
+												 </html>';
+					$headers = "From : poonam.6788@gmail.com";
+					$headers = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					mail($email, $subject, $message, $headers);
 			}
+		}
 	}
-	
-	$query = "SELECT bd.id as businessid, bd.businessname, bd.businesssector, bo.offerdescription
+
+	$query = "SELECT bd.userid as businessid, bd.businessname, bd.businesssector, bo.offerdescription
 			  FROM businessdetail bd , businessoffer bo
-			  WHERE bd.id = bo.businessid and bd.isactive=1 and bo.isactive=1
+			  WHERE bd.userid = bo.userid and bd.isactive=1 and bo.isactive=1
 			  and bd.id NOT IN (select businessid from customerbusiness where userid=".$userid.")
 			  GROUP BY bd.businessname, bd.businesssector, bo.offerdescription";
 
@@ -59,8 +60,8 @@
 		$resultset[$row['businesssector']][] = $row['businessname']."-".$row['offerdescription']."-".$row['businessid'];
 	}
 
-	$query = "SELECT balance, businessname 
-			  FROM customerbusiness cb, businessdetail bd  
+	$query = "SELECT balance, businessname
+			  FROM customerbusiness cb, businessdetail bd
 			  WHERE cb.businessid=bd.userid AND cb.userid=".$userid." group by bd.userid";
 	$result = $mysqli->query($query);
 	$rewardsset = array();
@@ -123,7 +124,7 @@
     content: "\2212";
 }
 .active, .panelAccordion:hover {
-    background-color: #A9C750; 
+    background-color: #A9C750;
 
 }
 .active, .accordion:hover {
@@ -168,12 +169,13 @@
 
 	include 'header.php';
 	?>
-	
+
 	<script>
-	function subscribeBusiness(businessid) {
-		window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
+		//this logic is handled in subscribe.php file instead of refresh
+	//function subscribeBusiness(businessid) {
+	//	window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
 		//TODO REFRESH PAGE
-	}
+	//}
 	</script>
 </head>
 
@@ -197,7 +199,7 @@
                             <li class="active"><a href="customer.php">Dashboard</a></li>
                             <li><a href="find_location.php">Find Location</a></li>
                             <li><a href="customer_profile.php">Profile</a></li>
-                            <li><a href="../logout.php">Logout</a></li>                           
+                            <li><a href="../logout.php">Logout</a></li>
                         </ul>
                     </div>
                     <!-- End main navigation -->
@@ -205,7 +207,7 @@
             </div>
         </div>
         <br><br>
-        
+
 	<h1></h1>
 	<div class="container">
 		<div class="tab">
@@ -232,7 +234,7 @@
 							width: 'auto',
 							fit: true
 						});
-						
+
 					});
 				</script>
 
@@ -257,9 +259,9 @@
 										//code to get user mobile number
 							            $query = "Select phonenumber from user
 							            where id = ".$userid;
-							            
+
 							            $result = $mysqli->query($query);
-							            while($row = $result->fetch_assoc()){ 
+							            while($row = $result->fetch_assoc()){
 							                $phone = $row['phonenumber'];
 							                $_SESSION["phone"] = $phone;
 							            }
@@ -281,7 +283,7 @@
 												Reward Points - <?php echo explode("-",$value)[1];?><br><br>
 												<a href="" style="color: brown;border:none;">View Details</a>
 											</div>
-										
+
 									<?php endforeach; ?>
 									<!-- <?php //foreach($rewardsset as $value): ?>
 										<div class="business_name">
@@ -293,10 +295,10 @@
 											</div>
 										</div>
 									<?php //endforeach; ?> -->
-								</div>	
+								</div>
 								</div>
 							</div>
-							
+
 							<!-- Explore section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
@@ -309,17 +311,17 @@
 									echo "<div class='panelContainer'>";
 									for ($x = 0; $x < count($values); $x++) {
 									  echo "<button class='panelAccordion'>";
-									  		
+
 									  		echo explode("-",$values[$x])[0];
-									  		
+
 									  		$bid = explode("-",$values[$x])[2];
 									  		echo "<a class='subscribe' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
 
 									  echo "</button>";
 									  echo "<div class='offerData'>".explode("-",$values[$x])[1]."</div>";
-									} 
+									}
 									echo "</div>";
-									
+
 								}
 								////////////////////////////////////////
 
@@ -344,8 +346,8 @@
 									// 	echo "</div>";
 									// }
 								?>
-										
-										
+
+
 
 								</div>
 							</div>
@@ -398,7 +400,7 @@
 	<?php
 
 		include 'footer.php';
-		
+
 	?>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
@@ -409,7 +411,7 @@
 				});
 			</script>
         <script type="text/javascript" src="../js/bootstrap.js"></script>
-        <script type="text/javascript" src="../js/modernizr.custom.js"></script>            
+        <script type="text/javascript" src="../js/modernizr.custom.js"></script>
 <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
 <script>
 var acc = document.getElementsByClassName("accordion");

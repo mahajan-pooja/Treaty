@@ -122,7 +122,7 @@ DROP TABLE IF EXISTS `treaty`.`businessoffer`;
 CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
-  `businessid` BIGINT(20) NOT NULL,
+--  `businessid` BIGINT(20) NOT NULL,
   `offername` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   `offerdescription` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
   `creditedpoints` BIGINT(80) NOT NULL,

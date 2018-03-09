@@ -622,9 +622,9 @@
                     </div>
                     <div class="span6">
                         <div class="highlighted-box center">
-                            <h1>We're Hiring</h1>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl ut aliquip consequat. I learned that we can do anything, but we can't do everything...</p>
-                            <button class="button button-sp">Join Us</button>
+                            <h1>Need Help?</h1>
+                            <p>Please check our FAQ section and get answers for general questions. If you have any other concerns Please feel free to Contact Us.</p>
+                            <a href="User/faq.php" class="button button-sp">FAQ</a>
                         </div>
                     </div>
                 </div>
