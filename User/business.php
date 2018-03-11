@@ -27,12 +27,11 @@ Changes done on this page by Rajeshwari:
 		<script type="text/javascript" src="js/user-dashboard.js"></script>
 
 		<!-- Web-Fonts -->
-			<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
-			<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
+		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 		<!-- //Web-Fonts -->
-		<?php
-		include 'header.php';
-		?>
+    
+		<?php include 'header.php'; ?>
 
 		<!-- Script for image display after selection -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -44,284 +43,286 @@ Changes done on this page by Rajeshwari:
 	        	$('#image').attr('src', e.target.result);
 	       		}
 	        reader.readAsDataURL(input.files[0]);
-	       }
-	    }
+	       }       
+	    }    
 		</script>
-		<!-- Script for image display after selection -->
-
+		<script type="text/javascript">
+			function resetImage(){    		
+		        document.getElementById('image').src="images/default-image.png";  
+		    }
+	    </script>
 	</head>
+	<?php
+		if(isset($_GET['flag'])){
+			if($_GET['flag'] == 'add'){ ?>
+			<script type="text/javascript">
+				alert("Rewards added successfully.");
+				window.location.href = "business.php";
+			</script>
+			<?php } else if($_GET['flag'] == 'redeem'){ ?>
+			<script type="text/javascript">
+				alert("Rewards redeemed successfully.");
+				window.location.href = "business.php";
+			</script>
+			<?php }
+		}
+		
+        require '../config.php';
 
-		<?php
-			if(isset($_GET['flag'])){
-				if($_GET['flag'] == 'add'){ ?>
-				<script type="text/javascript">
-					alert("Rewards added successfully.");
-					window.location.href = "business.php";
-				</script>
-				<?php } else if($_GET['flag'] == 'redeem'){ ?>
-				<script type="text/javascript">
-					alert("Rewards redeemed successfully.");
-					window.location.href = "business.php";
-				</script>
-				<?php }
+        if (isset($_POST['fname'])) {
+            $fname = $_POST['fname'];
+        }
+        if (isset($_POST['lname'])) {
+           $lname = $_POST['lname'];
+        }
+        if (isset($_POST['businessSector'])) {
+           $lname = $_POST['businessSector'];               
+        }
+        if (isset($_POST['businessphonenumber'])) {
+            $businessphonenumber = $_POST['businessphonenumber'];
+        }
+        if (isset($_POST['address1'])) {
+            $address1 = $_POST['address1'];
+        }
+        if (isset($_POST['address2'])) {
+            $address2 = $_POST['address2'];
+        }
+        if (isset($_POST['city'])) {
+            $city = $_POST['city'];
+        }
+        if (isset($_POST['state'])) {
+            $state = $_POST['state'];
+        }
+        if (isset($_POST['country'])) {
+            $country = $_POST['country'];
+        }
+        if (isset($_POST['zipcode'])) {
+            $zipcode = $_POST['zipcode'];
+        }            
+        if (isset($_POST['oName'])) {
+            $oName = $_POST['oName'];
+        }
+        if (isset($_POST['oDesc'])) {
+            $oDesc = $_POST['oDesc'];
+        }
+        if (isset($_POST['oPoints'])) {
+            $oPoints = $_POST['oPoints'];
+        }
+        if (isset($_POST['datepicker1'])) {
+            $datepicker1 = $_POST['datepicker1'];
+        }
+        if (isset($_POST['datepicker2'])) {
+            $datepicker2 = $_POST['datepicker2'];
+        }
+        if (isset($_POST['taskOption'])) {
+            $selectOption = $_POST['taskOption'];
+        }
+
+        $userid = $_SESSION['userid'];
+        if (!empty($fname)) {
+        	//create business
+        	// Find Lon and Lat of address
+        	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
+			$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+			$geo = json_decode($geo, true);
+			if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+			  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+			  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
 			}
-		?>
 
-        <?php
-            require '../config.php';
-
-            if (isset($_POST['fname'])) {
-                $fname = $_POST['fname'];
-            }
-            if (isset($_POST['lname'])) {
-               $lname = $_POST['lname'];
-            }
-            if (isset($_POST['businessphonenumber'])) {
-                $businessphonenumber = $_POST['businessphonenumber'];
-            }
-            if (isset($_POST['address1'])) {
-                $address1 = $_POST['address1'];
-            }
-            if (isset($_POST['address2'])) {
-                $address2 = $_POST['address2'];
-            }
-            if (isset($_POST['city'])) {
-                $city = $_POST['city'];
-            }
-            if (isset($_POST['state'])) {
-                $state = $_POST['state'];
-            }
-            if (isset($_POST['country'])) {
-                $country = $_POST['country'];
-            }
-            if (isset($_POST['zipcode'])) {
-                $zipcode = $_POST['zipcode'];
-            }
-            if (isset($_POST['oName'])) {
-                $oName = $_POST['oName'];
-            }
-            if (isset($_POST['oDesc'])) {
-                $oDesc = $_POST['oDesc'];
-            }
-            if (isset($_POST['oPoints'])) {
-                $oPoints = $_POST['oPoints'];
-            }
-            if (isset($_POST['datepicker1'])) {
-                $datepicker1 = $_POST['datepicker1'];
-            }
-            if (isset($_POST['datepicker2'])) {
-                $datepicker2 = $_POST['datepicker2'];
-            }
-            if (isset($_POST['taskOption'])) {
-                $selectOption = $_POST['taskOption'];
-            }
-
-            $userid = $_SESSION['userid'];
-            if (!empty($fname)) {
-            	//create business
-            	// Find Lon and Lat of address
-            	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
-				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-				$geo = json_decode($geo, true);
-				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-				}
-
-            	// Check if Image file is uploaded
-            	if(!empty($_FILES['image']['name'])){
-	            	$filename = addslashes($_FILES["image"]["name"]);
-					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-					$file_type = addslashes($_FILES["image"]["type"]);
-					$ext_array = array('jpg','jpeg','png');
-					$ext = pathinfo($filename,PATHINFO_EXTENSION);
-					if(in_array($ext,$ext_array)){
-						$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
-
-						$result = $mysqli->query($query);
-		                if($result){
-		                    $_SESSION["businessname"]   = $fname;
-		                    $_SESSION["businesssector"] = $lname;
-							//send email
-					        $subject = "You have registered a new business!!";
-					        //$message = "Please use this password to login ".$password."<br> Please click on this link";
-					        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-					                       <html xmlns="http://www.w3.org/1999/xhtml">
-					                       <head>
-					                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-					                       </head>
-					                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-					                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-					                       <div>
-					                               <p> You have registered your business </p>
-																				 <p> Business Name : '.$fname.'</p>
-																				 <p> Business Sector : '.$lname.'</p>
-					                       </div>
-					                       </body>
-					                       </html>';
-					        $headers = "From : poonam.6788@gmail.com";
-					        $headers = 'MIME-Version: 1.0' . "\r\n";
-					        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-					        if(mail($email, $subject, $message, $headers)){
-	            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-							}
-		                } else {
-		                    echo "Your Business could not be added. Please Try again.";
-		                    echo $query;
-		                }
-					} else {
-						echo 'Only JPEG and PNG Images can be uploaded';
-					}
-				} else {
-					echo 'Please Select a Image for your Business';
-				}
-            } else if (!empty($oName)) {
-                //create offer
-                $query  = "INSERT INTO businessoffer(userid, offername,
-                        offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
-                        VALUES (\"" . $userid . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\"
-                        ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\", 1, sysdate(), sysdate())";
-                $result = $mysqli->query($query);
-                if ($result) {
-					//send mail to business owner
-					$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
-					$email = $mysqli->query($query)->fetch_object()->email;
-					//send email
-					$subject = "You have created a new offer!!";
-					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-								 <html xmlns="http://www.w3.org/1999/xhtml">
-								 <head>
-								 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-								 </head>
-								 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-								 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-								 <div>
-									 <p> You have registered your business </p>
-									 <p> Offer Name : '.$oName.'</p>
-									 <p> Offer Desc : '.$oDesc.'</p>
-									 <p> Offer Points : '.$oPoints.'</p>
-								 </div>
-								 </body>
-								 </html>';
-					$headers = "From : poonam.6788@gmail.com";
-					$headers = 'MIME-Version: 1.0' . "\r\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-					mail($email, $subject, $message, $headers));
-					//send mail to all customers subscribed to this business
-					$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$selectOption.")";
+			// If Image is selected
+			if(!empty($_FILES['image']['name'])){
+            	$filename = addslashes($_FILES["image"]["name"]);
+				$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+				$file_type = addslashes($_FILES["image"]["type"]);
+				$ext_array = array('jpg','jpeg','png');
+				$ext = pathinfo($filename,PATHINFO_EXTENSION);
+				if(in_array($ext,$ext_array)){
+					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
 					$result = $mysqli->query($query);
-                	if ($result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							$email = $row["email"];
-							//send email
-							$subject = "You have created a new offer!!";
-							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-										 <html xmlns="http://www.w3.org/1999/xhtml">
-										 <head>
-										 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-										 </head>
-										 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-										 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-										 <div>
-														 <p> A new offer has been created for the business you a </p>
-										 </div>
-										 </body>
-										 </html>';
-							$headers = "From : poonam.6788@gmail.com";
-							$headers = 'MIME-Version: 1.0' . "\r\n";
-							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-							mail($email, $subject, $message, $headers);
+	                if($result){
+	                    $_SESSION["businessname"]   = $fname;
+	                    $_SESSION["businesssector"] = $lname;
+						//send email
+				        $subject = "You have registered a new business!!";
+				        //$message = "Please use this password to login ".$password."<br> Please click on this link";
+				        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+				                       <html xmlns="http://www.w3.org/1999/xhtml">
+				                       <head>
+				                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				                       </head>
+				                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+				                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+				                       <div>
+				                               <p> You have registered your business </p>
+																			 <p> Business Name : '.$fname.'</p>
+																			 <p> Business Sector : '.$lname.'</p>
+				                       </div>
+				                       </body>
+				                       </html>';
+				        $headers = "From : poonam.6788@gmail.com";
+				        $headers = 'MIME-Version: 1.0' . "\r\n";
+				        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				        if(mail($email, $subject, $message, $headers)){
+            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
 						}
-					}
-                	//send sms to customers subscribed to the business when offer is created.
-                	$qry = "SELECT cb.userid, u.phonenumber FROM customerbusiness cb, user u WHERE cb.businessid=" . $userid . " and cb.userid = u.id";
-	                $resultQry = $mysqli->query($qry);
-
-	                if ($resultQry->num_rows > 0) {
-	                    while($row = $resultQry->fetch_assoc()){
-
-	                   	$text = "New offer created.";
-	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-						        'api_key' => d0fbd93d,
-						        'api_secret' => bcaca354e0887dd9,
-						        'to' => $row['phonenumber'],
-						        'from' => 12034089447,
-						        'text' => $text
-						    ]);
-							$ch = curl_init($url);
-							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-							$response = curl_exec($ch);
-							curl_close($ch);
-	                	}
-	                }
-                	//redirect to business.php page after sending sms to customers
-                    echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
-            	} else {
-	                //TODO : this should be called on tab change
-	                //load businessname and sector
-	                $query = "SELECT a.businessname, a.businesssector,b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=\"" . $userid . "\" LIMIT 1";
-
-	                $result = $mysqli->query($query);
-	                $businessresultset = array();
-	                if ($result->num_rows > 0) {
-	                    $row = $result->fetch_array();
-	                    array_push($businessresultset, $row["businessname"]);
-	                    array_push($businessresultset, $row["businesssector"]);
-	                    array_push($businessresultset, $row["businesssectortext"]);
-	                }
-
-                	//get the offer business details
-	                $query = "SELECT id, address1, city
-                              FROM businessdetail
-                              WHERE userid=\"" . $userid . "\" and isactive=1";
-
-	                $result = $mysqli->query($query);
-
-	                if ($result->num_rows > 0) {
-	                    $businessrow = $result;
-	                    $resultset   = array();
-	                    while ($row = $businessrow->fetch_assoc()) {
-	                        //$addr = $row[0] . "-" . $row[1] . ", " . $row[2];
-	                        $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
-	                        array_push($resultset, $addr);
-	                    }
 	                } else {
-	                    unset($_SESSION["businessname"]);
-	                    unset($_SESSION["businesssector"]);
+	                    echo "Your Business could not be added. Please Try again.";
+	                    echo $query;
 	                }
-
-					//get business list
-					$query = "SELECT id, businessname, businesssector, address1, address2, city, state, country, zipcode
-							  FROM businessdetail
-	                          WHERE userid=\"" . $userid . "\" and isactive = 1";
-
-			        $result = $mysqli->query($query);
-			        $businesslistresultset = array();
-			        if ($result->num_rows > 0) {
-						// output data of each row
-						while($row = $result->fetch_assoc()) {
-							$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
-							array_push($businesslistresultset, $address);
-						}
-			        }
-
-					//get offers list
-					$query = "SELECT id, offername, creditedpoints, offerdescription
-							  FROM businessoffer
-	                          WHERE userid=\"" . $userid . "\" and isactive = 1";
-
-	                $result = $mysqli->query($query);
-	                $offerlistresultset = array();
-	                if ($result->num_rows > 0) {
-						// output data of each row
-						while($row = $result->fetch_assoc()) {
-							$address = $row["offername"] . "@" . $row["creditedpoints"] . " points". "@" . $row["id"]. "@" . $row["offerdescription"];
-							array_push($offerlistresultset, $address);
-						}
-	                }
-            	}
+				} else {
+					echo 'Only JPEG and PNG Images can be uploaded';
+				}
+			} else {
+				echo 'Please Select a Image for your Business';
 			}
-        ?>
+        } else if (!empty($oName)) {
+            //create offer
+            $query  = "INSERT INTO businessoffer(userid, offername,
+                    offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
+                    VALUES (\"" . $userid . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\"
+                    ,\"" . $datepicker1 . "\",\"" . $datepicker2 . "\", 1, sysdate(), sysdate())";
+            $result = $mysqli->query($query);
+            if ($result) {
+				//send mail to business owner
+				$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
+				$email = $mysqli->query($query)->fetch_object()->email;
+				//send email
+				$subject = "You have created a new offer!!";
+				$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+							 <html xmlns="http://www.w3.org/1999/xhtml">
+							 <head>
+							 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+							 </head>
+							 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+							 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+							 <div>
+								 <p> You have registered your business </p>
+								 <p> Offer Name : '.$oName.'</p>
+								 <p> Offer Desc : '.$oDesc.'</p>
+								 <p> Offer Points : '.$oPoints.'</p>
+							 </div>
+							 </body>
+							 </html>';
+				$headers = "From : poonam.6788@gmail.com";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				mail($email, $subject, $message, $headers));
+				//send mail to all customers subscribed to this business
+				$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$selectOption.")";
+				$result = $mysqli->query($query);
+            	if ($result->num_rows > 0) {
+					while ($row = $result->fetch_assoc()) {
+						$email = $row["email"];
+						//send email
+						$subject = "You have created a new offer!!";
+						$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+									 <html xmlns="http://www.w3.org/1999/xhtml">
+									 <head>
+									 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+									 </head>
+									 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+									 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+									 <div>
+													 <p> A new offer has been created for the business you a </p>
+									 </div>
+									 </body>
+									 </html>';
+						$headers = "From : poonam.6788@gmail.com";
+						$headers = 'MIME-Version: 1.0' . "\r\n";
+						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						mail($email, $subject, $message, $headers);
+					}
+				}
+            	//send sms to customers subscribed to the business when offer is created.
+            	$qry = "SELECT cb.userid, u.phonenumber,bd.businessname FROM customerbusiness cb, user u, businessdetail bd WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
+                $resultQry = $mysqli->query($qry);
+
+                if ($resultQry->num_rows > 0) {
+                    while($row = $resultQry->fetch_assoc()){
+                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
+                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
+					        'api_key' => d0fbd93d,
+					        'api_secret' => bcaca354e0887dd9,
+					        'to' => $row['phonenumber'],
+					        'from' => 12034089447,
+					        'text' => $text
+					    ]);
+						$ch = curl_init($url);
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						$response = curl_exec($ch);
+						curl_close($ch);
+                	}
+                }
+            	//redirect to business.php page after sending sms to customers
+                echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
+        	} else {
+                //TODO : this should be called on tab change
+                //load businessname and sector
+                $query = "SELECT a.businessname, a.businesssector,b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=\"" . $userid . "\" LIMIT 1";
+				
+                $result = $mysqli->query($query);
+                $businessresultset = array();
+                if ($result->num_rows > 0) {
+                    $row = $result->fetch_array();
+                    array_push($businessresultset, $row["businessname"]);
+                    array_push($businessresultset, $row["businesssector"]);
+                    array_push($businessresultset, $row["businesssectortext"]);
+                }
+
+            	//get the offer business details
+                $query = "SELECT id, address1, city
+                          FROM businessdetail
+                          WHERE userid=\"" . $userid . "\" and isactive=1";
+
+                $result = $mysqli->query($query);
+
+                if ($result->num_rows > 0) {
+                    $businessrow = $result;
+                    $resultset   = array();
+                    while ($row = $businessrow->fetch_assoc()) {
+                        //$addr = $row[0] . "-" . $row[1] . ", " . $row[2];
+                        $addr = $row['id'] . "-" . $row['address1'] . ", " . $row['city'];
+                        array_push($resultset, $addr);
+                    }
+                } else {
+                    unset($_SESSION["businessname"]);
+                    unset($_SESSION["businesssector"]);
+                }
+
+				//get business list
+				$query = "SELECT id, businessname, businesssector, address1, address2, city, state, country, zipcode
+						  FROM businessdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+
+		        $result = $mysqli->query($query);
+		        $businesslistresultset = array();
+		        if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						$address = $row["address1"] . "," . $row["city"] . ", " . $row["state"]. ", " . $row["country"]. "-" . $row["id"];
+						array_push($businesslistresultset, $address);
+					}
+		        }
+
+				//get offers list
+				$query = "SELECT id, offername, creditedpoints, offerdescription
+						  FROM businessoffer
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+
+                $result = $mysqli->query($query);
+                $offerlistresultset = array();
+                if ($result->num_rows > 0) {
+					// output data of each row
+					while($row = $result->fetch_assoc()) {
+						$address = $row["offername"] . "@" . $row["creditedpoints"] . " points". "@" . $row["id"]. "@" . $row["offerdescription"];
+						array_push($offerlistresultset, $address);
+					}
+                }
+        	}
+		}
+
+    ?>
 	<body>
         <div class="navbar">
             <div class="navbar-inner">
@@ -352,6 +353,19 @@ Changes done on this page by Rajeshwari:
                 </div>
             </div>
         </div>
+        <span class="loginName">
+        	<?php 
+        		$loginNameQry = "SELECT firstname, lastname
+						  FROM userdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                
+                $resultName = $mysqli->query($loginNameQry);
+                if ($resultName->num_rows > 0) {
+                	$row = $resultName->fetch_assoc();
+                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                }
+        	?>    	
+        </span>
         <br><br>
 
 		<h1></h1>
@@ -410,9 +424,9 @@ Changes done on this page by Rajeshwari:
 												<p class="b_name" id="custPoints" style="color: white;font-size: 150%;">
 											 <?php
 											//get customer points for add redeem
-								            if(isset($_GET['custID'])){
-
-								            	$decodePhn = base64_decode($_GET['custID']);
+								            if(isset($_GET['apcm'])){
+								            	
+							            	$decodePhn = base64_decode($_GET['apcm']);
 								            $query = "Select u.id, c.balance, ud.firstname, ud.lastname from user u, customerbusiness c, userdetail ud where u.phonenumber = \"" . $decodePhn . "\" and u.id = c.userid and u.id = ud.userid and u.isactive=1 and c.businessid = ".$userid;
 								            $result = $mysqli->query($query);
 								                $offerlistresultset = array();
@@ -424,13 +438,22 @@ Changes done on this page by Rajeshwari:
 
 													}
 													echo $uname. " have ";
-								                }
-								                if($points == ''){
-								                	echo "<script>
+
+								                } 
+								                if($points == ''){ 
+													echo "<script>
 								                	alert('This is not your subscribed customer. QR code invalid.');
 								                	window.location.href = 'business.php';
 								                	</script>";
-
+								                ?>
+								                <div id="invalidCust" class="modal" style="display: block;">
+													<p class="modal-content">This is not your subscribed customer. QR code invalid.</p>
+													<button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+												</div>
+								                <script>
+								                document.getElementById('invalidCust').style.display='block';
+								                </script>
+								            <?php
 								                }else{
 								                	echo $points. " Reward points.";
 								                }
@@ -474,13 +497,13 @@ Changes done on this page by Rajeshwari:
 												</div>
 											</form><?php
 								            	}else{
-								            		if(isset($_GET['custID'])){
+								            		if(isset($_GET['apcm'])){
 								            		echo "<p>No offers to redeem as customer has low reward balance.</p>";
 								            		}else{
 								            		echo "<p>Scan customer QR code to redeem offer.</p>";
 								            		}
-													//*****Need to close form tag here*****
 													echo '</form>';
+
 								            	}
 
 												?>
@@ -529,18 +552,55 @@ Changes done on this page by Rajeshwari:
 										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
 											<table style="width: 91.6%;">
                                         	<tr>
-                                            	<td style="padding-left: 16px;">
-	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;">
-	                                            	<img src = "images/default-image.png" alt = "Upload Image" id = "image" width="100px" />
+                                            	<td style="padding-left: 6px;">
+	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
+	                                            	<img src = "images/default-image.jpg" alt = "Upload Image" id = "image" width="100px" />
 	                                            	</div>
                                             	</td>
-                                            	<td style="vertical-align: bottom;width: 100%;">
-                                            		<input type="file" name="image" onchange= "displayImage(this)" required="" />
+
+                                            	<td style="vertical-align: bottom;width: 100%;">                                        
+                                            		<input type="file" name="image" onchange= "displayImage(this)" required="" style="padding: 0.5em 0.6em;margin-bottom: 6px;"/>
                                             	</td>
                                             </tr>
                                         	</table>
                                             <input <?php echo !isset($businessresultset[0]) ? '' : 'readonly' ?> name="fname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[0]) ? 'Business name' : $businessresultset[0] ?>" value="<?php echo !isset($businessresultset[0]) ? '' : $businessresultset[0] ?>">
-                                            <input <?php echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits" placeholder="<?php echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>" value="<?php echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
+                                            
+                                            <!-- Logic to populate select option from DB. -->
+                                           <?php
+                                           		// If first bussiness is getting added.
+                                           		$query = "SELECT id , businesssectortext FROM businesssector;";
+							                    $result = $mysqli->query($query); 
+							                    if(!isset($businessresultset[2])){
+							                    	
+							                    	$show_select = "<select name='businessSector' class='name agileits'>";
+							                    	$show_select = $show_select . "<option value='0'>Select Business Sector</option>";
+							                    
+							                    	while($row = mysqli_fetch_array($result)){
+							                        	$show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
+							                    	}							                    								             
+							                    }
+							                    else{
+							                    	//If business already exists and another business is to be added
+							                    	$show_select = "<select name='businessSector' class='name agileits'>";
+							                    	$show_select = $show_select . "<option value='0' disabled>Select Business Sector</option>";
+							                    
+							                    	while($row = mysqli_fetch_array($result)){
+							                    		if(strcasecmp($businessresultset[2], $row['businesssectortext']) == 0){
+							                    			$show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>"; 
+							                    		}
+							                    		else{
+							                    			$show_select = $show_select . "<option value='".$row['id']."' disabled>".$row['businesssectortext']."</option>"; 
+							                    		}
+							                        	             
+							                    	}							                  						                    	
+							                    }
+							                    $show_select = $show_select . "</select>";
+							                    echo $show_select;
+							                ?>
+
+                                            <!-- Instead of text box Select option given for businessSector
+                                            <input <?php //echo !isset($businessresultset[1]) ? '' : 'readonly' ?> name="lname" type="text" class="name agileits" placeholder="<?php //echo !isset($businessresultset[1]) ? 'Business sector' : $businessresultset[1] ?>" value="<?php //echo !isset($businessresultset[1]) ? '' : $businessresultset[1] ?>">
+                                            -->	
 											<input type="text" placeholder="Address : Street 1" name="address1" class="name agileits" required=""/>
 											<input type="text" placeholder="Address : Street 2" name="address2" class="name agileits"/>
 											<input type="text" placeholder="City" name="city" class="name agileits" required=""/>
@@ -548,9 +608,9 @@ Changes done on this page by Rajeshwari:
 											<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""/>
 											<input type="text" placeholder="Business Phone number" name="businessphonenumber" class="name agileits" required=""/>
-											<div class="submitBtn"><br>
+											<div class="submit" style="margin-left: 0px;"><br>
 												<input type="submit" value="Save">
-												<input type="submit" value="Cancel">
+												<input type="reset" value="Cancel" name="RegBusiCancel" onclick="resetImage();" formnovalidate>
                                                 <br><br>
 											</div>
 										</form>
@@ -597,6 +657,26 @@ Changes done on this page by Rajeshwari:
 		/* close connection */
             $mysqli->close();
         ?>
-
+        <!-- Popup box modal -->
+		<div id="add" class="modal">
+		  <p class="modal-content">Rewards Added successfully.</p>
+		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+		</div>
+		<div id="redeem" class="modal">
+		  <p class="modal-content">Rewards Redeemed successfully.</p>
+		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
+		</div>
+		<?php 
+		if(isset($_GET['flag'])){
+			if($_GET['flag'] == 'add'){ ?>
+			<script type="text/javascript">
+				document.getElementById('add').style.display='block';
+			</script>
+			<?php } else if($_GET['flag'] == 'redeem'){ ?>
+			<script type="text/javascript">
+				document.getElementById('redeem').style.display='block';
+			</script>
+			<?php } 
+		} ?>
 	</body>
 </html>

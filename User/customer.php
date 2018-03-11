@@ -69,8 +69,6 @@
 		$address = $row["businessname"] . "-" . $row["balance"];
 		array_push($rewardsset, $address);
 	}
-	/* close connection */
-	$mysqli->close();
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
@@ -206,6 +204,18 @@
                 </div>
             </div>
         </div>
+        <span class="loginName">
+        	<?php 
+        		$Qry = "SELECT firstname, lastname
+						  FROM userdetail
+                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+                $result = $mysqli->query($Qry);
+                if ($result->num_rows > 0) {
+                	$row = $result->fetch_assoc();
+                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                }
+        	?>    	
+        </span>
         <br><br>
 
 	<h1></h1>
@@ -444,5 +454,9 @@ for (j = 0; j < pAcc.length; j++) {
     });
 }
 </script>
+<?php
+/* close connection */
+	$mysqli->close();
+?>
 </body>
 </html>
