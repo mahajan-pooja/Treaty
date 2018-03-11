@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessdetail` (
   `longitude` FLOAT(10,6) NOT NULL,
   `isactive` BIGINT(20) NOT NULL DEFAULT '1',
   `businessimage` LONGBLOB NOT NULL,
+  `businessdescription` TEXT NOT NULL,
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -122,7 +123,7 @@ DROP TABLE IF EXISTS `treaty`.`businessoffer`;
 CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userid` BIGINT(20) NOT NULL,
---  `businessid` BIGINT(20) NOT NULL,
+ -- `businessid` BIGINT(20) NOT NULL,
   `offername` VARCHAR(100) CHARACTER SET 'utf8' NOT NULL,
   `offerdescription` VARCHAR(100) CHARACTER SET 'utf8' NULL DEFAULT NULL,
   `creditedpoints` BIGINT(80) NOT NULL,
@@ -132,13 +133,13 @@ CREATE TABLE IF NOT EXISTS `treaty`.`businessoffer` (
   `modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `created` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `ix_businessoffer_userid_businessid_offername` (`userid`, `businessid`, `offername`),
+  UNIQUE INDEX `ix_businessoffer_userid_offername` (`userid`, `offername`),
   CONSTRAINT `fk_businessoffer_userid`
     FOREIGN KEY (`userid`)
     REFERENCES `treaty`.`user` (`id`))
---  CONSTRAINT `fk_businessoffer_businessid`
+ -- CONSTRAINT `fk_businessoffer_businessid`
 --    FOREIGN KEY (`businessid`)
---    REFERENCES `treaty`.`businessdetail` (`id`)
+--    REFERENCES `treaty`.`businessdetail` (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

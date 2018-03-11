@@ -13,41 +13,41 @@ Changes done on this page:
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 	<head>
-	<title>Business Dashboard</title>
+		<title>Business Dashboard</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="../images/favicon.ico">
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <link rel="shortcut icon" href="../images/favicon.ico">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-	<link href="css/font-awesome.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/user-dashboard.js"></script>
+		<link href="css/font-awesome.css" rel="stylesheet">
+	    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
+	    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/user-dashboard.js"></script>
 
-	<!-- Web-Fonts -->
-		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
-		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-	<!-- //Web-Fonts -->
+		<!-- Web-Fonts -->
+			<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
+			<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+		<!-- //Web-Fonts -->
 
-	<!-- Script for image display after selection -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		function displayImage(input) {
-    		if (input.files && input.files[0]) {
-        	var reader = new FileReader();
-        	reader.onload = function (e) {
-        	$('#image').attr('src', e.target.result);
-       		}
-        reader.readAsDataURL(input.files[0]);
-       }
-    }
-	</script>
-	<!-- Script for image display after selection -->
-	
-	<?php include 'header.php'; ?>
-</head>
+		<!-- Script for image display after selection -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			function displayImage(input) {
+	    		if (input.files && input.files[0]) {
+	        	var reader = new FileReader();
+	        	reader.onload = function (e) {
+	        	$('#image').attr('src', e.target.result);
+	       		}
+	        reader.readAsDataURL(input.files[0]);
+	       }
+	    }
+		</script>
+		<!-- Script for image display after selection -->
+		
+		<?php include 'header.php'; ?>
+	</head>
 		<?php 
 
 			require '../config.php';
@@ -76,6 +76,12 @@ Changes done on this page:
             }
             if (isset($_POST['zipcode'])) {
                 $zipcode = $_POST['zipcode'];
+            }
+            if (isset($_POST['businessphonenumber'])) {
+                $businessphonenumber = $_POST['businessphonenumber'];
+            }
+            if (isset($_POST['businessdescription'])) {
+                $businessdescription = $_POST['businessdescription'];
             }
 			if (isset($_POST['cancel'])) {
 				$cancel = $_POST['cancel'];
@@ -109,23 +115,21 @@ Changes done on this page:
 
 				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
 				if($_FILES['image']['error'] == 0){
-						$filename = addslashes($_FILES["image"]["name"]);
-						$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-						$file_type = addslashes($_FILES["image"]["type"]);
-						$ext_array = array('jpg','jpeg','png');
-						$ext = pathinfo($filename,PATHINFO_EXTENSION);
-						if(in_array($ext,$ext_array)){
-								$query = "UPDATE businessdetail
-								 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
-								 WHERE id=".$businessid;
-						}
-						else{
-								echo 'Only JPEG and PNG Images can be uploaded';
-						}
-				}
-				else{
+					$filename = addslashes($_FILES["image"]["name"]);
+					$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+					$file_type = addslashes($_FILES["image"]["type"]);
+					$ext_array = array('jpg','jpeg','png');
+					$ext = pathinfo($filename,PATHINFO_EXTENSION);
+					if(in_array($ext,$ext_array)){
+						$query = "UPDATE businessdetail
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+						 WHERE id=".$businessid;
+					} else {
+						echo 'Only JPEG and PNG Images can be uploaded';
+					}
+				} else {
 					$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\",address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\" ,latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.",businessdescription=\"".$businessdescription."\",modified=sysdate()
 						 WHERE id=".$businessid;
 				}
 				
@@ -155,23 +159,24 @@ Changes done on this page:
             echo "Failed to update profile";
         }
 			} else if(!empty($businessid)) {
-					$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
-					$result = $mysqli->query($query);
-					$businessresultset = array();
-					if ($result->num_rows > 0) {
-							$row = $result->fetch_array();
-							array_push($businessresultset, $row["businessname"]);
-							array_push($businessresultset, $row["businesssectortext"]);
-							//array_push($businessresultset, $row["businesssector"]);
-							array_push($businessresultset, $row["address1"]);
-							array_push($businessresultset, $row["address2"]);
-							array_push($businessresultset, $row["city"]);
-							array_push($businessresultset, $row["state"]);
-							array_push($businessresultset, $row["country"]);
-							array_push($businessresultset, $row["zipcode"]);
-							array_push($businessresultset, $row["businessphonenumber"]);
-							array_push($businessresultset, base64_encode($row["businessimage"]));
-					}
+				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage,a.businessdescription, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
+				$result = $mysqli->query($query);
+				$businessresultset = array();
+				if ($result->num_rows > 0) {
+					$row = $result->fetch_array();
+					array_push($businessresultset, $row["businessname"]);
+					array_push($businessresultset, $row["businesssectortext"]);
+					//array_push($businessresultset, $row["businesssector"]);
+					array_push($businessresultset, $row["address1"]);
+					array_push($businessresultset, $row["address2"]);
+					array_push($businessresultset, $row["city"]);
+					array_push($businessresultset, $row["state"]);
+					array_push($businessresultset, $row["country"]);
+					array_push($businessresultset, $row["zipcode"]);
+					array_push($businessresultset, $row["businessphonenumber"]);
+					array_push($businessresultset, base64_encode($row["businessimage"]));
+					array_push($businessresultset, $row["businessdescription"]);
+				}
 			}
 		?>
 		<body>
@@ -283,6 +288,7 @@ Changes done on this page:
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[7]) ? '' : $businessresultset[7] ?>" />
 											<input type="text" placeholder="Business Phone Number" name="businessphonenumber" class="name agileits" required=""	value="<?php echo !isset($businessresultset[8]) ? '' : $businessresultset[8] ?>" />
+											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescription" rows="4" columns ="500" maxlength="200" class="name agileits" required="" <?php echo !isset($businessresultset[10]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[10]) ? '' : $businessresultset[10] ?></textarea>
 											<div class="submit"><br>
 												<input type="submit" value="Save">
 												<input name="cancel" type="submit" value="Cancel">
