@@ -22,27 +22,27 @@
 					VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
 			$result = $mysqli->query($query);
 			if ($result) {
-					//send mail to business owner
-					$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
-					$email = $mysqli->query($query)->fetch_object()->email;
-					//send email
-					$subject = "You have subscribed to a new business!!";
-					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-												 <html xmlns="http://www.w3.org/1999/xhtml">
-												 <head>
-												 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-												 </head>
-												 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-												 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-												 <div>
-														 <p> You have subscribed to a new business </p>
-												 </div>
-												 </body>
-												 </html>';
-					$headers = "From : poonam.6788@gmail.com";
-					$headers = 'MIME-Version: 1.0' . "\r\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-					mail($email, $subject, $message, $headers);
+				//send mail to business owner
+				$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
+				$email = $mysqli->query($query)->fetch_object()->email;
+				//send email
+				$subject = "You have subscribed to a new business!!";
+				$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+											 <html xmlns="http://www.w3.org/1999/xhtml">
+											 <head>
+											 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+											 </head>
+											 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+											 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+											 <div>
+													 <p> You have subscribed to a new business </p>
+											 </div>
+											 </body>
+											 </html>';
+				$headers = "From : poonam.6788@gmail.com";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				mail($email, $subject, $message, $headers);
 			}
 		}
 	}
@@ -340,7 +340,7 @@
 										
 													$branches = $branches . "," .$c_value[1];
 												}
-											}									
+											}
 											echo 'Locations : ' . ltrim($branches,",");								
 											
 											//Collect offer details
