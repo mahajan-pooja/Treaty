@@ -19,8 +19,8 @@ session_start();
     <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
 
 	<script type="text/javascript" src="js/jquery.min.js"></script>
-<!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
- -->
+	<!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
+	 -->
 	<!-- Web-Fonts -->
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
