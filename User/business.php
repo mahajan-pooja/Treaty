@@ -119,149 +119,148 @@ Changes done on this page by Rajeshwari:
             $selectOption = $_POST['taskOption'];
         }
         $userid = $_SESSION['userid'];
-
         if (!empty($fname)) {
         	//create business
         	// Find Lon and Lat of address
         	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
-			$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-			$geo = json_decode($geo, true);
-			if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-			  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-			  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-			}
+					$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+					$geo = json_decode($geo, true);
+					if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+					  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+					  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+					}
 
-			// If Image is selected
-			if(!empty($_FILES['image']['name'])){
-            	$filename = addslashes($_FILES["image"]["name"]);
-				$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-				$file_type = addslashes($_FILES["image"]["type"]);
-				$ext_array = array('jpg','jpeg','png');
-				$ext = pathinfo($filename,PATHINFO_EXTENSION);
-				if(in_array($ext,$ext_array)){
-					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
-					$result = $mysqli->query($query);
-	                if($result){
-	                    $_SESSION["businessname"]   = $fname;
-	                    $_SESSION["businesssector"] = $lname;
-						//send email
-				        $subject = "You have registered a new business!!";
-				        //$message = "Please use this password to login ".$password."<br> Please click on this link";
-				        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-				                       <html xmlns="http://www.w3.org/1999/xhtml">
-				                       <head>
-				                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-				                       </head>
-				                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-				                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-				                       <div>
-			                               <p> You have registered your business </p>
-										   <p> Business Name : '.$fname.'</p>
-										   <p> Business Sector : '.$lname.'</p>
-				                       </div>
-				                       </body>
-				                       </html>';
-				        $headers = "From : poonam.6788@gmail.com";
-				        $headers = 'MIME-Version: 1.0' . "\r\n";
-				        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				        if(mail($email, $subject, $message, $headers)){
-            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+					// If Image is selected
+					if(!empty($_FILES['image']['name'])){
+		            	$filename = addslashes($_FILES["image"]["name"]);
+						$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+						$file_type = addslashes($_FILES["image"]["type"]);
+						$ext_array = array('jpg','jpeg','png');
+						$ext = pathinfo($filename,PATHINFO_EXTENSION);
+						if(in_array($ext,$ext_array)){
+							$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+							$result = $mysqli->query($query);
+			                if($result){
+			                    $_SESSION["businessname"]   = $fname;
+			                    $_SESSION["businesssector"] = $lname;
+								//send email
+						        $subject = "You have registered a new business!!";
+						        //$message = "Please use this password to login ".$password."<br> Please click on this link";
+						        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+						                       <html xmlns="http://www.w3.org/1999/xhtml">
+						                       <head>
+						                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+						                       </head>
+						                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+						                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+						                       <div>
+					                               <p> You have registered your business </p>
+												   <p> Business Name : '.$fname.'</p>
+												   <p> Business Sector : '.$lname.'</p>
+						                       </div>
+						                       </body>
+						                       </html>';
+						        $headers = "From : poonam.6788@gmail.com";
+						        $headers = 'MIME-Version: 1.0' . "\r\n";
+						        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						        if(mail($email, $subject, $message, $headers)){
+		            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
+								}
+			                } else {
+			                    echo "Your Business could not be added. Please Try again.";
+			                    echo $query;
+			                }
+						} else {
+							echo 'Only JPEG and PNG Images can be uploaded';
 						}
-	                } else {
-	                    echo "Your Business could not be added. Please Try again.";
-	                    echo $query;
-	                }
-				} else {
-					echo 'Only JPEG and PNG Images can be uploaded';
-				}
-			} else {
-				echo 'Please Select a Image for your Business';
-			}
+					} else {
+						echo 'Please Select a Image for your Business';
+					}
         } else if(!empty($oName)) {
             //create offer
             $query  = "INSERT INTO businessoffer(userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
                     	VALUES (\"" . $userid . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\",\"" . $datepicker1 . "\",\"" . $datepicker2 . "\", 1, sysdate(), sysdate())";
             $result = $mysqli->query($query);
             if ($result) {
-				//send mail to business owner
-				$query = "SELECT email FROM user WHERE userid=\"" . $userid . "\" and isactive=1";
-				$result = $mysqli->query($query);
+							//send mail to business owner
+							$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
+							$result = $mysqli->query($query);
           		if ($result->num_rows > 0) {
           			$row = $result->fetch_array();
-				    $email = $row["email"];
-					//send email
-					$subject = "You have created a new offer!!";
-					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-								 <html xmlns="http://www.w3.org/1999/xhtml">
-								 <head>
-								 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-								 </head>
-								 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-								 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-								 <div>
-									 <p> You have registered your business </p>
-									 <p> Offer Name : '.$oName.'</p>
-									 <p> Offer Desc : '.$oDesc.'</p>
-									 <p> Offer Points : '.$oPoints.'</p>
-								 </div>
-								 </body>
-								 </html>';
-					$headers = "From : poonam.6788@gmail.com";
-					$headers = 'MIME-Version: 1.0' . "\r\n";
-					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-					mail($email, $subject, $message, $headers);
-					//send mail to all customers subscribed to this business
-					$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$selectOption.")";
-					$result = $mysqli->query($query);
-	            	if ($result->num_rows > 0) {
-						while ($row = $result->fetch_assoc()) {
-							$email = $row["email"];
-							//send email
-							$subject = "You have created a new offer!!";
-							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-										 <html xmlns="http://www.w3.org/1999/xhtml">
-										 <head>
-										 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-										 </head>
-										 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-										 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-										 <div>
-											<p> A new offer has been created for the business you a </p>
-										 </div>
-										 </body>
-										 </html>';
-							$headers = "From : poonam.6788@gmail.com";
-							$headers = 'MIME-Version: 1.0' . "\r\n";
-							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-							mail($email, $subject, $message, $headers);
-						}
-					}
+				    		$email = $row["email"];
+								//send email
+								$subject = "You have created a new offer!!";
+								$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+											 <html xmlns="http://www.w3.org/1999/xhtml">
+											 <head>
+											 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+											 </head>
+											 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+											 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+											 <div>
+												 <p> You have registered your business </p>
+												 <p> Offer Name : '.$oName.'</p>
+												 <p> Offer Desc : '.$oDesc.'</p>
+												 <p> Offer Points : '.$oPoints.'</p>
+											 </div>
+											 </body>
+											 </html>';
+								$headers = "From : poonam.6788@gmail.com";
+								$headers = 'MIME-Version: 1.0' . "\r\n";
+								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+								mail($email, $subject, $message, $headers);
+								//send mail to all customers subscribed to this business
+								$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$selectOption.")";
+								$result = $mysqli->query($query);
+			        	if ($result->num_rows > 0) {
+										while ($row = $result->fetch_assoc()) {
+												// $email = $row["email"];
+												// //send email
+												// $subject = "You have created a new offer!!";
+												// $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+												// 			 <html xmlns="http://www.w3.org/1999/xhtml">
+												// 			 <head>
+												// 			 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+												// 			 </head>
+												// 			 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+												// 			 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+												// 			 <div>
+												// 				<p> A new offer has been created for the business you a </p>
+												// 			 </div>
+												// 			 </body>
+												// 			 </html>';
+												// $headers = "From : poonam.6788@gmail.com";
+												// $headers = 'MIME-Version: 1.0' . "\r\n";
+												// $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+												// mail($email, $subject, $message, $headers);
+										}
+								}
 	            	//send sms to customers subscribed to the business when offer is created.
 	            	$qry = "SELECT cb.userid, u.phonenumber,bd.businessname
-							FROM customerbusiness cb, user u, businessdetail bd
-							WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
-	                $resultQry = $mysqli->query($qry);
-
-	                if ($resultQry->num_rows > 0) {
-	                    while($row = $resultQry->fetch_assoc()){
+								FROM customerbusiness cb, user u, businessdetail bd
+								WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
+                $resultQry = $mysqli->query($qry);
+								
+                if ($resultQry->num_rows > 0) {
+                    while($row = $resultQry->fetch_assoc()){
 	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
 	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-						        'api_key' => d0fbd93d,
-						        'api_secret' => bcaca354e0887dd9,
-						        'to' => $row['phonenumber'],
-						        'from' => 12034089447,
-						        'text' => $text
-						    ]);
-							$ch = curl_init($url);
-							curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-							$response = curl_exec($ch);
-							curl_close($ch);
+								        'api_key' => d0fbd93d,
+								        'api_secret' => bcaca354e0887dd9,
+								        'to' => $row['phonenumber'],
+								        'from' => 12034089447,
+								        'text' => $text
+					    				]);
+											$ch = curl_init($url);
+											curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+											$response = curl_exec($ch);
+											curl_close($ch);
 	                	}
-	                }
+                }
 	            	//redirect to business.php page after sending sms to customers
-	                echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
-				}
-        	}
+                echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
+						 }
+      	}
 		} else {
             //TODO : this should be called on tab change
             //load businessname and sector
