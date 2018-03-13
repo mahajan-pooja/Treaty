@@ -75,41 +75,61 @@
         $notifyCheck = 1;
       }
     	$userid = $_SESSION['userid'];
-        if(isset($_POST['save']) && !empty($oldpwd)){
-            if (strcmp($newpwd,$confnewpwd) != 0) {
-                $message = "New password and Confirm new password are not same";
-            } else {
-                //check if old password is correct
-                //get the userid from user table
-    			$query = "SELECT email FROM user where id=\"".$userid."\" and encryptedpassword=\"".$oldpwd."\"";
-    			// Sign In
-    			$result = $mysqli->query($query);
-                if ($result->num_rows > 0) {
-                    $query = "UPDATE user
-                              SET encryptedpassword = \"".$newpwd."\", modified = sysdate()
-                              WHERE id=".$userid;
-                              echo $query;
-                    $result = $mysqli->query($query);
-                    if ($result) {
-                        echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
-                    } else {
-                        $message = "Failed to update password";
-                    }
-                } else {
-                    $message = "Incorrect old password";
-                }
-            }
-        } else if(isset($_POST['deactivate'])) {
-            $query = "UPDATE user
-                      SET isactive = 0 , modified = sysdate()
-                      WHERE id=".$userid;
-            $result = $mysqli->query($query);
-            if ($result) {
-                echo '<script>window.location.href = "/Treaty/index.php";</script>';
-            } else {
-                $message = "Failed to update password";
-            }
-        } else if(!empty($fname)) {
+      if(isset($_POST['save']) && !empty($oldpwd)){
+          if (strcmp($newpwd,$confnewpwd) != 0) {
+              $message = "New password and Confirm new password are not same";
+          } else {
+              //check if old password is correct
+              //get the userid from user table
+        			$query = "SELECT email FROM user where id=\"".$userid."\" and encryptedpassword=\"".$oldpwd."\"";
+        			// Sign In
+        			$result = $mysqli->query($query);
+              if ($result->num_rows > 0) {
+                  $row = $result->fetch_array();
+        				  $email = $row["email"];
+                  $query = "UPDATE user
+                            SET encryptedpassword = \"".$newpwd."\", modified = sysdate()
+                            WHERE id=".$userid;
+                            echo $query;
+                  $result = $mysqli->query($query);
+                  if ($result) {
+                      //send email
+      								$subject = "Your password has been updated";
+      								$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+      															 <html xmlns="http://www.w3.org/1999/xhtml">
+      															 <head>
+      															 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      															 </head>
+      															 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+      															 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+      															 <div>
+      																	<p>Your password has been updated. If you have not updated your password, please call our customer care.</p>
+      															 </div>
+      															 </body>
+      															 </html>';
+      								$headers = "From : poonam.6788@gmail.com";
+      								$headers = 'MIME-Version: 1.0' . "\r\n";
+      								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+      								mail($email, $subject, $message, $headers);
+                      echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
+                  } else {
+                      $message = "Failed to update password";
+                  }
+              } else {
+                  $message = "Incorrect old password";
+              }
+          }
+      } else if(isset($_POST['deactivate'])) {
+          $query = "UPDATE user
+                    SET isactive = 0 , modified = sysdate()
+                    WHERE id=".$userid;
+          $result = $mysqli->query($query);
+          if ($result) {
+              echo '<script>window.location.href = "/Treaty/index.php";</script>';
+          } else {
+              $message = "Failed to update password";
+          }
+      } else if(!empty($fname)) {
 
             //get the userid from user table
 			$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";

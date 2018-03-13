@@ -121,34 +121,34 @@ INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector,
 INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive)
     VALUES (9, 5, 'Juanita''s Polynesian Delights', 1, '36601 Newark Blvd #87', 'Newark', 'CA', 'USA', '94560',12345678901,37.538941,-122.034422, 1);  
 
--- inserts with  images
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (1, 4, 'Dennys', 1, '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131',12345678901,37.384867,-121.927876, 1,LOAD_FILE('C:/Treaty_Images/image1.jpg'),'We are one of the most loved American Dinner. Open 24/7');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude,isactive,businessimage,businessdescription)
-    VALUES (2, 5, 'Subway', 1, '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',12345678901,37.383142,-121.897038, 1, LOAD_FILE('C:/Treaty_Images/image2.jpg'),'We have many fresh options to choose from. We bake our own bread. Try out our new summer speicals');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (3, 5, 'Papaya', 15, 'Great Mall, 447 Great Mall Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.415738,-121.897412, 1,LOAD_FILE('C:/Treaty_Images/image3.jpg'),'A Trendy Clothing store. Keep yourself to the point with our seasonal collection');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (4, 5, 'Family Wash', 8, '1643 McKee Rd', 'San Jose', 'CA', 'USA', '95116',12345678901,37.357269,-121.863172, 1,LOAD_FILE('C:/Treaty_Images/image4.jpg'),'Family owned business. Clean washers.Detergent dispensers available');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (5, 5, 'Pizza Hut', 1, '102 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.434039,-121.883343, 1,LOAD_FILE('C:/Treaty_Images/image5.jpg'),'We offer the most yiimiest pizza in town.We use all organic ingredients.');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (6, 5, 'Omega', 1, '90 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.434313,-121.883432, 1,LOAD_FILE('C:/Treaty_Images/image6.jpg'),'We serve authentic vietnamese dishes. We serve everything fresh and hot.');
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (7, 5, 'Naan n Masala', 1, '94 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.433218,-121.885443, 1,LOAD_FILE('C:/Treaty_Images/image7.jpg'),'We serve authentic Pakistani and Indian food. We offer free trial dishes on Sundays.');  
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (8, 5, 'Hyderabad Dum Biryani', 1, '55 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.435230,-121.884775, 1,LOAD_FILE('C:/Treaty_Images/image8.jpg'),'We serve the most decilious biryani in town.We use organic meat in all our dishes');  
-
-INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
-    VALUES (9, 5, 'Juanita''s Polynesian Delights', 1, '36601 Newark Blvd #87', 'Newark', 'CA', 'USA', '94560',12345678901,37.538941,-122.034422, 1,LOAD_FILE('C:/Treaty_Images/image9.jpg'),'We serve and cater the authentic Ploynesian food. Our speciality is Chicken and Pork roast.');  
-
+-- -- inserts with  images
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (1, 4, 'Dennys', 1, '2565 N 1st St', 'San Jose', 'CA', 'USA', '95131',12345678901,37.384867,-121.927876, 1,LOAD_FILE('C:/Treaty_Images/image1.jpg'),'We are one of the most loved American Dinner. Open 24/7');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude,isactive,businessimage,businessdescription)
+--     VALUES (2, 5, 'Subway', 1, '1095 E. Brokaw Road, Suite 60, Brokaw Commons', 'San Jose', 'CA', 'USA', '95131',12345678901,37.383142,-121.897038, 1, LOAD_FILE('C:/Treaty_Images/image2.jpg'),'We have many fresh options to choose from. We bake our own bread. Try out our new summer speicals');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (3, 5, 'Papaya', 15, 'Great Mall, 447 Great Mall Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.415738,-121.897412, 1,LOAD_FILE('C:/Treaty_Images/image3.jpg'),'A Trendy Clothing store. Keep yourself to the point with our seasonal collection');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (4, 5, 'Family Wash', 8, '1643 McKee Rd', 'San Jose', 'CA', 'USA', '95116',12345678901,37.357269,-121.863172, 1,LOAD_FILE('C:/Treaty_Images/image4.jpg'),'Family owned business. Clean washers.Detergent dispensers available');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (5, 5, 'Pizza Hut', 1, '102 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.434039,-121.883343, 1,LOAD_FILE('C:/Treaty_Images/image5.jpg'),'We offer the most yiimiest pizza in town.We use all organic ingredients.');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (6, 5, 'Omega', 1, '90 S Park Victoria Dr', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.434313,-121.883432, 1,LOAD_FILE('C:/Treaty_Images/image6.jpg'),'We serve authentic vietnamese dishes. We serve everything fresh and hot.');
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (7, 5, 'Naan n Masala', 1, '94 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.433218,-121.885443, 1,LOAD_FILE('C:/Treaty_Images/image7.jpg'),'We serve authentic Pakistani and Indian food. We offer free trial dishes on Sundays.');  
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (8, 5, 'Hyderabad Dum Biryani', 1, '55 Dempsey Rd', 'Milpitas', 'CA', 'USA', '95035',12345678901,37.435230,-121.884775, 1,LOAD_FILE('C:/Treaty_Images/image8.jpg'),'We serve the most decilious biryani in town.We use organic meat in all our dishes');  
+-- 
+-- INSERT INTO `treaty`.`businessdetail` (id, userid, businessname, businesssector, address1, city, state, country, zipcode,businessphonenumber, latitude, longitude, isactive,businessimage,businessdescription)
+--     VALUES (9, 5, 'Juanita''s Polynesian Delights', 1, '36601 Newark Blvd #87', 'Newark', 'CA', 'USA', '94560',12345678901,37.538941,-122.034422, 1,LOAD_FILE('C:/Treaty_Images/image9.jpg'),'We serve and cater the authentic Ploynesian food. Our speciality is Chicken and Pork roast.');  
+-- 
 
 -- insert script for businessoffer
 INSERT INTO `treaty`.`businessoffer` (id, userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive)
