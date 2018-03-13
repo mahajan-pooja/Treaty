@@ -59,6 +59,17 @@
 		$index++;			 
 	}
 
+	//All Subscribed
+	$query = "SELECT userid,businessid,isactive FROM customerbusiness WHERE userid =".$userid." ORDER BY businessid";
+
+	$result = $mysqli->query($query);
+	$subscribed_array = array();
+	$index = 0;
+	while ($row = $result->fetch_assoc()) {
+		$subscribed_array[$index] = array($row["userid"],$row["businessid"],$row["isactive"]);
+		$index++;			 
+	}
+
 	// Rewards Point section
 	$query = "SELECT balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
@@ -145,6 +156,21 @@
     background-color: white;
 /*    overflow: hidden;
 */} 
+#media p {
+    padding: 0px!important;
+    color: #636262;
+	font-size:14px;
+	font-weight:normal!important;
+	margin-bottom: 3px!important;
+	word-break: break-word;
+}
+#media .btn {width:auto!important}
+@media screen and (max-width: 384px) {
+	#media-pad {padding:3px!important;}
+	.tab-right {
+		float: none!important;
+	}
+}
 </style> 
 
 	<title>Customer Dashboard</title>
@@ -313,41 +339,113 @@
 							<!-- Explore section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
-								<div class="agileinfo-recover">								
+								<div style="height: 650px;overflow-y: auto;">	
+                              
+                                							
 								<?php
 
 								//------------------------------RAJ Code ---------------------------------
 								
 								//print_r($business_array);	
-								$temp_array = array();
+																
+				                $query = "SELECT id , businesssectortext FROM businesssector;";
+				                $result = $mysqli->query($query); 
+				                $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
+				                $show_select = $show_select . "<option value='all'>All</option>";
+				                    
+				                while($row = mysqli_fetch_array($result)){
+				                    $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
+				                }
+				                $show_select = $show_select . "</select><br><br>";
+				                echo $show_select; 
+				                
+
 								foreach ($business_array as $key => $bd_value) {
 									
-									echo "<img src='data:image/jpeg;base64,".$bd_value[3] ."' width='100px' style='height:100px;' />";
-									echo $bd_value[1];
-									echo $bd_value[2];
-									echo $bd_value[4];
-									
-									//Collect all Locations
-									$branches = "";
-									foreach ($city_array as $key1 => $c_value) {
-										if($bd_value[0] == $c_value[0]){
-
-											$branches = $branches . "," .$c_value[1];
-										}
-									}									
-									echo 'Locations : ' . ltrim($branches,",");								
-									
-									//Collect offer details
-									echo '<ul>';
-									foreach ($offers_array as $key2 => $o_value) {
-										if($bd_value[0] == $o_value[0]){
-											echo "<li>" .$o_value[1] . " ".$o_value[2]." ".$o_value[3] . "</li>";									
+                                    echo '<table id="media" class="table-responsive" style="background:#fff;">';
+                                    echo '<tr>';                                    
+                                    echo '<td id="media-pad" style="padding:10px">';
+                                    echo '<div style="width:100px;height:100px;border: 1px solid #ccc;">';                                    
+                                    echo "<img src='data:image/jpeg;base64,".$bd_value[3] ."' width='100px' style='height:100px;' />";
+                                    echo '</div>';
+                                    echo '</td>';                                    
+                                    echo '<td id="media-pad" style="vertical-align:top;padding:10px;width: 100%;">';                                    
+                                    echo '<p style="font-size:18px;color:#000">' . $bd_value[1] . '</p>'; //Name
+                                    echo '<p style="font-size:12px;color: #6d6c6c;">' . $bd_value[2] . '</p>'; //Sector
+                                    echo '<p style="font-size:14px;color: #6d6c6c;">' . $bd_value[4] . '</p>'; //Description
+                                            
+                                    //Collect all Locations
+                                    $branches = "";
+                                    foreach ($city_array as $key1 => $c_value) {
+                                        if($bd_value[0] == $c_value[0]){
+                                            $branches = $branches . "," .$c_value[1];
+                                        }
+                                    }									
+                                    echo '<p style="color:#000;color: #6d6c6c;">Locations : ' . ltrim($branches,",") . '</p>';				
+                                    //Collect offer details                                     
+                                    $offer_list = "";                                   
+                                    foreach ($offers_array as $key2 => $o_value) {                                    	
+                                    	                                  	
+                                        if(($bd_value[0] == $o_value[0]) and strtotime($o_value[4]) >= strtotime(date("Y-m-d"))){
+                                        	
+                                            $offer_list = $offer_list . "<li>" .$o_value[1] . " | ".$o_value[2]." | Valid Till: ".date("m-d-Y",strtotime($o_value[4])). "</li>";									
+                                        }
+                                    }
+                                    if($offer_list != ""){
+                                    	echo '<p style="color:#000">Available Offers: </p>';                                    	
+                                    }
+                                    echo '<ul style="list-style: inherit;padding-left:30px;font-size:14px">';
+                                    echo $offer_list;
+                                    $bid = $bd_value[0];
+                                    echo '</ul>';
+									echo '<br>';
+									echo '<p>';
+									// Check if user is already subscribed to the business
+									$already_subscribed_flag = 0;
+									foreach ($subscribed_array as $key3 => $subscribed_value) {										
+										if(($bd_value[0] == $subscribed_value[1]) and ($subscribed_value[2] == 1) ){
+											$already_subscribed_flag = 1;
+											break;
 										}
 									}
-									echo '</ul>';
-									echo '<br>';
+									if($already_subscribed_flag == 0){
+										echo "<a style='padding: 0px 5px;font-size: 12px;margin-left: 0px;' class='btn btn-primary btn-xs' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
+									}else{
+										echo "<a disabled style='padding: 0px 5px;font-size: 12px;margin-left: 0px;' class='btn btn-primary btn-xs' href=''>Subscribed</a>";
+									}
+									
+									echo "<a style='padding: 0px 5px;font-size: 12px;' href='#myModal' role='button' data-toggle='modal' class='btn btn-primary btn-xs'>View Details</a>";
+									echo '</p>';
+                                    echo '</td>';        
+                                    echo '</tr>';
+                                    echo '</table>'; 
+                                    echo '<br>';                                   
+                                    
 								}
-
+								?>
+								<div id="myModal" class="modal hide fade">
+									
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+										<h3 style="text-align:left">Modal header</h3>
+									</div>
+									
+									<div class="modal-body"> 
+										
+									   <p style="color: #000;">Description 1</p>
+                                       <p style="color: #000;">Description 1</p>
+                                       <p style="color: #000;">Description 1</p>
+                                       <p style="color: #000;">Description 1</p>
+										
+									</div>
+									
+									<div class="modal-footer">
+										<a href="#" style="float: right;" class="btn" data-dismiss="modal">Close</a>
+									</div>
+								</div>
+								<?php								
+								
+	
 								//--------------------------------------------------------------------------------
 
 
