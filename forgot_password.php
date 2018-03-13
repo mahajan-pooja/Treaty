@@ -58,7 +58,7 @@
 			                       </div>
 			                       </body>
 			                       </html>';
-			        $headers = "From : poonam.6788@gmail.com";
+			        $headers = 'From : rajeshwaripatil09@gmail.com'. "\r\n";
 			        $headers = 'MIME-Version: 1.0' . "\r\n";
 			        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 			        if(mail($email, $subject, $message, $headers)){ 

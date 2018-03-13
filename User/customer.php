@@ -23,62 +23,18 @@
 					VALUES (\"" . $userid . "\",\"" . $businessid . "\",\"" . $totalpoints . "\",1, sysdate(), sysdate())";
 			$result = $mysqli->query($query);
 		}
-	}
-	
-	// All business Unique
-	$query = "SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage,a.businessdescription FROM businessdetail as a JOIN businesssector as b ON 
-			a.businesssector = b.id GROUP BY userid ORDER BY userid";
-
-	$result = $mysqli->query($query);
-	$business_array = array();	
-	$index = 0;
-	while ($row = $result->fetch_assoc()) {
-		$business_array[$index] = array($row["userid"],$row["businessname"],$row["businesssectortext"],base64_encode($row["businessimage"]),$row["businessdescription"]);
-		$index++;		 
-	}
-
-	//All offers
-	$query = "SELECT userid, offername, offerdescription, startdate, expirationdate FROM businessoffer ORDER BY userid";
-
-	$result = $mysqli->query($query);
-	$offers_array = array();	
-	$index = 0;
-	while ($row = $result->fetch_assoc()) {
-		$offers_array[$index] = array($row["userid"],$row["offername"],$row["offerdescription"],$row["startdate"],$row["expirationdate"]);
-		$index++;		 
-	}
-
-	// All cities
-	$query = "SELECT DISTINCT userid ,city FROM businessdetail ORDER BY userid";
-
-	$result = $mysqli->query($query);
-	$city_array = array();
-	$index = 0;
-	while ($row = $result->fetch_assoc()) {
-		$city_array[$index] = array($row["userid"],$row["city"]);
-		$index++;			 
-	}
-
-	//All Subscribed
-	$query = "SELECT userid,businessid,isactive FROM customerbusiness WHERE userid =".$userid." ORDER BY businessid";
-
-	$result = $mysqli->query($query);
-	$subscribed_array = array();
-	$index = 0;
-	while ($row = $result->fetch_assoc()) {
-		$subscribed_array[$index] = array($row["userid"],$row["businessid"],$row["isactive"]);
-		$index++;			 
-	}
+	}	
 
 	// Rewards Point section
-	$query = "SELECT balance, businessname 
+	$query = "SELECT bd.userid,balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
-			  WHERE cb.businessid=bd.userid AND cb.userid=".$userid." group by bd.userid";
+			  WHERE cb.businessid=bd.userid AND cb.userid=".$userid." AND cb.isactive=1 group by bd.userid"; 
 	$result = $mysqli->query($query);
 	$rewardsset = array();
 	while($row = $result->fetch_assoc()) {
 		$address = $row["businessname"] . "-" . $row["balance"];
 		array_push($rewardsset, $address);
+		$business_owner_id = $row['userid'];
 	}
 ?>
 <!DOCTYPE html>
@@ -195,13 +151,80 @@
 	include 'header.php';
 	?>
 	
-	<script>
+
+	<script type="text/javascript">
 		//this logic is handled in subscribe.php file instead of refresh
-	//function subscribeBusiness(businessid) {
-	//	window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
+		//function subscribeBusiness(businessid) {
+		//	window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
 		//TODO REFRESH PAGE
-	//}
+		//}
+
+		// Called on Explore section select dorpdown.        
+        function selectedSector(selected_value){
+        	var businesssector_id = '';
+            businesssector_id = selected_value;  
+            
+            //Make a Ajax call.
+            $.ajax({
+                url: "explore_list.php", 
+                method: "POST", 
+                data: { businesssector_id:businesssector_id},
+                success: function(data){
+                    //alert (data)
+                	$('#explore_section').html(data);
+                },
+                error: function() {
+                x.innerHTML = "Error occured. Unable to make a Ajax call."
+				//Add bootstrap to display error on page
+              	} 
+            });            
+        }
+
+        function selectedSectorAll(){
+        	var businesssector_id = '';
+            businesssector_id = "all";  
+            
+            //Make a Ajax call.
+            $.ajax({
+                url: "explore_list.php", 
+                method: "POST", 
+                data: { businesssector_id:businesssector_id},
+                success: function(data){
+                    //alert (data)
+                	$('#explore_section').html(data);
+                },
+                error: function() {
+                x.innerHTML = "Error occured. Unable to make a Ajax call."
+				//Add bootstrap to display error on page
+              	} 
+            });
+        }
+
+        //Show Modal
+        function show_modal(bid){
+            //Make a Ajax call to collect data
+         	$.ajax({
+                url: "explore_view_details.php", 
+                method: "POST", 
+                data: { business_id:bid},
+                success: function(data){
+                    //alert (data)
+                	$(".modal-body").html(data);
+                	$("#myModal").modal();
+
+                },
+                error: function() {
+                x.innerHTML = "Error occured. Unable to make a Ajax call."
+				//Add bootstrap to display error on page
+              	} 
+            });  
+
+
+           //$(".modal-body").html(data);
+            //$("#myModal").modal();
+    	}
 	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -317,8 +340,9 @@
 										<button class='accordion'>
 											<?php echo explode("-",$value)[0];?></button>
 											<div class="panelContainer">
-												Reward Points - <?php echo explode("-",$value)[1];?><br><br>
-												<a href="" style="color: brown;border:none;">View Details</a>
+												Reward Points - <?php echo explode("-",$value)[1]; ?><br><br>
+												<a href="unsubscribe.php?bid=<?php echo $business_owner_id; ?>" style="color: brown;border:none;">Unsubscribe</a>
+
 											</div>
 										
 									<?php endforeach; ?>
@@ -339,160 +363,23 @@
 							<!-- Explore section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Explore Business supporting Treaty Rewards</p>
-								<div style="height: 650px;overflow-y: auto;">	
-                              
-                                							
 								<?php
-
-								//------------------------------RAJ Code ---------------------------------
-								
-								//print_r($business_array);	
-																
-				                $query = "SELECT id , businesssectortext FROM businesssector;";
-				                $result = $mysqli->query($query); 
-				                $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
-				                $show_select = $show_select . "<option value='all'>All</option>";
-				                    
-				                while($row = mysqli_fetch_array($result)){
-				                    $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
-				                }
-				                $show_select = $show_select . "</select><br><br>";
-				                echo $show_select; 
-				                
-
-								foreach ($business_array as $key => $bd_value) {
-									
-                                    echo '<table id="media" class="table-responsive" style="background:#fff;">';
-                                    echo '<tr>';                                    
-                                    echo '<td id="media-pad" style="padding:10px">';
-                                    echo '<div style="width:100px;height:100px;border: 1px solid #ccc;">';                                    
-                                    echo "<img src='data:image/jpeg;base64,".$bd_value[3] ."' width='100px' style='height:100px;' />";
-                                    echo '</div>';
-                                    echo '</td>';                                    
-                                    echo '<td id="media-pad" style="vertical-align:top;padding:10px;width: 100%;">';                                    
-                                    echo '<p style="font-size:18px;color:#000">' . $bd_value[1] . '</p>'; //Name
-                                    echo '<p style="font-size:12px;color: #6d6c6c;">' . $bd_value[2] . '</p>'; //Sector
-                                    echo '<p style="font-size:14px;color: #6d6c6c;">' . $bd_value[4] . '</p>'; //Description
-                                            
-                                    //Collect all Locations
-                                    $branches = "";
-                                    foreach ($city_array as $key1 => $c_value) {
-                                        if($bd_value[0] == $c_value[0]){
-                                            $branches = $branches . "," .$c_value[1];
-                                        }
-                                    }									
-                                    echo '<p style="color:#000;color: #6d6c6c;">Locations : ' . ltrim($branches,",") . '</p>';				
-                                    //Collect offer details                                     
-                                    $offer_list = "";                                   
-                                    foreach ($offers_array as $key2 => $o_value) {                                    	
-                                    	                                  	
-                                        if(($bd_value[0] == $o_value[0]) and strtotime($o_value[4]) >= strtotime(date("Y-m-d"))){
-                                        	
-                                            $offer_list = $offer_list . "<li>" .$o_value[1] . " | ".$o_value[2]." | Valid Till: ".date("m-d-Y",strtotime($o_value[4])). "</li>";									
-                                        }
-                                    }
-                                    if($offer_list != ""){
-                                    	echo '<p style="color:#000">Available Offers: </p>';                                    	
-                                    }
-                                    echo '<ul style="list-style: inherit;padding-left:30px;font-size:14px">';
-                                    echo $offer_list;
-                                    $bid = $bd_value[0];
-                                    echo '</ul>';
-									echo '<br>';
-									echo '<p>';
-									// Check if user is already subscribed to the business
-									$already_subscribed_flag = 0;
-									foreach ($subscribed_array as $key3 => $subscribed_value) {										
-										if(($bd_value[0] == $subscribed_value[1]) and ($subscribed_value[2] == 1) ){
-											$already_subscribed_flag = 1;
-											break;
-										}
-									}
-									if($already_subscribed_flag == 0){
-										echo "<a style='padding: 0px 5px;font-size: 12px;margin-left: 0px;' class='btn btn-primary btn-xs' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
-									}else{
-										echo "<a disabled style='padding: 0px 5px;font-size: 12px;margin-left: 0px;' class='btn btn-primary btn-xs' href=''>Subscribed</a>";
-									}
-									
-									echo "<a style='padding: 0px 5px;font-size: 12px;' href='#myModal' role='button' data-toggle='modal' class='btn btn-primary btn-xs'>View Details</a>";
-									echo '</p>';
-                                    echo '</td>';        
-                                    echo '</tr>';
-                                    echo '</table>'; 
-                                    echo '<br>';                                   
-                                    
-								}
+									$query = "SELECT id , businesssectortext FROM businesssector;";
+					                $result = $mysqli->query($query); 
+					                $show_select = "Filter Results for &nbsp;&nbsp;&nbsp;<select name='businessCategory' onChange = 'selectedSector(this.value);'>";
+					                $show_select = $show_select . "<option value='all'>All</option>";
+					                    
+					                while($row = mysqli_fetch_array($result)){
+					                    $show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";              
+					                }
+					                $show_select = $show_select . "</select><br><br>";
+					                echo $show_select;
+					                echo '<script type="text/javascript"> selectedSectorAll();</script>';
 								?>
-								<div id="myModal" class="modal hide fade">
-									
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h3 style="text-align:left">Modal header</h3>
-									</div>
-									
-									<div class="modal-body"> 
-										
-									   <p style="color: #000;">Description 1</p>
-                                       <p style="color: #000;">Description 1</p>
-                                       <p style="color: #000;">Description 1</p>
-                                       <p style="color: #000;">Description 1</p>
-										
-									</div>
-									
-									<div class="modal-footer">
-										<a href="#" style="float: right;" class="btn" data-dismiss="modal">Close</a>
-									</div>
-								</div>
-								<?php								
-								
-	
-								//--------------------------------------------------------------------------------
+								<!-- By default Print explore section-->
 
-
-
-								//////////POOJA CODE////////////////
-								//print_r($resultset);
-								//foreach ($resultset as $i => $values){
-								//	echo "<button class='accordion'>".$i."</button>";
-								//	echo "<div class='panelContainer'>";
-								//	for ($x = 0; $x < count($values); $x++) {
-								//	  echo "<button class='panelAccordion'>";
-									  		
-								//	  		echo explode("-",$values[$x])[0];
-									  		
-								//	  		$bid = explode("-",$values[$x])[2];
-								//	  		echo "<a class='subscribe' href='subscribe.php?bid=".$bid."&cid=".$userid."'>Subscribe</a>";
-
-								//	  echo "</button>";
-								//	  echo "<div class='offerData'>".explode("-",$values[$x])[1]."</div>";
-								//	} 
-								//	echo "</div>";
-									
-								//}
-
-								////////////////////////////////////////
-
-									// foreach ($resultset as $i => $values) {
-									// 	echo "<div class=\"business_cat_name\">";
-									//     echo "<span class=\"b_name\">".$i."</span>";
-									// 	echo "<img class=\"downImg\" id=\"business_title_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadSubCat();\"><br>";
-									//     foreach ($values as $key => $value) {
-									// 		echo "<div class=\"business_title\" id=\"business_title\">
-									// 				<div>
-									// 					<span class=\"bus_name\"><a href=\"\">".explode("-",$value)[0]."</a></span>
-									// 					<button class=\"subscribe\" value=\"Subscribe\" name=\"subscribe\"
-									// 						 onclick=\"subscribeBusiness(".explode("-",$value)[2].");\">Subscribe</button>
-									// 					<img class=\"downImg\" id=\"offer_downImg\" src=\"images/down.png\" width=\"100\" height=\"100\" onclick=\"loadOffer();\">
-									// 				</div>
-									// 				<div class=\"offer\" id=\"offer\">".explode("-",$value)[1]."</div>
-									// 			</div>";
-									//     }
-									// 	echo "</div>";
-									// }
-								?> 
-							
-										
-
+								<div id = "explore_section" style="height: 650px;overflow-y: auto;">
+																		
 								</div>
 							</div>
 							<!-- Customer Profile section -->

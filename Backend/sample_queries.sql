@@ -68,7 +68,8 @@ SELECT a.businessname, b.businesssector, a.address1, a.address2, a.city, a.state
 SELECT a.businessname, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=5 LIMIT 1;
 
 -- All busi
-SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id GROUP BY userid ORDER BY userid; 
+SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage 
+FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id  WHERE a.businesssector=2 GROUP BY userid ORDER BY userid; 
 
 -- All offers
 SELECT userid ,offername,offerdescription,startdate,expirationdate FROM businessoffer ORDER BY userid;
@@ -77,7 +78,7 @@ SELECT userid ,offername,offerdescription,startdate,expirationdate FROM business
 SELECT DISTINCT userid ,city FROM businessdetail ORDER BY userid;
 
 -- All subscribed
-SELECT userid,businessid,isactive FROM customerbusiness WHERE userid = 2 ORDER BY businessid;
+SELECT userid,businessid,isactive FROM customerbusiness WHERE userid = 3 ORDER BY businessid;
 
 
 -- Not used

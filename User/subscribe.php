@@ -36,7 +36,7 @@
 				//Code end 
 
 				echo "<script>alert('Subscribed Successfully.');</script>";
-    	echo '<script>window.location.href = "customer.php#horzontalTab3";</script>';
+    	echo '<script>window.location.href = "customer.php#horizontalTab3";</script>';
 				
 			}
     	
