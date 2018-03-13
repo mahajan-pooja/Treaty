@@ -140,10 +140,10 @@ Changes done on this page by Rajeshwari:
 						if(in_array($ext,$ext_array)){
 							$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
 							$result = $mysqli->query($query);
-			                if($result){
-			                    $_SESSION["businessname"]   = $fname;
-			                    $_SESSION["businesssector"] = $lname;
-								//send email
+	            if($result) {
+	                	$_SESSION["businessname"]   = $fname;
+	                	$_SESSION["businesssector"] = $lname;
+										//send email
 						        $subject = "You have registered a new business!!";
 						        //$message = "Please use this password to login ".$password."<br> Please click on this link";
 						        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -165,11 +165,11 @@ Changes done on this page by Rajeshwari:
 						        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 						        if(mail($email, $subject, $message, $headers)){
 		            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-								}
-			                } else {
-			                    echo "Your Business could not be added. Please Try again.";
-			                    echo $query;
-			                }
+										}
+                } else {
+                    echo "Your Business could not be added. Please Try again.";
+                    echo $query;
+                }
 						} else {
 							echo 'Only JPEG and PNG Images can be uploaded';
 						}
@@ -210,29 +210,29 @@ Changes done on this page by Rajeshwari:
 								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 								mail($email, $subject, $message, $headers);
 								//send mail to all customers subscribed to this business
-								$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$selectOption.")";
+								$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$userid.")";
 								$result = $mysqli->query($query);
 			        	if ($result->num_rows > 0) {
 										while ($row = $result->fetch_assoc()) {
-												// $email = $row["email"];
-												// //send email
-												// $subject = "You have created a new offer!!";
-												// $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-												// 			 <html xmlns="http://www.w3.org/1999/xhtml">
-												// 			 <head>
-												// 			 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-												// 			 </head>
-												// 			 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-												// 			 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-												// 			 <div>
-												// 				<p> A new offer has been created for the business you a </p>
-												// 			 </div>
-												// 			 </body>
-												// 			 </html>';
-												// $headers = "From : poonam.6788@gmail.com";
-												// $headers = 'MIME-Version: 1.0' . "\r\n";
-												// $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-												// mail($email, $subject, $message, $headers);
+												$email = $row["email"];
+												//send email
+												$subject = "You have created a new offer!!";
+												$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+															 <html xmlns="http://www.w3.org/1999/xhtml">
+															 <head>
+															 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+															 </head>
+															 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+															 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+															 <div>
+																<p> A new offer has been created for the business you a </p>
+															 </div>
+															 </body>
+															 </html>';
+												$headers = "From : poonam.6788@gmail.com";
+												$headers = 'MIME-Version: 1.0' . "\r\n";
+												$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+												mail($email, $subject, $message, $headers);
 										}
 								}
 	            	//send sms to customers subscribed to the business when offer is created.
@@ -243,18 +243,18 @@ Changes done on this page by Rajeshwari:
 								
                 if ($resultQry->num_rows > 0) {
                     while($row = $resultQry->fetch_assoc()){
-	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
-	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-								        'api_key' => d0fbd93d,
-								        'api_secret' => bcaca354e0887dd9,
-								        'to' => $row['phonenumber'],
-								        'from' => 12034089447,
-								        'text' => $text
-					    				]);
-											$ch = curl_init($url);
-											curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-											$response = curl_exec($ch);
-											curl_close($ch);
+		                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
+		                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
+										        'api_key' => d0fbd93d,
+										        'api_secret' => bcaca354e0887dd9,
+										        'to' => $row['phonenumber'],
+										        'from' => 12034089447,
+										        'text' => $text
+						    				]);
+												$ch = curl_init($url);
+												curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+												$response = curl_exec($ch);
+												curl_close($ch);
 	                	}
                 }
 	            	//redirect to business.php page after sending sms to customers
