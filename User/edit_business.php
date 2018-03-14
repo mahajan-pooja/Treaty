@@ -13,41 +13,41 @@ Changes done on this page:
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 	<head>
-	<title>Business Dashboard</title>
+		<title>Business Dashboard</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="../images/favicon.ico">
-	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <link rel="shortcut icon" href="../images/favicon.ico">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 
-	<link href="css/font-awesome.css" rel="stylesheet">
-    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
-    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/user-dashboard.js"></script>
+		<link href="css/font-awesome.css" rel="stylesheet">
+	    <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
+	    <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/user-dashboard.js"></script>
 
-	<!-- Web-Fonts -->
-		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
-		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-	<!-- //Web-Fonts -->
+		<!-- Web-Fonts -->
+			<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
+			<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+		<!-- //Web-Fonts -->
 
-	<!-- Script for image display after selection -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script type="text/javascript">
-		function displayImage(input) {
-    		if (input.files && input.files[0]) {
-        	var reader = new FileReader();
-        	reader.onload = function (e) {
-        	$('#image').attr('src', e.target.result);
-       		}
-        reader.readAsDataURL(input.files[0]);
-       }
-    }
-	</script>
-	<!-- Script for image display after selection -->
-	
-	<?php include 'header.php'; ?>
-</head>
+		<!-- Script for image display after selection -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			function displayImage(input) {
+	    		if (input.files && input.files[0]) {
+	        	var reader = new FileReader();
+	        	reader.onload = function (e) {
+	        	$('#image').attr('src', e.target.result);
+	       		}
+	        reader.readAsDataURL(input.files[0]);
+	       }
+	    }
+		</script>
+		<!-- Script for image display after selection -->
+		
+		<?php include 'header.php'; ?>
+	</head>
 		<?php 
 
 			require '../config.php';
@@ -121,25 +121,43 @@ Changes done on this page:
 					$ext_array = array('jpg','jpeg','png');
 					$ext = pathinfo($filename,PATHINFO_EXTENSION);
 					if(in_array($ext,$ext_array)){
-
 						$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.", businessimage=\"".$tmp_name."\",businessdescription=\"".$businessdescription."\",modified=sysdate() WHERE id=".$businessid;
-					}
-					else{
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\", businessimage=\"".$tmp_name."\",latitude=".$latitude.",longitude=".$longitude.", modified=sysdate() 
+						 WHERE id=".$businessid;
+					} else {
 						echo 'Only JPEG and PNG Images can be uploaded';
 					}
-				}
-				else{
+				} else {
 					$query = "UPDATE businessdetail
-						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.",businessdescription=\"".$businessdescription."\",modified=sysdate() WHERE id=".$businessid;
+						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.",businessdescription=\"".$businessdescription."\",modified=sysdate()
+						 WHERE id=".$businessid;
 				}
 				
-                $result = $mysqli->query($query);
-                if ($result) {
-                    echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-                } else {
-                    echo "Failed to update profile";
-                }
+        $result = $mysqli->query($query);
+        if ($result) {
+						//send email
+						$subject = "You have updated business details!!";
+						$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+													 <html xmlns="http://www.w3.org/1999/xhtml">
+													 <head>
+													 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+													 </head>
+													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+													 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+													 <div>
+																	 <p> You have updated your business </p>
+													 </div>
+													 </body>
+													 </html>';
+						$headers = "From : poonam.6788@gmail.com";
+						$headers = 'MIME-Version: 1.0' . "\r\n";
+						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						if(mail($email, $subject, $message, $headers)) {
+	            echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+						}
+        } else {
+            echo "Failed to update profile";
+        }
 			} else if(!empty($businessid)) {
 				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage,a.businessdescription, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
 				$result = $mysqli->query($query);
@@ -160,8 +178,8 @@ Changes done on this page:
 					array_push($businessresultset, $row["businessdescription"]);
 				}
 			}
-			?>
-	<body>
+		?>
+		<body>
             <div class="navbar">
             <div class="navbar-inner">
                 <div class="container">
@@ -178,7 +196,7 @@ Changes done on this page:
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if($_SESSION['displaydashboard']){
+                                if(isset($_SESSION['displaydashboard'])){
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 

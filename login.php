@@ -5,314 +5,317 @@ session_start();
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	<title>Login</title>
+		<title>Login</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="keywords" content="Classic Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
-    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
-        function hideURLbar(){ window.scrollTo(0,1); }
-    </script>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    	<meta name="keywords" content="Classic Forms Responsive Widget,Login form widgets, Sign up Web forms , Login signup Responsive web form,Flat Pricing table,Flat Drop downs,Registration Forms,News letter Forms,Elements" />
+    	<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+        	function hideURLbar(){ window.scrollTo(0,1); }
+    	</script>
 
-	<link href="css/font-awesome.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
-    <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
-    
-	<script type="text/javascript" src="js/jquery.min.js"></script>
-<!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
- -->
-	<!-- Web-Fonts -->
-		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
-		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
-	<!-- //Web-Fonts -->
-    <style>
-		.hr-sect {
-			display: flex;
-			flex-basis: 100%;
-			align-items: center;
-			color: #000;
+		<link href="css/font-awesome.css" rel="stylesheet">
+	    <link href="css/style.css" rel="stylesheet" type="text/css" media="all">
+	    <link href="css/login-style.css" rel="stylesheet" type="text/css" media="all">
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<!-- 	<script type="text/javascript" src="js/user-dashboard.js"></script>
+		 -->
+		<!-- Web-Fonts -->
+			<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
+			<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+		<!-- //Web-Fonts -->
+	    <style>
+			.hr-sect {
+				display: flex;
+				flex-basis: 100%;
+				align-items: center;
+				color: #000;
+			}
+			.hr-sect::before,
+			.hr-sect::after {
+				content: "";
+				flex-grow: 1;
+				background: rgba(0, 0, 0, 0.35);
+				height: 1px;
+				font-size: 0px;
+				line-height: 0px;
+				margin: 0px 8px;
+			}
+		</style>
+	</head>
+	<?php
+		include 'header.php';
+		require 'config.php';
+		require_once "social_login/fb_config.php";
+		require_once "social_login/google_config.php";
+
+		if(isset($_POST['signInemail'])){
+			$signInemail = $_POST['signInemail'];
 		}
-		.hr-sect::before,
-		.hr-sect::after {
-			content: "";
-			flex-grow: 1;
-			background: rgba(0, 0, 0, 0.35);
-			height: 1px;
-			font-size: 0px;
-			line-height: 0px;
-			margin: 0px 8px;
-		}	
-	</style>
-</head>
 
-		<?php
-			include 'header.php';
-			require 'config.php';
-			require_once "social_login/fb_config.php";
-			require_once "social_login/google_config.php";
+		if(isset($_POST['signInpassword'])){
+			$signInpassword = $_POST['signInpassword'];
+		}
 
-			if(isset($_POST['signInemail'])){
-				$signInemail = $_POST['signInemail'];
+		if(isset($_POST['signUpemail'])){
+			$signUpemail = $_POST['signUpemail'];
+		}
+
+		if(isset($_POST['signUppassword'])){
+			$signUppassword= $_POST['signUppassword'];
+		}
+
+		if(isset($_POST['signUpcpassword'])){
+			$signUpcpassword = $_POST['signUpcpassword'];
+		}
+
+		if(isset($_POST['user'])){
+			$signUprole = $_POST['user'];
+		}
+
+		if(isset($_POST['signUpPhone'])){
+			$signUpPhone = $_POST['signUpPhone'];
+		}
+
+		if(isset($_SESSION['signupresponse_social'])){
+			$signupresponse_social = $_SESSION['signupresponse_social'];
+		}
+
+		if(isset($_POST['user_social'])){
+			$signUprole_social = $_POST['user_social'];
+			$_SESSION['signUprole_social'] = $_POST['user_social'];
+		}
+
+		// database connection
+		if(!empty($signInemail)) {
+		    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"
+									and isactive=1";
+		    // Sign In
+		    $result = $mysqli->query($query);
+		    if ($result->num_rows > 0) {
+				$row = $result->fetch_array();
+				//Store userid in Session
+				//Use $_SESSION['userid'] wherever u want to access the userid
+		        $_SESSION['userid'] = $row['id'];
+				$role = $row['role'];
+				// check if there if exists an entry in user_detail table
+				$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
+				$result = $mysqli->query($query);
+				// if yes, do not take him to profile page
+				if ($result->num_rows > 0) {
+					if(strcasecmp($role, 'Business Owner') == 0) {
+						echo '<script>window.location.href = "User/business.php";</script>';
+					} else {
+						echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
+					}
+				} else {
+					//if no, take him to profile page
+					if(strcasecmp($role, 'Business Owner') == 0) {
+							echo '<script>window.location.href = "User/business_profile.php";</script>';
+					} else {
+							echo '<script>window.location.href = "User/customer_profile.php";</script>';
+					}
+				}
+		    } else {
+		        $response="Invalid username/password";
+		    }
+		} else if(!empty($signUpemail)) {
+		    //check if both the passwords are same
+		    if(strcmp($signUppassword, $signUpcpassword) != 0) {
+		        $signupresponse="Passwords dont match";
+		    } else {
+		        //check if user already exist
+		        $query = "SELECT role FROM user where email=\"".$signUpemail."\" and encryptedpassword=\"". $signUppassword."\"";
+		        $result = $mysqli->query($query);
+		        if ($result->num_rows > 0) {
+		            $signupresponse="User with email already exists. Please sign in.";
+		        } else {
+		            // insert into table
+		            $query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
+		                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+		            $result = $mysqli->query($query);
+		            if ($result) {
+						//send email
+						$subject = "Congratulations!!Welcome to Treaty!!";
+						$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+													 <html xmlns="http://www.w3.org/1999/xhtml">
+													 <head>
+													 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+													 </head>
+													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding:5%;">
+															 <div>
+																	 <p> Thank you for creating an acount with Treaty. We are here to serve you better!! </p>
+															 </div>
+													 </body>
+													 </html>';
+						$headers = "From : poonam.6788@gmail.com";
+						$headers = 'MIME-Version: 1.0' . "\r\n";
+						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						if(mail($signUpemail, $subject, $message, $headers)){
+								if(strcasecmp($signUprole, 'Business Owner') == 0) {
+										echo '<script>window.location.href = "User/business_profile.php";</script>';
+								} else {
+										echo '<script>window.location.href = "User/customer_profile.php";</script>';
+								}
+						}
+		            } else {
+		                $signupresponse="Failed to signup";
+		            }
+		        }
+		    }
+		}
+
+		//Social Login
+		//Facebook Sign In
+		if (isset($_POST['fb_signin_btn'])) {
+			$_SESSION['fb_signin_btn'] = $_POST['fb_signin_btn'];
+
+		    if (isset($_SESSION['fb_access_token'])) {
+				//Check user role
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+
+				$result = $mysqli->query($query);
+				if ($result->num_rows > 0) {
+					$row = $result->fetch_array();
+					$_SESSION['userid'] = $row['id'];
+
+					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+						header('Location: User/business_profile.php');
+						exit();
+					} else {
+						header('Location: User/customer_profile.php');
+						exit();
+					}
+				}
 			}
+			$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
+			$permissions = ['email'];
+			$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
 
-			if(isset($_POST['signInpassword'])){
-				$signInpassword = $_POST['signInpassword'];
+			header('Location:'.$fb_loginURL);
+			exit();
+		}
+
+		//Facebook Sign Up
+		if (isset($_POST['fb_signup_btn'])){
+			$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];
+
+		    if (isset($_SESSION['fb_access_token'])) {
+				//Check user exists
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+				$result = $mysqli->query($query);
+				if ($result->num_rows > 0) {
+					 $signupresponse_social="User with email already exists. Please sign in.";
+					 header('Location: login.php');
+					 exit();
+
+				}
+				else
+				{
+					$signUpPhone = '1234567890';
+					$signUppassword = 'facebook';
+					$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
+		                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+		            $result = $mysqli->query($query);
+
+		            if ($result) {
+						if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
+							header('Location: User/business_profile.php');
+							exit();
+						}
+						else
+						{
+							header('Location: User/customer_profile.php');
+							exit();
+						}
+		            }
+		            else
+		            {
+		                $signupresponse_social="Failed to signup";
+		            }
+				}
 			}
+			$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
+			$permissions = ['email'];
+			$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
 
-			if(isset($_POST['signUpemail'])){
-				$signUpemail = $_POST['signUpemail'];
-			}
+			header('Location:'.$fb_loginURL);
+			exit();
+		}
 
-			if(isset($_POST['signUppassword'])){
-				$signUppassword= $_POST['signUppassword'];
-			}
+		//Google Sign In
+		if (isset($_POST['google_signin_btn'])) {
+			$_SESSION['google_signin_btn'] = $_POST['google_signin_btn'];
 
-			if(isset($_POST['signUpcpassword'])){
-				$signUpcpassword = $_POST['signUpcpassword'];
-			}
+			if(isset($_SESSION['google_access_token'])){
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
 
-			if(isset($_POST['user'])){
-				$signUprole = $_POST['user'];
-			}
-
-			if(isset($_POST['signUpPhone'])){
-				$signUpPhone = $_POST['signUpPhone'];
-			}
-
-			if(isset($_SESSION['signupresponse_social'])){
-				$signupresponse_social = $_SESSION['signupresponse_social'];
-			}
-
-			if(isset($_POST['user_social'])){
-				$signUprole_social = $_POST['user_social'];
-				$_SESSION['signUprole_social'] = $_POST['user_social'];
-			}
-
-			// database connection
-			if(!empty($signInemail)) {
-			    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"
-				and isactive=1";
-			    // Sign In
 			    $result = $mysqli->query($query);
 			    if ($result->num_rows > 0) {
-
 					$row = $result->fetch_array();
-					//Store userid in Session
-					//Use $_SESSION['userid'] wherever u want to access the userid
-			        $_SESSION['userid'] = $row['id'];
-					$role = $row['role'];
-					// check if there if exists an entry in user_detail table
-					$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
-					$result = $mysqli->query($query);
-					// if yes, do not take him to profile page
-					if ($result->num_rows > 0) {
-						if(strcasecmp($role, 'Business Owner') == 0) {
-							echo '<script>window.location.href = "User/business.php";</script>';
-						} else {
-							echo '<script>window.location.href = "User/customer.php#horizontalTab3";</script>';
-						}
+					$_SESSION['userid'] = $row['id'];
+
+					if(strcasecmp($row['role'], 'Business Owner') == 0) {
+						header('Location: User/business_profile.php');
+						exit();
 					} else {
-						//if no, take him to profile page
-						if(strcasecmp($role, 'Business Owner') == 0) {
-							echo '<script>window.location.href = "User/business_profile.php";</script>';
-						} else {
-							echo '<script>window.location.href = "User/customer_profile.php";</script>';
-						}
+						header('Location: User/customer_profile.php');
+						exit();
 					}
-			    } else {
-			        $response="Invalid username/password";
-			    }
-			} else if(!empty($signUpemail)) {
-			    //check if both the passwords are same
-			    if(strcmp($signUppassword, $signUpcpassword) != 0) {
-			        $signupresponse="Passwords dont match";
-			    } else {
-			        //check if user already exist
-			        $query = "SELECT role FROM user where email=\"".$signUpemail."\" and encryptedpassword=\"". $signUppassword."\"";
-			        $result = $mysqli->query($query);
-			        if ($result->num_rows > 0) {
-			            $signupresponse="User with email already exists. Please sign in.";
-			        } else {
-			            // insert into table
-			            $query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-			                        VALUES (\"".$signUpemail."\",\"".$signUprole."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
-			            $result = $mysqli->query($query);
-			            if ($result) {
-							if(strcasecmp($signUprole, 'Business Owner') == 0) {
-								echo '<script>window.location.href = "User/business_profile.php";</script>';
-							} else {
-								echo '<script>window.location.href = "User/customer_profile.php";</script>';
-							}
-			            } else {
-			                $signupresponse="Failed to signup";
-			            }
-			        }
-			    }
+				}
 			}
+			$google_loginURL = $gClient->createAuthUrl();
+			header('Location:'.$google_loginURL);
+			exit();
+		}
 
-			//Social Login
-			//Facebook Sign In
-			if (isset($_POST['fb_signin_btn'])) { 
+		//Google Sign up
+		if (isset($_POST['google_signup_btn'])){
+			$_SESSION['google_signup_btn'] = $_POST['google_signup_btn'];
 
-				$_SESSION['fb_signin_btn'] = $_POST['fb_signin_btn'];
-
-			    if (isset($_SESSION['fb_access_token'])) {
-					//Check user role
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-
-					$result = $mysqli->query($query);
-					if ($result->num_rows > 0) {
-
-						$row = $result->fetch_array();
-						$_SESSION['userid'] = $row['id'];
-
-						if(strcasecmp($row['role'], 'Business Owner') == 0) {
+		    if (isset($_SESSION['google_access_token'])) {
+				//Check user exists
+				$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
+				$result = $mysqli->query($query);
+				if ($result->num_rows > 0) {
+					 $signupresponse_social="User with email already exists. Please sign in.";
+					 header('Location: login.php');
+					 exit();
+				}
+				else
+				{
+					$signUpPhone = '1234567890';
+					$signUppassword = 'google';
+					$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
+		                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
+		            $result = $mysqli->query($query);
+		            if ($result) {
+						if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
 							header('Location: User/business_profile.php');
 							exit();
-						} else {
+						}
+						else
+						{
 							header('Location: User/customer_profile.php');
 							exit();
 						}
-					}
+		            }
+		            else
+		            {
+		                $signupresponse_social="Failed to signup";
+		            }
 				}
-				$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
-				$permissions = ['email'];
-				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
-
-				header('Location:'.$fb_loginURL);
-				exit();
-
 			}
+			$google_loginURL = $gClient->createAuthUrl();
 
-			//Facebook Sign Up
-			if (isset($_POST['fb_signup_btn'])){
-
-
-				$_SESSION['fb_signup_btn'] = $_POST['fb_signup_btn'];
-
-			    if (isset($_SESSION['fb_access_token'])) {
-					//Check user exists
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-					$result = $mysqli->query($query);
-					if ($result->num_rows > 0) {
-						 $signupresponse_social="User with email already exists. Please sign in.";
-						 header('Location: login.php');
-						 exit();
-
-					}
-					else
-					{
-						$signUpPhone = '1234567890';
-						$signUppassword = 'facebook';
-						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
-			            $result = $mysqli->query($query);
-
-			            if ($result) {
-
-							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
-								header('Location: User/business_profile.php');
-								exit();
-							}
-							else
-							{
-								header('Location: User/customer_profile.php');
-								exit();
-							}
-			            }
-			            else
-			            {
-			                $signupresponse_social="Failed to signup";
-			            }
-					}
-				}
-				$redirectURL = "http://localhost/Treaty/social_login/fb-callback.php";
-				$permissions = ['email'];
-				$fb_loginURL = $helper->getLoginUrl($redirectURL, $permissions);
-
-				header('Location:'.$fb_loginURL);
-				exit();
-
-			}
-
-			//Google Sign In
-			if (isset($_POST['google_signin_btn'])) {
-
-				$_SESSION['google_signin_btn'] = $_POST['google_signin_btn'];
-
-				if(isset($_SESSION['google_access_token'])){
-
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-
-				    $result = $mysqli->query($query);
-				    if ($result->num_rows > 0) {
-
-						$row = $result->fetch_array();
-						$_SESSION['userid'] = $row['id'];
-
-						if(strcasecmp($row['role'], 'Business Owner') == 0) {
-							header('Location: User/business_profile.php');
-							exit();
-						} else {
-							header('Location: User/customer_profile.php');
-							exit();
-						}
-					}
-				}
-				$google_loginURL = $gClient->createAuthUrl();
-				header('Location:'.$google_loginURL);
-				exit();
-
-			}
-
-			//Google Sign up
-			if (isset($_POST['google_signup_btn'])){
-
-				$_SESSION['google_signup_btn'] = $_POST['google_signup_btn'];
-
-			    if (isset($_SESSION['google_access_token'])) {
-					//Check user exists
-					$query = "SELECT id, role FROM user where email=\"".$_SESSION['email']."\"";
-					$result = $mysqli->query($query);
-					if ($result->num_rows > 0) {
-						 $signupresponse_social="User with email already exists. Please sign in.";
-						 header('Location: login.php');
-						 exit();
-					}
-					else
-					{
-						$signUpPhone = '1234567890';
-						$signUppassword = 'google';
-						$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
-			                       VALUES (\"".$_SESSION['email']."\",\"".$signUprole_social."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
-			            $result = $mysqli->query($query);
-			            if ($result) {
-							if(strcasecmp($signUprole_social, 'Business Owner') == 0) {
-								header('Location: User/business_profile.php');
-								exit();
-							}
-							else
-							{
-								header('Location: User/customer_profile.php');
-								exit();
-							}
-			            }
-			            else
-			            {
-			                $signupresponse_social="Failed to signup";
-			            }
-					}
-				}
-				$google_loginURL = $gClient->createAuthUrl();
-
-				header('Location:'.$google_loginURL);
-				exit();
-			}
-
-			?>
+			header('Location:'.$google_loginURL);
+			exit();
+		}
+	?>
 	</head>
-	<body>   
-    
+	<body>
+
 		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container">
@@ -334,7 +337,7 @@ session_start();
                             <li><a href="index.php#clients">Clients</a></li>
                             <li><a href="index.php#price">Price</a></li>
                             <li><a href="index.php#contact">Contact</a></li>
-                            <li class="active"><a href='login.php'>Login</a></li>                        
+                            <li class="active"><a href='login.php'>Login</a></li>
 						</ul>
 					</div>
 					<!-- End main navigation -->
@@ -438,9 +441,9 @@ session_start();
 								<input class="button" type="submit" value="Sign Up">
 								<br><br>
 							</form>
-                            
-                            <div class="hr-sect">OR</div>                            
-                            
+
+                            <div class="hr-sect">OR</div>
+
 							<form method="post" style="color: black!important;">
 								<br>
 								<input type="radio" name="user_social" style="margin: 0px;" value="Customer" required checked="checked"> <span>Customer</span> &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -491,7 +494,7 @@ session_start();
 				});
 			});
 		</script>
-        
+
         <script type="text/javascript" src="js/bootstrap.js"></script>
         <script type="text/javascript" src="js/modernizr.custom.js"></script>
 
@@ -500,11 +503,11 @@ session_start();
         <!-- css3-mediaqueries.js for IE8 or older -->
         <!--[if lt IE 9]>
             <script src="js/respond.min.js"></script>
-        <![endif]-->         
-    
+        <![endif]-->
+
         <div class="footer">
             <p style="color: white;">Treaty.com © copyright 2018</p>
-        </div>        
+        </div>
 		<!-- //tabs -->
 		<!-- //js-scripts -->
 	</body>

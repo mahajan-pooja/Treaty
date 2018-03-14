@@ -24,7 +24,6 @@
 			$result = $mysqli->query($query);
 		}
 	}	
-
 	// Rewards Point section
 	$query = "SELECT bd.userid,balance, businessname 
 			  FROM customerbusiness cb, businessdetail bd  
@@ -91,7 +90,6 @@
 }
 .active, .panelAccordion:hover {
     background-color: #A9C750; 
-
 }
 .active, .accordion:hover {
     color: white;
@@ -147,7 +145,6 @@
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
 	<?php
-
 	include 'header.php';
 	?>
 	
@@ -158,7 +155,6 @@
 		//	window.location.assign("customer.php#horizontalTab2?businessid="+businessid);
 		//TODO REFRESH PAGE
 		//}
-
 		// Called on Explore section select dorpdown.        
         function selectedSector(selected_value){
         	var businesssector_id = '';
@@ -179,7 +175,6 @@
               	} 
             });            
         }
-
         function selectedSectorAll(){
         	var businesssector_id = '';
             businesssector_id = "all";  
@@ -199,7 +194,6 @@
               	} 
             });
         }
-
         //Show Modal
         function show_modal(bid){
             //Make a Ajax call to collect data
@@ -211,15 +205,12 @@
                     //alert (data)
                 	$(".modal-body").html(data);
                 	$("#myModal").modal();
-
                 },
                 error: function() {
                 x.innerHTML = "Error occured. Unable to make a Ajax call."
 				//Add bootstrap to display error on page
               	} 
             });  
-
-
            //$(".modal-body").html(data);
             //$("#myModal").modal();
     	}
@@ -288,7 +279,6 @@
 								$info.show();
 							}
 						});
-
 						$('#verticalTab').easyResponsiveTabs({
 							type: 'vertical',
 							width: 'auto',
@@ -429,7 +419,6 @@
 		</div>
 	</div>
 	<?php
-
 		include 'footer.php';
 		
 	?>
@@ -447,7 +436,6 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 var i;
-
 for (i = 0; i < acc.length; i++) {
     acc[i].addEventListener("click", function() {
         this.classList.toggle("active");
@@ -459,10 +447,8 @@ for (i = 0; i < acc.length; i++) {
         }
     });
 }
-
 var pAcc = document.getElementsByClassName("panelAccordion");
 var j;
-
 for (j = 0; j < pAcc.length; j++) {
     pAcc[j].addEventListener("click", function() {
         this.classList.toggle("active");
