@@ -57,7 +57,6 @@
 					
 					echo "<script>alert('Subscribed Successfully.');</script>";
     			echo '<script>window.location.href = "customer.php#horzontalTab3";</script>';
-				
 			}
     	
     } else {

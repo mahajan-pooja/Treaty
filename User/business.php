@@ -54,19 +54,7 @@ Changes done on this page by Rajeshwari:
 	    </script>
 	</head>
 	<?php
-		if(isset($_GET['flag'])){
-			if($_GET['flag'] == 'add'){ ?>
-			<script type="text/javascript">
-				alert("Rewards added successfully.");
-				window.location.href = "business.php";
-			</script>
-			<?php } else if($_GET['flag'] == 'redeem'){ ?>
-			<script type="text/javascript">
-				alert("Rewards redeemed successfully.");
-				window.location.href = "business.php";
-			</script>
-			<?php }
-		}
+		
 
         require '../config.php';
 
@@ -123,59 +111,59 @@ Changes done on this page by Rajeshwari:
         	//create business
         	// Find Lon and Lat of address
         	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
-					$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-					$geo = json_decode($geo, true);
-					if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-					  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-					  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-					}
+			$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
+			$geo = json_decode($geo, true);
+			if (isset($geo['status']) && ($geo['status'] == 'OK')) {
+			  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
+			  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+			}
 
-					// If Image is selected
-					if(!empty($_FILES['image']['name'])){
-		            	$filename = addslashes($_FILES["image"]["name"]);
-						$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
-						$file_type = addslashes($_FILES["image"]["type"]);
-						$ext_array = array('jpg','jpeg','png');
-						$ext = pathinfo($filename,PATHINFO_EXTENSION);
-						if(in_array($ext,$ext_array)){
-							$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
-							$result = $mysqli->query($query);
-	            if($result) {
+			// If Image is selected
+			if(!empty($_FILES['image']['name'])){
+            	$filename = addslashes($_FILES["image"]["name"]);
+				$tmp_name = addslashes(file_get_contents($_FILES["image"]["tmp_name"]));
+				$file_type = addslashes($_FILES["image"]["type"]);
+				$ext_array = array('jpg','jpeg','png');
+				$ext = pathinfo($filename,PATHINFO_EXTENSION);
+				if(in_array($ext,$ext_array)){
+					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+					$result = $mysqli->query($query);
+        			if($result) {
 	                	$_SESSION["businessname"]   = $fname;
 	                	$_SESSION["businesssector"] = $lname;
 										//send email
-						        $subject = "You have registered a new business!!";
-						        //$message = "Please use this password to login ".$password."<br> Please click on this link";
-						        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-						                       <html xmlns="http://www.w3.org/1999/xhtml">
-						                       <head>
-						                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-						                       </head>
-						                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-						                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-						                       <div>
-					                               <p> You have registered your business </p>
-												   <p> Business Name : '.$fname.'</p>
-												   <p> Business Sector : '.$lname.'</p>
-						                       </div>
-						                       </body>
-						                       </html>';
-						        $headers = "From : poonam.6788@gmail.com";
-						        $headers = 'MIME-Version: 1.0' . "\r\n";
-						        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-						        if(mail($email, $subject, $message, $headers)){
-		            				echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
-										}
-                } else {
-                    echo "Your Business could not be added. Please Try again.";
-                    echo $query;
-                }
-						} else {
-							echo 'Only JPEG and PNG Images can be uploaded';
+				        $subject = "You have registered a new business!!";
+				        //$message = "Please use this password to login ".$password."<br> Please click on this link";
+				        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+				                       <html xmlns="http://www.w3.org/1999/xhtml">
+				                       <head>
+				                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+				                       </head>
+				                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+				                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+				                       <div>
+			                               <p> You have registered your business </p>
+										   <p> Business Name : '.$fname.'</p>
+										   <p> Business Sector : '.$lname.'</p>
+				                       </div>
+				                       </body>
+				                       </html>';
+				        $headers = "From : poonam.6788@gmail.com";
+				        $headers = 'MIME-Version: 1.0' . "\r\n";
+				        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						if(mail($email, $subject, $message, $headers)){
+		            		echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
 						}
-					} else {
-						echo 'Please Select a Image for your Business';
+                	} else {
+                    	echo "Your Business could not be added. Please Try again.";
+                    	echo $query;
+                	}
+				}else{
+						echo 'Only JPEG and PNG Images can be uploaded';
 					}
+				}else{
+					echo 'Please Select a Image for your Business';
+				}
         } else if(!empty($oName)) {
             //create offer
             $query  = "INSERT INTO businessoffer(userid, offername, offerdescription, creditedpoints, startdate, expirationdate, isactive, modified, created)
@@ -346,7 +334,7 @@ Changes done on this page by Rajeshwari:
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if($_SESSION['displaydashboard']){
+                                if(isset($_SESSION['displaydashboard'])){
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?>
@@ -429,6 +417,7 @@ Changes done on this page by Rajeshwari:
 											?>
 												<p class="b_name" id="custPoints" style="color: white;font-size: 150%;">
 											 <?php
+											 $points = 0;
 											//get customer points for add redeem
 								            if(isset($_GET['apcm'])){
 
@@ -665,11 +654,11 @@ Changes done on this page by Rajeshwari:
             $mysqli->close();
         ?>
         <!-- Popup box modal -->
-		<div id="add" class="modal">
+		<div id="add" class="modal" style="display:none!important">
 		  <p class="modal-content">Rewards Added successfully.</p>
 		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
 		</div>
-		<div id="redeem" class="modal">
+		<div id="redeem" class="modal" style="display:none!important">
 		  <p class="modal-content">Rewards Redeemed successfully.</p>
 		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
 		</div>

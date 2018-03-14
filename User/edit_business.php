@@ -195,8 +195,8 @@ Changes done on this page:
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
-														<?php
-                                if($_SESSION['displaydashboard']){
+							<?php
+                                if(isset($_SESSION['displaydashboard'])){
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 

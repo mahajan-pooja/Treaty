@@ -28,11 +28,17 @@
 </head>
 
 	<?php
-        require '../config.php';
-
-		$first_name = $_SESSION['first_name'];
-		$last_name = $_SESSION['last_name'];
-		$email_id = $_SESSION['email'];
+      
+      require '../config.php';
+      if(isset($_SESSION['first_name'])){
+        $first_name = $_SESSION['first_name'];
+      }        
+      if(isset($_SESSION['last_name'])){
+        $last_name = $_SESSION['last_name'];
+      }
+    	if(isset($_SESSION['email'])){
+        $email_id = $_SESSION['email'];
+      }	
 
     	if(isset($_POST['fname'])){
     		$fname = $_POST['fname'];

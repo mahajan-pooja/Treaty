@@ -29,7 +29,7 @@
 	clear: both;
 }
 /*-- popup-modal-Page---*/
-.modal{
+/*.modal{
 	z-index:3;
 	display:none;
 	padding-top:50px;
@@ -40,7 +40,7 @@
 	height:20%!important;
 	overflow:auto;
 	background-color:#D2E09D!important;
-}
+}*/
 .loginName{
 	float: right!important;
 	margin-right: 10%;
@@ -568,7 +568,7 @@ ul.w3agile {
 
 .footer {
 	text-align: center;
-	margin: 40px 0 20px;
+	margin: 40px 0 0px;
 }
 .footer p {
 	color: #fff;
