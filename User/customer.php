@@ -236,6 +236,7 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
                             <li class="active"><a href="customer.php">Dashboard</a></li>
+                            <li><a href="transactions.php">Transactions</a></li>
                             <li><a href="find_location.php">Find Location</a></li>
                             <li><a href="customer_profile.php">Profile</a></li>
                             <li><a href="../logout.php">Logout</a></li>                           
