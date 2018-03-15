@@ -13,9 +13,9 @@
 	$modal_text = "";
 	while ($row = $result->fetch_assoc()) {
 		
-		$modal_text = $modal_text . '<p style="color: #000;">Branch '.$index.'</p>';
-		$modal_text = $modal_text . '<p style="color: #000;">'.$row["address1"]." ".$row["address2"].",".$row["city"].",".$row["state"].",".$row["country"].",".$row["zipcode"].'</p>';
-		$modal_text = $modal_text . '<p style="color: #000;"> Phone Number: '.$row["businessphonenumber"].'</p><hr>';
+		$modal_text = $modal_text . '<p style="color: #000; font-size:16px">Branch '.$index.'</p>';
+		$modal_text = $modal_text . '<p style="color: #000;font-size:14px"><span style="margin-right: 10px;"><i class="fa fa-map-marker" style="font-size: 17px;color: #006dcc;"></i></span>'.$row["address1"]." ".$row["address2"].",".$row["city"].",".$row["state"].",".$row["country"].",".$row["zipcode"].'</p>';
+		$modal_text = $modal_text . '<p style="color: #000; font-size:14px"><span style="margin-right: 10px;"><i class="fa fa-phone" style="font-size: 17px;color: #006dcc;""></i></span>'.$row["businessphonenumber"].'</p><hr>';
 		$index++;
 	}
 

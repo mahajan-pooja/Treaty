@@ -90,7 +90,7 @@
                         <?php if(isset($_SESSION['userid'])): ?>
                           <li><a href='logout.php'>Logout</a></li>
                         <?php else: ?>
-                           <li><a href='login.php'>Login</a></li>
+                           <li><a href='../login.php'>Login</a></li>
                         <?php endif; ?>
                        <!-- <li><a href="find_location.php">Find Location</a></li>
                         <li><a href="customer_profile.php">Profile</a></li>
@@ -137,8 +137,8 @@
 
 					<div class="tab-left">
 						<ul class="resp-tabs-list">
-							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>Customer</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Business Owner</li>
+							<li class="resp-tab-faq-item"><i class="fa fa-suitcase" aria-hidden="true"></i>Customer</li>
+							<li class="resp-tab-faq-item"><i class="fa fa-university" aria-hidden="true"></i>Business Owner</li>
 						</ul>
 					</div>
 

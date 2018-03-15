@@ -125,6 +125,28 @@
 		float: none!important;
 	}
 }
+
+#myModal p{
+	padding:0px;
+}
+#custbtn a{
+		color: black;
+		padding: 0.8em;
+		font-size: 0.9em;
+		cursor: pointer;
+		border: 1px solid #181A1C;
+		background: #a9c750;
+		outline: none;
+		font-weight: 400;
+		text-transform: capitalize;
+		width: 23%;
+		-webkit-transition:none;
+		transition:none;
+}
+#custbtn a:hover {
+    color: white;
+    background: black;
+}
 </style> 
 
 	<title>Customer Dashboard</title>
@@ -195,7 +217,7 @@
             });
         }
         //Show Modal
-        function show_modal(bid){
+        function show_modal(bid,business_name){
             //Make a Ajax call to collect data
          	$.ajax({
                 url: "explore_view_details.php", 
@@ -204,15 +226,14 @@
                 success: function(data){
                     //alert (data)
                 	$(".modal-body").html(data);
+                	$("#business_name").html(business_name);
                 	$("#myModal").modal();
                 },
                 error: function() {
                 x.innerHTML = "Error occured. Unable to make a Ajax call."
 				//Add bootstrap to display error on page
               	} 
-            });  
-           //$(".modal-body").html(data);
-            //$("#myModal").modal();
+            });             
     	}
 	</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -292,9 +313,9 @@
 
 					<div class="tab-left">
 						<ul class="resp-tabs-list">
-							<li class="resp-tab-item"><i class="fa fa-suitcase" aria-hidden="true"></i>QR Code</li>
-							<li class="resp-tab-item"><i class="fa fa-university" aria-hidden="true"></i>Rewards</li>
-							<li class="resp-tab-item"><i class="fa fa-car" aria-hidden="true"></i>Explore</li>
+							<li class="resp-tab-item"><i class="fa fa-qrcode" aria-hidden="true"></i>QR Code</li>
+							<li class="resp-tab-item"><i class="fa fa-gift" aria-hidden="true"></i>Rewards</li>
+							<li class="resp-tab-item"><i class="fa fa-search" aria-hidden="true"></i>Explore</li>
 						</ul>
 					</div>
 
@@ -322,31 +343,30 @@
 								</div>
 							</div>
 							<!-- Customer Rewards section -->
-							<div class="tab-1 resp-tab-content">
+							<div id="custbtn" class="tab-1 resp-tab-content">
 								<p class="secHead">Your Reward Points</p>
 
-								<div class="agileinfo-recover">
-									<?php foreach($rewardsset as $value): ?>
-										<button class='accordion'>
-											<?php echo explode("-",$value)[0];?></button>
-											<div class="panelContainer">
-												Reward Points - <?php echo explode("-",$value)[1]; ?><br><br>
-												<a href="unsubscribe.php?bid=<?php echo $business_owner_id; ?>" style="color: brown;border:none;">Unsubscribe</a>
-
-											</div>
-										
-									<?php endforeach; ?>
-									<!-- <?php //foreach($rewardsset as $value): ?>
-										<div class="business_name">
-											<span class="b_name"><?php //echo explode("-",$value)[0];?></span>
-											<img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
-											<div class="pointsDiv" id="pointsDiv">
-												Reward Points - <?php //echo explode("-",$value)[1];?><br><br>
-												<a href="" style="color: brown;border:none;">View Details</a>
-											</div>
-										</div>
-									<?php //endforeach; ?> -->
-								</div>	
+                                    <div class="agileinfo-recover">
+                                        <?php foreach($rewardsset as $value): ?>
+                                            <button class='accordion'>
+                                                <?php echo explode("-",$value)[0];?></button>
+                                                <div class="panelContainer">
+                                                    Reward Points - <?php echo explode("-",$value)[1]; ?><br><br>
+                                                    <a href="unsubscribe.php?bid=<?php echo $business_owner_id; ?>">Unsubscribe</a>
+                                                </div>
+                                            
+                                        <?php endforeach; ?>
+    <?php /*?>									<?php //foreach($rewardsset as $value): ?>
+                                            <div class="business_name">
+                                                <span class="b_name"><?php //echo explode("-",$value)[0];?></span>
+                                                <img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
+                                                <div class="pointsDiv" id="pointsDiv">
+                                                    Reward Points - <?php //echo explode("-",$value)[1];?><br><br>
+                                                    <a href="" style="color: brown;border:none;">View Details</a>
+                                                </div>
+                                            </div>
+                                        <?php //endforeach; ?><?php */?>
+                                    </div>	
 								</div>
 							</div>
 							

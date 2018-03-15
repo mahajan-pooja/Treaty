@@ -85,7 +85,7 @@
         $offer_list = "";                                   
         foreach ($offers_array as $key2 => $o_value) {                                    	
             if(($bd_value[0] == $o_value[0]) and strtotime($o_value[4]) >= strtotime(date("Y-m-d"))){
-          		$offer_list = $offer_list . "<li>" .$o_value[1] . " | ".$o_value[2]." | Valid Till: ".date("m-d-Y",strtotime($o_value[4])). "</li>";									
+          		$offer_list = $offer_list . "<li style='color: chocolate;'>" .$o_value[1] . " | ".$o_value[2]." | Valid Till: ".date("m-d-Y",strtotime($o_value[4])). "</li>";									
             }
         }
         if($offer_list != ""){
@@ -111,7 +111,7 @@
 			echo "<a disabled style='padding: 0px 5px;font-size: 12px;margin-left: 0px;' class='btn btn-primary btn-xs' href=''>Subscribed</a>";
 		}
 								
-		echo "<a style='padding: 0px 5px;font-size: 12px;' role='button' data-toggle='modal' class='btn btn-primary btn-xs' onClick ='show_modal(".$bid.");'>View Details</a>";
+		echo "<a style='padding: 0px 5px;font-size: 12px;' role='button' data-toggle='modal' class='btn btn-primary btn-xs' onClick ='show_modal(".$bid.", \"".$bd_value[1]."\");'>View Details</a>";
 		echo '</p>';
         echo '</td>';        
         echo '</tr>';
@@ -122,7 +122,7 @@
 	echo '<div id="myModal" class="modal hide fade">										
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 style="text-align:left">Branch Details</h3>
+		<h3 id = "business_name" style="text-align:left"></h3>
 	</div>	
 	<div class="modal-body">'; 
 		
