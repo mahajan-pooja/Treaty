@@ -277,13 +277,13 @@
 						<ul class="resp-tabs-list">
                             <?php
                                  if(!isset($profileresultset)) {
-		                              echo "<li class=\"resp-tab-item-profile\"><i class=\"fa fa-plane\" aria-hidden=\"true\"></i>Create Account</li>";
+		                              echo "<li class=\"resp-tab-item-profile\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i>Create Account</li>";
                                   } else{
-                                      echo "<li class=\"resp-tab-item-profile\"><i class=\"fa fa-plane\" aria-hidden=\"true\"></i>Update Account</li>";
+                                      echo "<li class=\"resp-tab-item-profile\"><i class=\"fa fa-edit\" aria-hidden=\"true\"></i>Update Account</li>";
                                   }
                             ?>
-							<li class="resp-tab-item-profile"><i class="fa fa-ship" aria-hidden="true"></i>Change Password</li>
-							<li class="resp-tab-item-profile"><i class="fa fa-plane" aria-hidden="true"></i>Deactivate Account</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-key" aria-hidden="true"></i>Change Password</li>
+							<li class="resp-tab-item-profile"><i class="fa fa-user-times" aria-hidden="true"></i>Deactivate Account</li>
 						</ul>
 					</div>
 

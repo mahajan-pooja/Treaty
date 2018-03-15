@@ -52,6 +52,20 @@ Changes done on this page by Rajeshwari:
 		        document.getElementById('image').src="images/default-image.png";
 		    }
 	    </script>
+        <style>
+		.agile_form textarea {
+			padding: 0.5em 1em;
+			color: #000;
+			width: 90.1%;
+			font-size: 13px;
+			outline: none;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			letter-spacing: 1px;
+			-webkit-appearance: none;
+			margin: 5px;
+		}		
+		</style>
 	</head>
 	<?php
 		
@@ -399,11 +413,11 @@ Changes done on this page by Rajeshwari:
 					<div class="tabs">
 						<div class="tab-left">
 							<ul class="resp-tabs-list" style="margin: 0px;">
-								<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Add/Redeem Rewards</li>
-								<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Offers</li>
-								<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Business</li>
-								<li class="resp-tab-item-business"><i class="fa fa-university" aria-hidden="true"></i>Register Business</li>
-								<li class="resp-tab-item-business"><i class="fa fa-suitcase" aria-hidden="true"></i>Create Offer</li>
+								<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-calculator" aria-hidden="true"></i>Add/Redeem Rewards</li>
+								<li class="resp-tab-item-business"><i class="fa fa-star" aria-hidden="true"></i>Offers</li>
+								<li class="resp-tab-item-business"><i class="fa fa-briefcase" aria-hidden="true"></i>Business</li>
+								<li class="resp-tab-item-business"><i class="fa fa-map-marker" aria-hidden="true"></i>Register Business</li>
+								<li class="resp-tab-item-business"><i class="fa fa-cogs" aria-hidden="true"></i>Create Offer</li>
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -522,7 +536,8 @@ Changes done on this page by Rajeshwari:
 										<?php foreach($offerlistresultset as $value): ?>
 											<div class="offerDiv">
 												<span class="offerDesc"><?php echo explode("@",$value)[0];echo "<br>";echo explode("@",$value)[3];?></span>
-												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></img>
+                                                <span><i style="color:#333;cursor: pointer;" class="fa fa-4x fa-pencil-square-o" aria-hidden="true" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></i></span>
+												<?php /*?><img class="btn" width="100" src="images/setting.png" height="100" onClick="editOffer(<?php echo explode("@",$value)[2]; ?>)"></img><?php */?>
 											</div>
 										<?php endforeach; ?>
 									</div>
@@ -534,7 +549,8 @@ Changes done on this page by Rajeshwari:
 										<?php foreach($businesslistresultset as $value): ?>
 											<div class="offerDiv">
 												<span class="offerDesc"><?php echo explode("-",$value)[0];?></span>
-												<img class="btn" width="100" src="images/setting.png" height="100" onClick="editBusiness(<?php echo explode("-",$value)[1]; ?>)"></img>
+                                                <span><i style="color:#333;cursor: pointer;" class="fa fa-4x fa-pencil-square-o" aria-hidden="true" onClick="editBusiness(<?php echo explode("-",$value)[1]; ?>)"></i></span>
+												<?php /*?><img class="btn" width="100" src="images/setting.png" height="100" onClick="editBusiness(<?php echo explode("-",$value)[1]; ?>)"></img><?php */?>
 											</div>
 									    <?php endforeach; ?>
 									</div>
@@ -545,9 +561,9 @@ Changes done on this page by Rajeshwari:
 									<div class="register agileits">
 
 										<form method="post" class="agile_form" enctype="multipart/form-data" runat="server">
-											<table style="width: 91.6%;">
+											<table style="width: 93.6%;">
                                         	<tr>
-                                            	<td style="padding-left: 6px;">
+                                            	<td style="padding-left: 3%;">
 	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
 	                                            	<img src = "images/default-image.jpg" alt = "Upload Image" id = "image" width="100px" />
 	                                            	</div>
@@ -603,7 +619,7 @@ Changes done on this page by Rajeshwari:
 											<input type="text" placeholder="Country" name="country" class="name agileits" required=""/>
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""/>
 											<input type="text" placeholder="Business Phone number" name="businessphonenumber" class="name agileits" required=""/>
-											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescriptions" rows="4" columns ="500" maxlength="200" class="name agileits" required="" <?php echo !isset($businessresultset[3]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[3]) ? '' : $businessresultset[3] ?></textarea>
+											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescriptions" rows="4" columns ="500" maxlength="200" class="name agileits" required <?php echo !isset($businessresultset[3]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[3]) ? '' : $businessresultset[3] ?></textarea>
 											<div class="submit" style="margin-left: 0px;"><br>
 												<input type="submit" value="Save">
 												<input type="reset" value="Cancel" name="RegBusiCancel" onclick="resetImage();" formnovalidate>
@@ -654,23 +670,25 @@ Changes done on this page by Rajeshwari:
             $mysqli->close();
         ?>
         <!-- Popup box modal -->
-		<div id="add" class="modal" style="display:none!important">
+		<!-- <div id="add" class="modal" style="display:none!important">
 		  <p class="modal-content">Rewards Added successfully.</p>
 		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
 		</div>
 		<div id="redeem" class="modal" style="display:none!important">
 		  <p class="modal-content">Rewards Redeemed successfully.</p>
 		  <button onclick="window.location.href = 'business.php'" class="popButton">OK</button>
-		</div>
+		</div> -->
 		<?php
 		if(isset($_GET['flag'])){
 			if($_GET['flag'] == 'add'){ ?>
 			<script type="text/javascript">
-				document.getElementById('add').style.display='block';
+				//document.getElementById('add').style.display='block';
+				alert("Rewards Added successfully.")
 			</script>
 			<?php } else if($_GET['flag'] == 'redeem'){ ?>
 			<script type="text/javascript">
-				document.getElementById('redeem').style.display='block';
+				//document.getElementById('redeem').style.display='block';
+				alert("Rewards Redeemed successfully.")
 			</script>
 			<?php }
 		} ?>

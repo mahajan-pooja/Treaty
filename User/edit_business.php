@@ -47,6 +47,20 @@ Changes done on this page:
 		<!-- Script for image display after selection -->
 		
 		<?php include 'header.php'; ?>
+        <style>
+		.agile_form textarea {
+			padding: 0.5em 1em;
+			color: #000;
+			width: 90.1%;
+			font-size: 13px;
+			outline: none;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+			letter-spacing: 1px;
+			-webkit-appearance: none;
+			margin: 5px;
+		}		
+		</style>
 	</head>
 		<?php 
 
@@ -288,7 +302,7 @@ Changes done on this page:
 											<input type="text" placeholder="Zip" name="zipcode" class="name agileits" required=""
 												value="<?php echo !isset($businessresultset[7]) ? '' : $businessresultset[7] ?>" />
 											<input type="text" placeholder="Business Phone Number" name="businessphonenumber" class="name agileits" required=""	value="<?php echo !isset($businessresultset[8]) ? '' : $businessresultset[8] ?>" />
-											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescription" rows="4" columns ="500" maxlength="200" class="name agileits" required="" <?php echo !isset($businessresultset[10]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[10]) ? '' : $businessresultset[10] ?></textarea>
+											<textarea placeholder="Say somthing about your business(200 Characters)..." id="businessdescription" name="businessdescription" rows="4" columns ="500" maxlength="200" class="name agileits" required <?php echo !isset($businessresultset[10]) ? '' : 'readonly'?>><?php echo !isset($businessresultset[10]) ? '' : $businessresultset[10] ?></textarea>
 											<div class="submit"><br>
 												<input type="submit" value="Save">
 												<input name="cancel" type="submit" value="Cancel">

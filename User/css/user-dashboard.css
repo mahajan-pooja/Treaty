@@ -150,18 +150,19 @@
     background:#a9c750;
     margin-bottom: 2%;
     text-align: center;
-    padding: 2%;
+    padding: 5px;;
     float: left;
     width: 100%;
 }
 .offerDesc{
 	color: green;
     background-color: rgba(252, 250, 234,0.5);
-    padding: 3%;
+    padding: 14px;
     text-align: center;
     float: left;
     width: 77%;
     font-size: 100%;
+	height: 40px;
 }
 .btn{
 	float: left;
@@ -298,6 +299,21 @@ h1 {
 	transition: all 0.3s ease-out;
 	display: inline-block;
 	width: 32.9%;
+}
+.resp-tab-faq-item {
+	color: #ffffff;
+	cursor: pointer;
+	display: block;
+	outline: none;
+	padding: 20px 0;
+	text-align: center;
+	-webkit-transition: all 0.3s ease-out;
+	-moz-transition: all 0.3s ease-out;
+	-ms-transition: all 0.3s ease-out;
+	-o-transition: all 0.3s ease-out;
+	transition: all 0.3s ease-out;
+	display: inline-block;
+	width: 49.7%;
 }
 .resp-tab-item-profile {
 	color: #ffffff;
