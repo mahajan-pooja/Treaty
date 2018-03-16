@@ -1,15 +1,7 @@
-<!-- 
-Changes done on this page:
-- Removed businessname and businesssector from update query as its not getting edited at all
-- Added code for Image and modified the Update query.
-- Added businessphonenumber on screen 
-- Lon and Lat of the address added to update query.
-
--->
 <?php
 	// Start the session
 	session_start();
-	?>
+?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
 	<head>
@@ -70,9 +62,9 @@ Changes done on this page:
 			if (isset($_POST['businessname'])) {
                 $businessname = $_POST['businessname'];
             }
-            /*if (isset($_POST['businesssector'])) {
-                $businesssector = $_POST['businesssector'];
-            }*/
+            if (isset($_SESSION['userid'])) {
+                $userid = $_SESSION['userid'];
+            }
             if (isset($_POST['address1'])) {
                 $address1 = $_POST['address1'];
             }
@@ -117,7 +109,7 @@ Changes done on this page:
 			} else if(!empty($cancel)) {
 				echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
 			} else if(!empty($businessname)) {
-				//Find Lon and Lat of the adrress.
+				//Find Lon and Lat of the adrress.			
 				$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
 				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
 				$geo = json_decode($geo, true);
@@ -125,8 +117,13 @@ Changes done on this page:
 				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
 				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
 				}
+				else{
+					echo '<script>alert("Please Check your address. Enter valid address.");</script>';	
+					$latitude = 0;
+				    $longitude = 0;
+				}
 
-
+				
 				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
 				if($_FILES['image']['error'] == 0){
 					$filename = addslashes($_FILES["image"]["name"]);
@@ -146,32 +143,42 @@ Changes done on this page:
 						 SET address1=\"".$address1."\", address2=\"".$address2."\", city=\"".$city."\", state=\"".$state."\", zipcode=\"".$zipcode."\",businessphonenumber=\"".$businessphonenumber."\" ,latitude=".$latitude.",longitude=".$longitude.",businessdescription=\"".$businessdescription."\",modified=sysdate()
 						 WHERE id=".$businessid;
 				}
-				
-        $result = $mysqli->query($query);
-        if ($result) {
-						//send email
-						$subject = "You have updated business details!!";
-						$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-													 <html xmlns="http://www.w3.org/1999/xhtml">
-													 <head>
-													 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-													 </head>
-													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-													 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-													 <div>
-																	 <p> You have updated your business </p>
-													 </div>
-													 </body>
-													 </html>';
-						$headers = "From : poonam.6788@gmail.com";
-						$headers = 'MIME-Version: 1.0' . "\r\n";
-						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-						if(mail($email, $subject, $message, $headers)) {
-	            echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
-						}
-        } else {
-            echo "Failed to update profile";
-        }
+
+    			$result = $mysqli->query($query);
+    			if ($result) {
+    				//-------Added to solve email error-----
+					$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
+					$result = $mysqli->query($query);
+      				if ($result->num_rows > 0) {
+      					$row = $result->fetch_array();
+			    		$email = $row["email"];
+			    	}
+			    	//-------Added to solve email error end-----
+
+					//send email
+					$subject = "You have updated business details!!";
+					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+												 <html xmlns="http://www.w3.org/1999/xhtml">
+												 <head>
+												 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+												 </head>
+												 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+												 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+												 <div>
+																 <p> You have updated your business </p>
+												 </div>
+												 </body>
+												 </html>';
+					$headers = "From : treatyrewards@gmail.com";
+					$headers = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					if(mail($email, $subject, $message, $headers)) {
+            			echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
+					}
+    			}else {
+        				echo "Failed to update profile";
+    			}
+        		
 			} else if(!empty($businessid)) {
 				$query = "SELECT a.businessname, a.address1, a.address2, a.city, a.state, a.country, a.zipcode,a.businessphonenumber, a.businessimage,a.businessdescription, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE a.id=".$businessid;
 				$result = $mysqli->query($query);
