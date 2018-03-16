@@ -30,11 +30,15 @@
 	<?php
 		//include 'customer_profile_nav.php';
 		require '../config.php';
-
-		$first_name = $_SESSION['first_name'];
-		$last_name = $_SESSION['last_name'];
-		$email_id = $_SESSION['email'];
-
+		if(isset($_SESSION['first_name'])){
+			$first_name = $_SESSION['first_name'];
+		}
+		if(isset($_SESSION['last_name'])){
+			$last_name = $_SESSION['last_name'];
+		}
+		if(isset($_SESSION['email'])){
+			$email_id = $_SESSION['email'];
+		}
 		if(isset($_POST['fname'])){
 			$fname = $_POST['fname'];
 		}
@@ -63,20 +67,23 @@
 			$zip = $_POST['zip'];
 		}
 
-    if(isset($_POST['old-pwd'])){
-      $oldpwd = $_POST['old-pwd'];
-    }
-    if(isset($_POST['new-pwd'])){
-      $newpwd = $_POST['new-pwd'];
-    }
-    if(isset($_POST['conf-new-pwd'])){
-      $confnewpwd = $_POST['conf-new-pwd'];
-    }
-    $notifyCheck = 0;
-    if(isset($_POST['notifyCheck'])) {
-      $notifyCheck = 1;
-    }
-        $userid = $_SESSION["userid"];
+	    if(isset($_POST['old-pwd'])){
+	      $oldpwd = $_POST['old-pwd'];
+	    }
+	    if(isset($_POST['new-pwd'])){
+	      $newpwd = $_POST['new-pwd'];
+	    }
+	    if(isset($_POST['conf-new-pwd'])){
+	      $confnewpwd = $_POST['conf-new-pwd'];
+	    }
+	    $notifyCheck = 0;
+	    if(isset($_POST['notifyCheck'])) {
+	      $notifyCheck = 1;
+	    }
+	    if(isset($_SESSION["userid"])){
+	    	$userid = $_SESSION["userid"];
+	    }
+        
         if(isset($_POST['save']) && !empty($oldpwd)){
             if (strcmp($newpwd,$confnewpwd) != 0) {
                 $message = "New password and Confirm new password are not same";
@@ -109,11 +116,12 @@
 															 </div>
 															 </body>
 															 </html>';
-								$headers = "From : poonam.6788@gmail.com";
+								$headers = "From : treatyrewards@gmail.com";
 								$headers = 'MIME-Version: 1.0' . "\r\n";
 								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 								mail($email, $subject, $message, $headers);
-                echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
+				echo '<script>alert("Password Changed Sucessfully");</script>';				
+                echo '<script>window.location.href = "/Treaty/User/customer_profile.php";</script>';
               } else {
                   $message = "Failed to update password";
               }
@@ -309,7 +317,7 @@
 										<input type="text" placeholder="Address : Street 1" name="street1" class="name agileits"
                                               value="<?php echo !isset($profileresultset[3]) ? '' : $profileresultset[3]; ?>" required=""/>
 										<input type="text" placeholder="Address : Street 2" name="street2" class="name agileits"
-                                              value="<?php echo !isset($profileresultset[4]) ? '' : $profileresultset[4]; ?>" required=""/>
+                                              value="<?php echo !isset($profileresultset[4]) ? '' : $profileresultset[4]; ?>"/>
 										<input type="text" placeholder="City" name="city" class="name agileits"
                                               value="<?php echo !isset($profileresultset[5]) ? '' : $profileresultset[5]; ?>" required=""/>
 										<input type="text" placeholder="State" name="state" class="name agileits"
@@ -333,9 +341,9 @@
 								<p class="secHead">Change Password</p>
 								<div class="agile-send-mail">
 									<form method="post" class="agile_form">
-										<input type="text" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
-										<input type="text" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
-										<input type="text" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>
+										<input type="password" placeholder="Old Password" name="old-pwd" class="name agileits" required=""/>
+										<input type="password" placeholder="New Password" name="new-pwd" class="name agileits" required=""/>
+										<input type="password" placeholder="Confirm New Password" name="conf-new-pwd" class="name agileits" required=""/>
                                         <div>
                                             <br>
                                             <label style="color:red;font-weight:bold;">

@@ -1,26 +1,26 @@
 <?php
+	
 	require '../config.php';
-
 	$bid = $_GET['bid'];
 	$cid = $_GET['cid'];
 
-
 //subscribe for business
-	$qry  = "INSERT INTO customerbusiness(userid, businessid,
-	         earnedpoints, redeemedpoints, balance, isactive, modified, created)
+	$query  = "INSERT INTO customerbusiness(userid, businessid,earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", 20, 0, 20, 1, sysdate(), sysdate())";
-	$res = $mysqli->query($qry);
-    if ($res) {
+	
+	$result = $mysqli->query($query);
+    if ($result) {
+    		
     		//send text message to customer
 		    $query = "Select phonenumber,businessname,email from user u,businessdetail b
-			 		where u.id = ".$cid." and b.id= ". $bid;
+			 		where u.id = ".$cid." and b.userid= ". $bid;			 
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_assoc()){ 
 				
-					$phone = $row['phonenumber'];
-					$businessname = $row['businessname'];
-			    $businessname = $row['email'];
-					
+				$phone = $row['phonenumber'];
+				$businessname = $row['businessname'];
+			    //$businessname = $row['email'];
+				$email = $row['email'];
 			    $text = "You are Successfully subscribed for ".$businessname.". 20 rewards added to your Treaty account. \nYour current Treaty Rewards - 20.\n\n\n"; 
 
 			    //actual code to send text msg
@@ -50,7 +50,7 @@
 												 </div>
 												 </body>
 												 </html>';
-					$headers = "From : poonam.6788@gmail.com";
+					$headers = "From : treatyrewards@gmail.com";
 					$headers = 'MIME-Version: 1.0' . "\r\n";
 					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 					mail($email, $subject, $message, $headers);
@@ -59,7 +59,9 @@
     			echo '<script>window.location.href = "customer.php#horzontalTab3";</script>';
 			}
     	
-    } else {
+    } 
+    else 
+    {
         echo "Failed to subscribe rewards.";
     }
 

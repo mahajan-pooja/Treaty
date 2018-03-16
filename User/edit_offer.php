@@ -30,8 +30,13 @@
 
 	<?php 
 		require '../config.php';
-		$offerid = $_GET["offerid"];
-		
+
+		if (isset($_GET["offerid"])) {
+            $offerid = $_GET["offerid"];
+        }	
+		if (isset($_SESSION['userid'])) {
+            $userid = $_SESSION['userid'];
+        }		
 		if (isset($_POST['oName'])) {
 			$oName = $_POST['oName'];
 		}
@@ -41,10 +46,12 @@
 		if (isset($_POST['oPoints'])) {
 			$oPoints = $_POST['oPoints'];
 		}
-		if (isset($_POST['datepicker1'])) {
+		if (isset($_POST['datepicker1'])){
+			//$datepicker1 = date('Y-m-d',strtotime($_POST['datepicker1']));
 			$datepicker1 = $_POST['datepicker1'];
 		}
 		if (isset($_POST['datepicker2'])) {
+			//$datepicker2 = date('Y-m-d',strtotime($_POST['datepicker2']));
 			$datepicker2 = $_POST['datepicker2'];
 		}
 		if (isset($_POST['cancel'])) {
@@ -70,9 +77,19 @@
 			$query = "UPDATE businessoffer
 					 SET offername=\"".$oName."\", offerdescription=\"".$oDesc."\", creditedpoints=\"".$oPoints."\", startdate=\"".$datepicker1."\", expirationdate=\"".$datepicker2."\", modified=sysdate() 
 					 WHERE id=".$offerid;
-			
+	
 			$result = $mysqli->query($query);
 			if ($result) {
+
+				//-------Added to solve email error-----
+				$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
+				$result = $mysqli->query($query);
+      			if ($result->num_rows > 0) {
+      				$row = $result->fetch_array();
+			    	$email = $row["email"];
+			    }
+			    //-------Added to solve email error end-----
+
 				//send email
 				$subject = "You have updated your offer!!";
 				$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -87,7 +104,7 @@
 											 </div>
 											 </body>
 											 </html>';
-				$headers = "From : poonam.6788@gmail.com";
+				$headers = "From : treatyrewards@gmail.com";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 				if(mail($email, $subject, $message, $headers)) {
@@ -243,7 +260,7 @@
 		<script src="js/jquery-ui.js"></script>
 			<script>
 				$(function() {
-				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker();
+				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker({ dateFormat: 'yy-mm-dd' });
 				});
 			</script>
 <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->	

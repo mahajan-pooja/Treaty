@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `treaty`.`customerbusiness` (
     REFERENCES `treaty`.`user` (`id`),
   CONSTRAINT `fk_customeroffer_businessid`
     FOREIGN KEY (`businessid`)
-    REFERENCES `treaty`.`businessdetail` (`id`))
+    REFERENCES `treaty`.`businessdetail` (`userid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

@@ -1,12 +1,3 @@
-<!--
-Changes done on this page by Rajeshwari:
-- Image Logic added
-- Logic for Lon and Lat added
-- Business Phoe number added on screen
-- Facing Prob for Business Sector number -> replaced with business sector name, Not yet completed
-- Added textarea for business description
--->
-
 <?php
 	// Start the session
 	session_start();
@@ -120,6 +111,10 @@ Changes done on this page by Rajeshwari:
         if (isset($_POST['taskOption'])) {
             $selectOption = $_POST['taskOption'];
         }
+        if(isset($_POST['businessdescriptions'])){
+        	$businessdescription = $_POST['businessdescriptions'];
+        }
+
         $userid = $_SESSION['userid'];
         if (!empty($fname)) {
         	//create business
@@ -140,9 +135,19 @@ Changes done on this page by Rajeshwari:
 				$ext_array = array('jpg','jpeg','png');
 				$ext = pathinfo($filename,PATHINFO_EXTENSION);
 				if(in_array($ext,$ext_array)){
-					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\", sysdate(), sysdate())";
+					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage,businessdescription, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\",\"".$businessdescription."\", sysdate(), sysdate())";
 					$result = $mysqli->query($query);
         			if($result) {
+
+        				//-------Added to solve email error-----
+						$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
+						$result = $mysqli->query($query);
+          				if ($result->num_rows > 0) {
+          					$row = $result->fetch_array();
+				    		$email = $row["email"];
+				    	}
+				    	//-------Added to solve email error end-----
+
 	                	$_SESSION["businessname"]   = $fname;
 	                	$_SESSION["businesssector"] = $lname;
 										//send email
@@ -162,15 +167,14 @@ Changes done on this page by Rajeshwari:
 				                       </div>
 				                       </body>
 				                       </html>';
-				        $headers = "From : poonam.6788@gmail.com";
+				        $headers = "From : treatyrewards@gmail.com";
 				        $headers = 'MIME-Version: 1.0' . "\r\n";
 				        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 						if(mail($email, $subject, $message, $headers)){
 		            		echo '<script>window.location.href = "business.php#horizontalTab3";</script><meta http-equiv="refresh" content="0">';
 						}
                 	} else {
-                    	echo "Your Business could not be added. Please Try again.";
-                    	echo $query;
+                    	echo "Your Business could not be added. Please Try again.";                         	            	
                 	}
 				}else{
 						echo 'Only JPEG and PNG Images can be uploaded';
@@ -187,9 +191,10 @@ Changes done on this page by Rajeshwari:
 							//send mail to business owner
 							$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
 							$result = $mysqli->query($query);
-          		if ($result->num_rows > 0) {
-          			$row = $result->fetch_array();
+          					if ($result->num_rows > 0) {
+          					$row = $result->fetch_array();
 				    		$email = $row["email"];
+
 								//send email
 								$subject = "You have created a new offer!!";
 								$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -207,7 +212,7 @@ Changes done on this page by Rajeshwari:
 											 </div>
 											 </body>
 											 </html>';
-								$headers = "From : poonam.6788@gmail.com";
+								$headers = "From : treatyrewards@gmail.com";
 								$headers = 'MIME-Version: 1.0' . "\r\n";
 								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 								mail($email, $subject, $message, $headers);
@@ -231,7 +236,7 @@ Changes done on this page by Rajeshwari:
 															 </div>
 															 </body>
 															 </html>';
-												$headers = "From : poonam.6788@gmail.com";
+												$headers = "From : treatyrewards@gmail.com";
 												$headers = 'MIME-Version: 1.0' . "\r\n";
 												$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 												mail($email, $subject, $message, $headers);
@@ -583,8 +588,8 @@ Changes done on this page by Rajeshwari:
 							                    $result = $mysqli->query($query);
 							                    if(!isset($businessresultset[2])){
 
-							                    	$show_select = "<select name='businessSector' class='name agileits'>";
-							                    	$show_select = $show_select . "<option value='0'>Select Business Sector</option>";
+							                    	$show_select = "<select name='businessSector' class='name agileits' required>";
+							                    	$show_select = $show_select . "<option value=''>Select Business Sector</option>";
 
 							                    	while($row = mysqli_fetch_array($result)){
 							                        	$show_select = $show_select . "<option value='".$row['id']."'>".$row['businesssectortext']."</option>";
@@ -592,8 +597,8 @@ Changes done on this page by Rajeshwari:
 							                    }
 							                    else{
 							                    	//If business already exists and another business is to be added
-							                    	$show_select = "<select name='businessSector' class='name agileits'>";
-							                    	$show_select = $show_select . "<option value='0' disabled>Select Business Sector</option>";
+							                    	$show_select = "<select name='businessSector' class='name agileits' required>";
+							                    	$show_select = $show_select . "<option value='' disabled>Select Business Sector</option>";
 
 							                    	while($row = mysqli_fetch_array($result)){
 							                    		if(strcasecmp($businessresultset[2], $row['businesssectortext']) == 0){
@@ -640,7 +645,7 @@ Changes done on this page by Rajeshwari:
 											<input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 											<div class="submitBtn"><br>
 												<input type="submit" value="Save">
-												<input type="submit" value="Cancel">
+												<input type="reset" value="Cancel">
                                                 <br><br>
 											</div>
 										</form>

@@ -147,6 +147,36 @@
     color: white;
     background: black;
 }
+
+
+.customerTable{
+	width: 100%;
+	height: 400px;
+	background-color: #ECF7A7;
+	padding: 3%;
+	overflow: auto;
+	text-align: center;
+	
+}
+.customerTable th{
+	text-align: center;
+}
+/*body{
+	padding: 0px!important;
+}*/
+.custTable{
+	border: 1px solid green;
+	padding: 2%;
+	border-collapse: collapse!important;
+	border-spacing: 1px!important;
+}
+.heading{
+	font-size: 150%;
+	margin-bottom: 3%;
+}
+.tdtransaction{
+	text-align: center;
+}
 </style> 
 
 	<title>Customer Dashboard</title>
@@ -161,7 +191,11 @@
     <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<script type="text/javascript" src="js/jquery.min.js"></script>
 	<script type="text/javascript" src="js/user-dashboard.js"></script>
-
+	<!-- Transaction Table -->	
+	<link rel="stylesheet" type="text/css" href="searchBoxPlugin/css/tablesort.css">
+	<link rel="stylesheet" type="text/css" href="searchBoxPlugin/css/styles.css">
+	<!-- Transaction Table -->
+	
 	<!-- Web-Fonts -->
 		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
 		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
@@ -237,6 +271,7 @@
     	}
 	</script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -257,7 +292,7 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
                             <li class="active"><a href="customer.php">Dashboard</a></li>
-                            <li><a href="transactions.php">Transactions</a></li>
+                            <!-- <li><a href="transactions.php">Transactions</a></li> -->
                             <li><a href="find_location.php">Find Location</a></li>
                             <li><a href="customer_profile.php">Profile</a></li>
                             <li><a href="../logout.php">Logout</a></li>                           
@@ -317,6 +352,7 @@
 							<li class="resp-tab-item"><i class="fa fa-qrcode" aria-hidden="true"></i>QR Code</li>
 							<li class="resp-tab-item"><i class="fa fa-gift" aria-hidden="true"></i>Rewards</li>
 							<li class="resp-tab-item"><i class="fa fa-search" aria-hidden="true"></i>Explore</li>
+							<li class="resp-tab-item"><i class="fa fa-history" aria-hidden="true"></i>Transactions</li>
 						</ul>
 					</div>
 
@@ -356,17 +392,7 @@
                                                     <a href="unsubscribe.php?bid=<?php echo $business_owner_id; ?>">Unsubscribe</a>
                                                 </div>
                                             
-                                        <?php endforeach; ?>
-    <?php /*?>									<?php //foreach($rewardsset as $value): ?>
-                                            <div class="business_name">
-                                                <span class="b_name"><?php //echo explode("-",$value)[0];?></span>
-                                                <img class="downImg" id="downImg" src="images/down.png" width="100" height="100" onclick="loadPoints();"><br>
-                                                <div class="pointsDiv" id="pointsDiv">
-                                                    Reward Points - <?php //echo explode("-",$value)[1];?><br><br>
-                                                    <a href="" style="color: brown;border:none;">View Details</a>
-                                                </div>
-                                            </div>
-                                        <?php //endforeach; ?><?php */?>
+                                        <?php endforeach; ?>   
                                     </div>	
 								</div>
 							</div>
@@ -393,6 +419,51 @@
 																		
 								</div>
 							</div>
+
+							<!-- Transactions section-->
+							<div id="custbtn" class="tab-1 resp-tab-content">
+								<p class="secHead">Transactions</p>
+									<?php 
+									$userid = $_SESSION['userid']; 
+
+									$query = "select r.modified, r.earnedpoints,r.redeemedpoints,r.balance, 		bd.businessname
+												from rewardtransaction r left join businessdetail bd  on r.businessid = bd.userid 
+												where r.userid = ".$userid." group by balance";
+										$result = $mysqli->query($query);
+										?>
+										<table border='1' class="table-sort table-sort-search table-sort-show-search-count">
+											<thead>
+													<tr>
+														<th>Date</th>
+														<th>Time</th>
+														<th>Business Name</th>
+														<th>Earned Points</th>
+														<th>Redeemed Points</th>
+														<th>Balance Points</th>
+													</tr>
+											</thead>
+											
+										<?php
+										if ($result->num_rows > 0) {
+											while($row = $result->fetch_array()){	 
+											$dateTime = explode(" ",$row["modified"]);
+										?>
+											<tr>
+												<td class="tdtransaction"><?php echo $dateTime[0];?></td>
+												<td class="tdtransaction"><?php echo $dateTime[1];?></td>
+												<td class="tdtransaction"><?php echo $row["businessname"];?></td>
+												<td class="tdtransaction"><?php echo $row["earnedpoints"];?></td>
+												<td class="tdtransaction"><?php echo $row["redeemedpoints"];?></td>
+												<td class="tdtransaction"><?php echo $row["balance"];?></td>	
+											</tr>	
+												<?php	
+											}
+										}	
+										?>
+									</table>	                                    	
+								</div>
+							</div>
+
 							<!-- Customer Profile section -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">Your Profile</p>
@@ -486,5 +557,18 @@ for (j = 0; j < pAcc.length; j++) {
 /* close connection */
 	$mysqli->close();
 ?>
+<!-- Transaction Table -->
+<!-- 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script> 
+ -->	<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script> 
+	<script type="text/javascript" src="searchBoxPlugin/tablesort.js"></script> 
+	<script type="text/javascript">
+        // For Demo Purposes
+        $(function () {
+            $('table.table-sort').tablesort();
+            hljs.initHighlightingOnLoad(); // Syntax Hilighting
+        });
+    </script>
+    <!-- Transaction Table -->
+
 </body>
 </html>

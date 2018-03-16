@@ -298,7 +298,7 @@ h1 {
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 	display: inline-block;
-	width: 32.9%;
+	width: 24.6%; /*changed today*/
 }
 .resp-tab-faq-item {
 	color: #ffffff;
@@ -687,6 +687,7 @@ ul li .check{
     -webkit-appearance: none;
     margin: 5px;
 }
+
 .agile_form input[type=file] {
     padding: 0.5em 1em;
     color: #000;
