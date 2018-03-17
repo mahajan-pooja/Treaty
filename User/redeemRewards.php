@@ -48,8 +48,8 @@
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
                 $response = curl_exec($ch);
                 //Code end 
-
-                echo '<script>window.location.href = "business.php?flag=redeem";</script>';
+                echo '<script>alert("Rewards redeemed successfully.");</script>';
+                echo '<script>window.location.href = "business.php";</script>';
             }
     } else {
         echo "Failed to redeem rewards.";
