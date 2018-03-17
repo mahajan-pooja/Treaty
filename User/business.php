@@ -688,12 +688,12 @@
 			if($_GET['flag'] == 'add'){ ?>
 			<script type="text/javascript">
 				//document.getElementById('add').style.display='block';
-				alert("Rewards Added successfully.")
+				//alert("Rewards Added successfully.")
 			</script>
 			<?php } else if($_GET['flag'] == 'redeem'){ ?>
 			<script type="text/javascript">
 				//document.getElementById('redeem').style.display='block';
-				alert("Rewards Redeemed successfully.")
+				//alert("Rewards Redeemed successfully.")
 			</script>
 			<?php }
 		} ?>

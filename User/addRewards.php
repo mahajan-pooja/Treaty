@@ -1,6 +1,6 @@
 <?php	
 	require '../config.php';
-	$amount = $_POST['amount']; 
+	$amount = round($_POST['amount']); 
 	$bid = $_GET['bid'];
 	$cid = $_GET['cid'];
 //get current balance rewards of customer
@@ -72,8 +72,8 @@
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				$response = curl_exec($ch);
 				//Code end 
-
-				echo '<script>window.location.href = "business.php?flag=add";</script>';
+				echo '<script>alert("Rewards Added successfully.");</script>';
+				echo '<script>window.location.href = "business.php";</script>';
 			}
     } else {
         echo "Failed to add rewards.";
