@@ -4,16 +4,16 @@
 	$bid = $_GET['bid'];
 	$cid = $_GET['cid'];
 
-//subscribe for business
+	//subscribe for business
 	$query  = "INSERT INTO customerbusiness(userid, businessid,earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", 20, 0, 20, 1, sysdate(), sysdate())";
 	
 	$result = $mysqli->query($query);
     if ($result) {
     		
-    		//send text message to customer
+    		//send text message and email to customer, limiting to 1 because there are multiple business entries in businessdetail table
 		    $query = "Select phonenumber,businessname,email from user u,businessdetail b
-			 		where u.id = ".$cid." and b.userid= ". $bid;			 
+			 		where u.id = ".$cid." and b.userid= ". $bid ." LIMIT 1";			 
 			$result = $mysqli->query($query);
 			while($row = $result->fetch_assoc()){ 
 				
@@ -44,9 +44,11 @@
 												 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 												 </head>
 												 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-												 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+												 <img src="http://www.kajenconsulting.com/wp-content/themes/kajen/images/fullySubscribed1.png">
 												 <div>
-														 <p> You have subscribed to a new business </p>
+														 <p> You have subscribed to a new business : '.$businessname.'.<br>
+														 20 rewards added to your Treaty account.<br>
+														 Your current Treaty Rewards - 20.</p>
 												 </div>
 												 </body>
 												 </html>';
@@ -62,6 +64,7 @@
     } 
     else 
     {
+		echo $query;
         echo "Failed to subscribe rewards.";
     }
 
