@@ -91,12 +91,12 @@
           } else {
               //check if old password is correct
               //get the userid from user table
-        			$query = "SELECT email FROM user where id=\"".$userid."\" and encryptedpassword=\"".$oldpwd."\"";
-        			// Sign In
-        			$result = $mysqli->query($query);
+    			$query = "SELECT email FROM user where id=\"".$userid."\" and encryptedpassword=\"".$oldpwd."\"";
+    			// Sign In
+    			$result = $mysqli->query($query);
               if ($result->num_rows > 0) {
                   $row = $result->fetch_array();
-        				  $email = $row["email"];
+				  $email = $row["email"];
                   $query = "UPDATE user
                             SET encryptedpassword = \"".$newpwd."\", modified = sysdate()
                             WHERE id=".$userid;
@@ -111,7 +111,7 @@
       															 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       															 </head>
       															 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-      															 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+      															 <img src="https://i.pinimg.com/474x/1a/54/78/1a5478269e366828ee609b8ff07ba331--tips-and-tricks-shells.jpg">
       															 <div>
       																	<p>Your password has been updated. If you have not updated your password, please call our customer care.</p>
       															 </div>
@@ -144,27 +144,21 @@
 
       //get the userid from user table
       //If user enters diffrent phone numbers on SignUp page and Update profile this logic doesn't work.
-			$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
-			// Sign In
-			$result = $mysqli->query($query);
-
             $query2 = "SELECT id FROM userdetail where userid=\"".$userid."\"";
             $result2 = $mysqli->query($query2);
 
-            if ($result2->num_rows == 0 && $result->num_rows > 0) {
-        				$row = $result->fetch_array();
-        				$user_id = $row["id"];
-            		//insert the entry in userdetail table
-            		// insert into table
-            		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-            			address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
-            					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\",". $notifyCheck .", sysdate(), sysdate())";
-            		$result = $mysqli->query($query);
-            		if ($result) {                 
-            			echo '<script>window.location.href = "business.php#horizontalTab4";</script>';
-            		} else {
-            			echo "Failed to update profile";
-            		}
+            if ($result2->num_rows == 0) {
+        		//insert the entry in userdetail table
+        		// insert into table
+        		$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
+        			address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+        					,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\",". $notifyCheck .", sysdate(), sysdate())";
+        		$result = $mysqli->query($query);
+        		if ($result) {                 
+        			echo '<script>window.location.href = "business.php#horizontalTab4";</script>';
+        		} else {
+        			echo "Failed to update profile";
+        		}
             } else {
                 $query = "UPDATE userdetail
                           SET firstname = \"".$fname."\", lastname = \"".$lname."\",  phonenumber= \"".$phone."\", address1 = \"".$street1."\",

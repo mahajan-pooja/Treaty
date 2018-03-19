@@ -145,11 +145,11 @@ session_start();
 													 </head>
 													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding:5%;">
 															 <div>
-																	 <p> Thank you for creating an acount with Treaty. We are here to serve you better!! </p>
+																	 <p> Thank you for creating an account with Treaty. We are here to serve you better!! </p>
 															 </div>
 													 </body>
 													 </html>';
-						$headers = "From : treatyrewards@gmail.com";
+						$headers = 'From: Treaty <treatyrewards@gmail.com>' . "\r\n";
 						$headers = 'MIME-Version: 1.0' . "\r\n";
 						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 
@@ -160,7 +160,7 @@ session_start();
 				        	$row = $result->fetch_array();
 				            $_SESSION['userid'] = $row['id'];
 				        }
-						if(mail($signUpemail, $subject, $message, $headers)){
+						if(mail($signUpemail, $subject, $message, $headers, "-f treatyrewards@gmail.com")){
 								if(strcasecmp($signUprole, 'Business Owner') == 0) {
 										echo '<script>window.location.href = "User/business_profile.php";</script>';
 								} else {

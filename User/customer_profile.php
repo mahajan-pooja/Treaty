@@ -103,23 +103,23 @@
               $result = $mysqli->query($query);
               if ($result) {
                 //send email
-								$subject = "Your password has been updated";
-								$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-															 <html xmlns="http://www.w3.org/1999/xhtml">
-															 <head>
-															 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-															 </head>
-															 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-															 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-															 <div>
-																	<p>Your password has been updated. If you have not updated your password, please call our customer care.</p>
-															 </div>
-															 </body>
-															 </html>';
-								$headers = "From : treatyrewards@gmail.com";
-								$headers = 'MIME-Version: 1.0' . "\r\n";
-								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-								mail($email, $subject, $message, $headers);
+				$subject = "Your password has been updated";
+				$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+							 <html xmlns="http://www.w3.org/1999/xhtml">
+							 <head>
+							 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+							 </head>
+							 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+							 <img src="https://i.pinimg.com/474x/1a/54/78/1a5478269e366828ee609b8ff07ba331--tips-and-tricks-shells.jpg">
+							 <div>
+									<p>Your password has been updated. If you have not updated your password, please call our customer care.</p>
+							 </div>
+							 </body>
+							 </html>';
+				$headers = "From : treatyrewards@gmail.com";
+				$headers = 'MIME-Version: 1.0' . "\r\n";
+				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+				mail($email, $subject, $message, $headers);
 				echo '<script>alert("Password Changed Sucessfully");</script>';				
                 echo '<script>window.location.href = "/Treaty/User/customer_profile.php";</script>';
               } else {
@@ -141,21 +141,15 @@
             }
         } else if(!empty($fname)) {
 			//get the userid from user table
-			$query = "SELECT id FROM user where phonenumber=\"".$phone."\"";
-			// Sign In
-			$result = $mysqli->query($query);
             $query2 = "SELECT id FROM userdetail where userid=\"".$userid."\"";
             $result2 = $mysqli->query($query2);
 			// Sign In
-			if ($result2->num_rows == 0 && $result->num_rows > 0) {
-  				$row = $result->fetch_array();
-  				$user_id = $row["id"];
+			if ($result2->num_rows == 0 ) {
   				//insert the entry in userdetail table
   				// insert into table
   				$query = "INSERT INTO userdetail(userid, firstname, lastname, phonenumber,
-  					address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$user_id."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
+  					address1, address2, city, state, country, zipcode, is_send_sms, modified, created) VALUES (\"".$userid."\",\"".$fname."\",\"". $lname."\",\"". $phone."\",\"". $street1."\",\"". $street2."\"
   							,\"". $city."\",\"". $state."\",\"". $country."\",\"". $zip."\",". $notifyCheck .", sysdate(), sysdate())";
-  				echo $query;
   				$result = $mysqli->query($query);
   				if ($result) {
   					echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
@@ -163,18 +157,27 @@
   					echo "Failed to update profile";
   				}
 			} else {
-          $query = "UPDATE userdetail
-                    SET firstname = \"".$fname."\", lastname = \"".$lname."\",  phonenumber= \"".$phone."\", address1 = \"".$street1."\",
-                       address2 = \"".$street2."\", city = \"".$city."\", state = \"".$state."\", country = \"".$country."\", zipcode = \"".$zip."\",
-                       is_send_sms = ".$notifyCheck.",
-                       modified = sysdate()
-                    WHERE userid=".$userid;
-          $result = $mysqli->query($query);
-          if ($result) {
-              echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
-          } else {
-              echo "Failed to update profile";
-          }
+              $query = "UPDATE userdetail
+                        SET firstname = \"".$fname."\", lastname = \"".$lname."\",  phonenumber= \"".$phone."\", address1 = \"".$street1."\",
+                           address2 = \"".$street2."\", city = \"".$city."\", state = \"".$state."\", country = \"".$country."\", zipcode = \"".$zip."\",
+                           is_send_sms = ".$notifyCheck.",
+                           modified = sysdate()
+                        WHERE userid=".$userid;
+              $result = $mysqli->query($query);
+              if ($result) {
+                  $query = "UPDATE user
+                            SET phonenumber= \"".$phone."\",
+                               modified = sysdate()
+                            WHERE id=".$userid;
+                  $result = $mysqli->query($query);
+                  if ($result) {
+                      echo '<script>window.location.href = "/Treaty/User/customer.php";</script>';
+                  } else {
+                      echo "Failed to update profile";
+                  }
+              } else {
+                  echo "Failed to update profile";
+              }
 			}
 		}  else {
 			$query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode, is_send_sms

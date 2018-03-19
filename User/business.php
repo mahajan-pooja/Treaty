@@ -59,8 +59,6 @@
 		</style>
 	</head>
 	<?php
-		
-
         require '../config.php';
 
         if (isset($_POST['fname'])) {
@@ -138,7 +136,6 @@
 					$query  = "INSERT INTO businessdetail(userid, businessname, businesssector, address1, address2, city, state, country, zipcode,businessphonenumber,latitude, longitude,businessimage,businessdescription, modified, created) VALUES (\"" . $_SESSION['userid'] . "\",\"" . $fname . "\",\"" . $lname . "\",\"" . $address1 . "\",\"" . $address2 . "\",\"" . $city . "\",\"" . $state . "\",\"" . $country . "\",\"" . $zipcode . "\",\"". $businessphonenumber ."\",\"". $latitude ."\",\"".$longitude."\",\"". $tmp_name ."\",\"".$businessdescription."\", sysdate(), sysdate())";
 					$result = $mysqli->query($query);
         			if($result) {
-
         				//-------Added to solve email error-----
 						$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
 						$result = $mysqli->query($query);
@@ -147,26 +144,31 @@
 				    		$email = $row["email"];
 				    	}
 				    	//-------Added to solve email error end-----
-
+						$query = "SELECT businesssectortext FROM businesssector WHERE id=". $lname;
+						$result = $mysqli->query($query);
+						if ($result->num_rows > 0) {
+							$row = $result->fetch_array();
+							$businesssectortext = $row["businesssectortext"];
+						}
 	                	$_SESSION["businessname"]   = $fname;
-	                	$_SESSION["businesssector"] = $lname;
+	                	$_SESSION["businesssector"] = $businesssectortext;
 										//send email
 				        $subject = "You have registered a new business!!";
 				        //$message = "Please use this password to login ".$password."<br> Please click on this link";
 				        $message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-				                       <html xmlns="http://www.w3.org/1999/xhtml">
-				                       <head>
-				                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-				                       </head>
-				                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-				                       <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-				                       <div>
-			                               <p> You have registered your business </p>
-										   <p> Business Name : '.$fname.'</p>
-										   <p> Business Sector : '.$lname.'</p>
-				                       </div>
-				                       </body>
-				                       </html>';
+	                       <html xmlns="http://www.w3.org/1999/xhtml">
+	                       <head>
+	                       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	                       </head>
+	                       <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+	                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgo0PD3ASp5rYX3eTryJZOpefQVQzCHcyfA5ASAkF36XyyDDRNMw">
+	                       <div>
+                               <p> You have registered your business </p>
+							   <p> Business Name : '.$fname.'</p>
+							   <p> Business Sector : '.$businesssectortext.'</p>
+	                       </div>
+	                       </body>
+	                       </html>';
 				        $headers = "From : treatyrewards@gmail.com";
 				        $headers = 'MIME-Version: 1.0' . "\r\n";
 				        $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
@@ -176,10 +178,10 @@
                 	} else {
                     	echo "Your Business could not be added. Please Try again.";                         	            	
                 	}
-				}else{
+				} else {
 						echo 'Only JPEG and PNG Images can be uploaded';
 					}
-				}else{
+				} else {
 					echo 'Please Select a Image for your Business';
 				}
         } else if(!empty($oName)) {
@@ -188,86 +190,72 @@
                     	VALUES (\"" . $userid . "\",\"" . $oName . "\",\"" . $oDesc . "\",\"" . $oPoints . "\",\"" . $datepicker1 . "\",\"" . $datepicker2 . "\", 1, sysdate(), sysdate())";
             $result = $mysqli->query($query);
             if ($result) {
-							//send mail to business owner
-							$query = "SELECT email FROM user WHERE id=\"" . $userid . "\" and isactive=1";
-							$result = $mysqli->query($query);
-          					if ($result->num_rows > 0) {
-          					$row = $result->fetch_array();
-				    		$email = $row["email"];
-
-								//send email
-								$subject = "You have created a new offer!!";
-								$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-											 <html xmlns="http://www.w3.org/1999/xhtml">
-											 <head>
-											 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-											 </head>
-											 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-											 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-											 <div>
-												 <p> You have registered your business </p>
-												 <p> Offer Name : '.$oName.'</p>
-												 <p> Offer Desc : '.$oDesc.'</p>
-												 <p> Offer Points : '.$oPoints.'</p>
-											 </div>
-											 </body>
-											 </html>';
-								$headers = "From : treatyrewards@gmail.com";
-								$headers = 'MIME-Version: 1.0' . "\r\n";
-								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-								mail($email, $subject, $message, $headers);
-								//send mail to all customers subscribed to this business
-								$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$userid.")";
-								$result = $mysqli->query($query);
-			        	if ($result->num_rows > 0) {
-										while ($row = $result->fetch_assoc()) {
-												$email = $row["email"];
-												//send email
-												$subject = "You have created a new offer!!";
-												$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-															 <html xmlns="http://www.w3.org/1999/xhtml">
-															 <head>
-															 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-															 </head>
-															 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-															 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
-															 <div>
-																<p> A new offer has been created for the business you a </p>
-															 </div>
-															 </body>
-															 </html>';
-												$headers = "From : treatyrewards@gmail.com";
-												$headers = 'MIME-Version: 1.0' . "\r\n";
-												$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-												mail($email, $subject, $message, $headers);
-										}
-								}
-	            	//send sms to customers subscribed to the business when offer is created.
-	            	$qry = "SELECT cb.userid, u.phonenumber,bd.businessname
-								FROM customerbusiness cb, user u, businessdetail bd
-								WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
+				//send mail to all customers subscribed to this business
+				$query = "select email from user where id IN (select userid from customerbusiness where businessid = ".$userid.")";
+				$result = $mysqli->query($query);
+	        	if ($result->num_rows > 0) {
+					while ($row = $result->fetch_assoc()) {
+						$email = $row["email"];
+						$query2 = "SELECT businessname FROM businessdetail WHERE userid=\"" . $userid."\"";
+						$result2 = $mysqli->query($query2);
+          				if ($result2->num_rows > 0) {
+          					$row2 = $result2->fetch_array();
+				    		$businessname = $row2["businessname"];
+							//send email
+							$subject = "New offer created!!";
+							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+										 <html xmlns="http://www.w3.org/1999/xhtml">
+										 <head>
+										 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+										 </head>
+										 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+										 <img src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAhfAAAAJDQ1YTFiNThlLTg1OWYtNGY0MS05NmU1LWM3NDczNjBjOWU0Mg.png">
+										 <div>
+											<p> A new offer has been created for the business you subscribed.<br>
+												Business name : '.$businessname.' <br>
+												Offer name : '.$oName.' <br>
+												Offer Description : '.$oDesc.' <br>
+												Points : '.$oPoints.'<br>
+												Start date : '.$datepicker1.' <br>
+												Expiration date : '.$datepicker2.' <br>
+											</p>
+										 </div>
+										 </body>
+										 </html>';
+							$headers = "From : treatyrewards@gmail.com";
+							$headers = 'MIME-Version: 1.0' . "\r\n";
+							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+							mail($email, $subject, $message, $headers);
+				    	}
+					}
+				}
+            	//send sms to customers subscribed to the business when offer is created.
+            	$qry = "SELECT cb.userid, u.phonenumber,bd.businessname
+							FROM customerbusiness cb, user u, businessdetail bd
+							WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
                 $resultQry = $mysqli->query($qry);
-								
+				
                 if ($resultQry->num_rows > 0) {
                     while($row = $resultQry->fetch_assoc()){
-		                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
-		                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-										        'api_key' => d0fbd93d,
-										        'api_secret' => bcaca354e0887dd9,
-										        'to' => $row['phonenumber'],
-										        'from' => 12034089447,
-										        'text' => $text
-						    				]);
-												$ch = curl_init($url);
-												curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-												$response = curl_exec($ch);
-												curl_close($ch);
-	                	}
+	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
+	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
+									        'api_key' => d0fbd93d,
+									        'api_secret' => bcaca354e0887dd9,
+									        'to' => $row['phonenumber'],
+									        'from' => 12034089447,
+									        'text' => $text
+					    				]);
+											$ch = curl_init($url);
+											curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+											$response = curl_exec($ch);
+											curl_close($ch);
+	            	}
                 }
-	            	//redirect to business.php page after sending sms to customers
+	            //redirect to business.php page after sending sms to customers
                 echo ' <script>window.location.href = "business.php#horizontalTab2";</script><meta http-equiv="refresh" content="0">';
-						 }
-      	}
+			} else {
+				echo "Unable to create new offer";
+			}
 		} else {
             //TODO : this should be called on tab change
             //load businessname and sector
@@ -449,7 +437,6 @@
 														$points = $row["balance"];
 														$uid = $row["id"];
 														$uname = $row["firstname"]." ".$row["lastname"];
-
 													}
 													echo $uname. " have ";
 
@@ -664,9 +651,12 @@
 		<script src="js/jquery-ui.js"></script>
 		<script>
 			$(function() {
-			$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker(
-				{ dateFormat: 'yy-mm-dd' }
-			);
+				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker(
+					{ 
+						dateFormat: 'yy-mm-dd',
+						minDate: 0
+					}
+				);
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
@@ -688,12 +678,12 @@
 			if($_GET['flag'] == 'add'){ ?>
 			<script type="text/javascript">
 				//document.getElementById('add').style.display='block';
-				alert("Rewards Added successfully.")
+				//alert("Rewards Added successfully.")
 			</script>
 			<?php } else if($_GET['flag'] == 'redeem'){ ?>
 			<script type="text/javascript">
 				//document.getElementById('redeem').style.display='block';
-				alert("Rewards Redeemed successfully.")
+				//alert("Rewards Redeemed successfully.")
 			</script>
 			<?php }
 		} ?>
