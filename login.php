@@ -145,7 +145,7 @@ session_start();
 													 </head>
 													 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding:5%;">
 															 <div>
-																	 <p> Thank you for creating an acount with Treaty. We are here to serve you better!! </p>
+																	 <p> Thank you for creating an account with Treaty. We are here to serve you better!! </p>
 															 </div>
 													 </body>
 													 </html>';
