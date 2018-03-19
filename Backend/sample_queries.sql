@@ -9,7 +9,7 @@ SET businessname="walmart", businesssector="retail", address1="60 pikes descanso
 WHERE userid=22;
 
 SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode FROM userdetail WHERE userid="1";
-
+select * from businesssector;
 select * from businessoffer;
 
 desc businessoffer;
@@ -68,8 +68,7 @@ SELECT a.businessname, b.businesssector, a.address1, a.address2, a.city, a.state
 SELECT a.businessname, b.businesssectortext FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id WHERE userid=5 LIMIT 1;
 
 -- All busi
-SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage 
-FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id  WHERE a.businesssector=2 GROUP BY userid ORDER BY userid; 
+SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id GROUP BY userid; 
 
 -- All offers
 SELECT userid ,offername,offerdescription,startdate,expirationdate FROM businessoffer ORDER BY userid;
@@ -77,14 +76,25 @@ SELECT userid ,offername,offerdescription,startdate,expirationdate FROM business
 -- All cities
 SELECT DISTINCT userid ,city FROM businessdetail ORDER BY userid;
 
--- All subscribed
-SELECT userid,businessid,isactive FROM customerbusiness WHERE userid = 3 ORDER BY businessid;
-
 
 -- Not used
 SELECT a. userid ,a.businessname,c.businesssectortext,a.businessimage,a.businessdescription, b.offername,b.offerdescription, b.startdate, b.expirationdate
 FROM businessdetail as a JOIN businessoffer as b  ON a.userid = b.userid INNER JOIN businesssector as c ON a.businesssector = c.id GROUP BY offername ORDER BY userid; 
 
+SELECT DISTINCT a.userid,a.businessname,b.businesssectortext,a.businessimage,a.businessdescription 
+			FROM businessdetail as a JOIN businesssector as b 
+			ON a.businesssector = b.id 
+			GROUP BY userid 
+			ORDER BY userid;
 
+select * from businessdetail;
 
+Select phonenumber,businessname,email from user u,businessdetail b 
+		where  u.id =14 and b.userid=15;
+                    
+INSERT INTO customerbusiness(userid, businessid,earnedpoints, redeemedpoints, balance, isactive, modified, created) 
+VALUES ("14","15", 20, 0, 20, 1, sysdate(), sysdate());
 
+describe customerbusiness;
+describe businessoffer;
+SELECT * FROM BUSINESSOFFER;
