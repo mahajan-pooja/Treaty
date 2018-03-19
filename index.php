@@ -59,7 +59,7 @@
                         Attract customers with loyalty rewards and make them keep coming back. </p>
                         <!-- <a href="#" class="da-link button">Read more</a> -->
                         <div class="da-img">
-                            <img src="png/001-favorite.png" alt="image01" width="250">
+                            <img src="images/Slider03.png" alt="image01" width="250">
                         </div>
                     </div>
                     <!-- End first slide -->

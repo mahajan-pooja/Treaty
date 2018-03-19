@@ -424,7 +424,7 @@
 							<div id="custbtn" class="tab-1 resp-tab-content">
 								<p class="secHead">Transactions</p>
 									<?php 
-									$userid = $_SESSION['userid']; 
+									//$userid = $_SESSION['userid']; 
 
 									$query = "select r.modified, r.earnedpoints,r.redeemedpoints,r.balance, 		bd.businessname
 												from rewardtransaction r left join businessdetail bd  on r.businessid = bd.userid 
