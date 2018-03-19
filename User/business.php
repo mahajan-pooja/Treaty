@@ -195,7 +195,12 @@
 				$result = $mysqli->query($query);
 	        	if ($result->num_rows > 0) {
 					while ($row = $result->fetch_assoc()) {
-							$email = $row["email"];
+						$email = $row["email"];
+						$query2 = "SELECT businessname FROM businessdetail WHERE userid=\"" . $userid."\"";
+						$result2 = $mysqli->query($query2);
+          				if ($result2->num_rows > 0) {
+          					$row2 = $result2->fetch_array();
+				    		$businessname = $row2["businessname"];
 							//send email
 							$subject = "New offer created!!";
 							$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -207,7 +212,9 @@
 										 <img src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAhfAAAAJDQ1YTFiNThlLTg1OWYtNGY0MS05NmU1LWM3NDczNjBjOWU0Mg.png">
 										 <div>
 											<p> A new offer has been created for the business you subscribed.<br>
-												Offername : '.$oName.' <br>
+												Business name : '.$businessname.' <br>
+												Offer name : '.$oName.' <br>
+												Offer Description : '.$oDesc.' <br>
 												Points : '.$oPoints.'<br>
 												Start date : '.$datepicker1.' <br>
 												Expiration date : '.$datepicker2.' <br>
@@ -219,6 +226,7 @@
 							$headers = 'MIME-Version: 1.0' . "\r\n";
 							$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 							mail($email, $subject, $message, $headers);
+				    	}
 					}
 				}
             	//send sms to customers subscribed to the business when offer is created.
@@ -226,7 +234,7 @@
 							FROM customerbusiness cb, user u, businessdetail bd
 							WHERE cb.businessid=" . $userid . " and cb.userid = u.id and cb.businessid = bd.userid";
                 $resultQry = $mysqli->query($qry);
-								
+				
                 if ($resultQry->num_rows > 0) {
                     while($row = $resultQry->fetch_assoc()){
 	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
