@@ -58,8 +58,6 @@
 			    $text = $amount. " rewards added to your treaty account. \nYour current Treaty Rewards are - ".$balance."\n\n\n";
 			    
 			    //echo '<script>window.location.href = "send_sms.php?flag=add&phone='.$phone.'&amount='.$amount.'&balance='.$balance.'";</script>'; 
-
-
 			    //actual code to send text msg
 			    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
 			        'api_key' => d0fbd93d,
@@ -71,6 +69,33 @@
 			    $ch = curl_init($url);
 				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 				$response = curl_exec($ch);
+				
+				//send mail to business owner
+				$query = "SELECT email FROM user WHERE id=\"" . $cid . "\" and isactive=1";
+				$result = $mysqli->query($query);
+				if ($result->num_rows > 0) {
+					$row = $result->fetch_array();
+					$email = $row["email"];
+					//send email
+					$subject = "Rewards point added to your account!!";
+					$message = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+								 <html xmlns="http://www.w3.org/1999/xhtml">
+								 <head>
+								 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+								 </head>
+								 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
+								 <img src="https://s-media-cache-ak0.pinimg.com/originals/b0/a0/a3/b0a0a33dee17c0640f3db16940447c39.jpg">
+								 <div>
+										 <p> Congratulations '.$amount.' points have been added to your rewards account!! </p>
+								 </div>
+								 </body>
+								 </html>';
+					$headers = "From : treatyrewards@gmail.com";
+					$headers = 'MIME-Version: 1.0' . "\r\n";
+					$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+					mail($email, $subject, $message, $headers);
+				}
+				
 				//Code end 
 				echo '<script>alert("Rewards Added successfully.");</script>';
 				echo '<script>window.location.href = "business.php";</script>';

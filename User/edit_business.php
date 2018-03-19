@@ -163,9 +163,10 @@
 												 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 												 </head>
 												 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
-												 <img src="https://i2.wp.com/beanexpert.online/wp-content/uploads/2017/06/reset-password.jpg?resize=380%2C240&ssl=1">
+												 <img src="http://blog.tyang.org/wp-content/uploads/2010/09/update.jpg">
 												 <div>
-																 <p> You have updated your business </p>
+													 <p> You have updated your business details!!<br><br><br>
+													 [If you have not taken this action. Please contact our customer care.]</p>
 												 </div>
 												 </body>
 												 </html>';

@@ -260,7 +260,12 @@
 		<script src="js/jquery-ui.js"></script>
 			<script>
 				$(function() {
-				$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker({ dateFormat: 'yy-mm-dd' });
+					$( "#datepicker,#datepicker1,#datepicker2,#datepicker3,#datepicker4,#datepicker5,#datepicker6,#datepicker7" ).datepicker(
+						{ 
+							dateFormat: 'yy-mm-dd',
+							minDate: 0
+						}
+					);
 				});
 			</script>
 <!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->	
