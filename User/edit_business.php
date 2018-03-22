@@ -222,7 +222,7 @@
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 
-                            <li><a href="customer_list.php">Customers</a></li>                                                       
+                            <!-- <li><a href="customer_list.php">Customers</a></li> -->                                                       
                             <li><a href="business_profile.php">Profile</a></li>
                             <li><a href="../logout.php">Logout</a></li>                           
                         </ul>

@@ -14,7 +14,7 @@
 		exit();
 	}
 
-	if (!$fb_access_token) {
+	if (!$fb_access_token){
 		header('Location: ../login.php');
 		exit();
 	}

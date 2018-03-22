@@ -34,7 +34,7 @@
 				header('Location: ../User/customer_profile.php');
 				exit();
 			}
-		}	
+		}
 	}
 
 	//Sign Up

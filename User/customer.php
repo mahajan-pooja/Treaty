@@ -40,143 +40,117 @@
 <html class=" js cssanimations csstransitions">
 
 <head>
-
+	<?php
+	include 'header.php';
+	?>
 <style>
-.accordion {
-    background-color: #A9C750;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-    margin-top: 2%;
-}
-.accordion:after {
-    content: '\002B';
-    color: #777;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-.agileinfo-recover .active:after {
-    content: "\2212";
-}
-.panelAccordion{
-	background-color: #e6f7c1;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 15px;
-    transition: 0.4s;
-    margin-top: 1%;
-}
-.panelAccordion:after {
-    content: '\002B';
-    color: #777;
-    font-weight: bold;
-    float: right;
-    margin-left: 5px;
-}
-.agileinfo-recover .active:after {
-    content: "\2212";
-}
-.active, .panelAccordion:hover {
-    background-color: #A9C750; 
-}
-.active, .accordion:hover {
-    color: white;
-}
-.offerData{
-	display: none;
-	background-color: orange;
-	padding: 2%;
-	text-align: center;
-}
-.panelContainer{
-	display: none;
-	text-align: center;
-}
-.panel {
-    padding: 0 18px;
-    display: block;
-    background-color: white;
-/*    overflow: hidden;
-*/} 
-#media p {
-    padding: 0px!important;
-    color: #636262;
-	font-size:14px;
-	font-weight:normal!important;
-	margin-bottom: 3px!important;
-	word-break: break-word;
-}
-#media .btn {width:auto!important}
-@media screen and (max-width: 384px) {
-	#media-pad {padding:3px!important;}
-	.tab-right {
-		float: none!important;
+	.accordion {
+	    background-color: #A9C750;
+	    color: #444;
+	    cursor: pointer;
+	    padding: 18px;
+	    width: 100%;
+	    border: none;
+	    text-align: center;
+	    outline: none;
+	    font-size: 15px;
+	    transition: 0.4s;
+	    margin-top: 2%;
 	}
-}
+	.accordion:after {
+	    content: '\002B';
+	    color: #777;
+	    font-weight: bold;
+	    float: right;
+	    margin-left: 5px;
+	}
+	.agileinfo-recover .active:after {
+	    content: "\2212";
+	}
+	.panelAccordion{
+		background-color: #e6f7c1;
+	    color: #444;
+	    cursor: pointer;
+	    padding: 18px;
+	    width: 100%;
+	    border: none;
+	    text-align: center;
+	    outline: none;
+	    font-size: 15px;
+	    transition: 0.4s;
+	    margin-top: 1%;
+	}
+	.panelAccordion:after {
+	    content: '\002B';
+	    color: #777;
+	    font-weight: bold;
+	    float: right;
+	    margin-left: 5px;
+	}
+	.agileinfo-recover .active:after {
+	    content: "\2212";
+	}
+	.active, .panelAccordion:hover {
+	    background-color: #A9C750; 
+	}
+	.active, .accordion:hover {
+	    color: white;
+	}
+	.offerData{
+		display: none;
+		background-color: orange;
+		padding: 2%;
+		text-align: center;
+	}
+	.panelContainer{
+		display: none;
+		text-align: center;
+	}
+	.panel {
+	    padding: 0 18px;
+	    display: block;
+	    background-color: white;
+	/*    overflow: hidden;
+	*/} 
+	#media p {
+	    padding: 0px!important;
+	    color: #636262;
+		font-size:14px;
+		font-weight:normal!important;
+		margin-bottom: 3px!important;
+		word-break: break-word;
+	}
+	#media .btn {width:auto!important}
+	@media screen and (max-width: 384px) {
+		#media-pad {padding:3px!important;}
+		.tab-right {
+			float: none!important;
+		}
+	}
 
-#myModal p{
-	padding:0px;
-}
-#custbtn a{
-		color: black;
-		padding: 0.8em;
-		font-size: 0.9em;
-		cursor: pointer;
-		border: 1px solid #181A1C;
-		background: #a9c750;
-		outline: none;
-		font-weight: 400;
-		text-transform: capitalize;
-		width: 23%;
-		-webkit-transition:none;
-		transition:none;
-}
-#custbtn a:hover {
-    color: white;
-    background: black;
-}
-
-
-.customerTable{
-	width: 100%;
-	height: 400px;
-	background-color: #ECF7A7;
-	padding: 3%;
-	overflow: auto;
-	text-align: center;
+	#myModal p{
+		padding:0px;
+	}
+	#custbtn a{
+			color: black;
+			padding: 0.8em;
+			font-size: 0.9em;
+			cursor: pointer;
+			border: 1px solid #181A1C;
+			background: #a9c750;
+			outline: none;
+			font-weight: 400;
+			text-transform: capitalize;
+			width: 23%;
+			-webkit-transition:none;
+			transition:none;
+	}
+	#custbtn a:hover {
+	    color: white;
+	    background: black;
+	}
 	
-}
-.customerTable th{
-	text-align: center;
-}
-/*body{
-	padding: 0px!important;
-}*/
-.custTable{
-	border: 1px solid green;
-	padding: 2%;
-	border-collapse: collapse!important;
-	border-spacing: 1px!important;
-}
-.heading{
-	font-size: 150%;
-	margin-bottom: 3%;
-}
-.tdtransaction{
-	text-align: center;
-}
+
 </style> 
 
 	<title>Customer Dashboard</title>
@@ -190,20 +164,15 @@
     <link href="../css/style.css" rel="stylesheet" type="text/css" media="all">
     <link rel="stylesheet" href="css/user-dashboard.css" type="text/css" media="all" />
 	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/user-dashboard.js"></script>
-	<!-- Transaction Table -->	
-	<link rel="stylesheet" type="text/css" href="searchBoxPlugin/css/tablesort.css">
-	<link rel="stylesheet" type="text/css" href="searchBoxPlugin/css/styles.css">
-	<!-- Transaction Table -->
-	
+	<script type="text/javascript" src="js/user-dashboard.js"></script>	
 	<!-- Web-Fonts -->
-		<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
-		<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Raleway:400,500,600,700,800' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 	<!-- //Web-Fonts -->
-	<?php
-	include 'header.php';
-	?>
 	
+	<!-- Needed for Ajax calls -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- Needed for Ajax calls -->
 
 	<script type="text/javascript">
 		//this logic is handled in subscribe.php file instead of refresh
@@ -231,6 +200,8 @@
               	} 
             });            
         }
+
+        // Call when Select Option is selected to filter results
         function selectedSectorAll(){
         	var businesssector_id = '';
             businesssector_id = "all";  
@@ -250,7 +221,8 @@
               	} 
             });
         }
-        //Show Modal
+
+        //Show Modal for view deatils on explore section
         function show_modal(bid,business_name){
             //Make a Ajax call to collect data
          	$.ajax({
@@ -269,16 +241,23 @@
               	} 
             });             
     	}
-	</script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+    	//Table Search for transaction
+    	$(document).ready(function(){
+		  $("#search_input").on("keyup", function() {
+		    var value = $(this).val().toLowerCase();
+		    $("#transTable tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+		  });
+		});    	
+	</script>	
 </head>
 
 <body>
-
         <div class="navbar">
             <div class="navbar-inner">
-                <div class="container">
+                <div>
                     <a href="../index.php" class="brand">
                         <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
                         <!-- This is website logo -->
@@ -349,10 +328,10 @@
 
 					<div class="tab-left">
 						<ul class="resp-tabs-list">
-							<li class="resp-tab-item"><i class="fa fa-qrcode" aria-hidden="true"></i>QR Code</li>
-							<li class="resp-tab-item"><i class="fa fa-gift" aria-hidden="true"></i>Rewards</li>
-							<li class="resp-tab-item"><i class="fa fa-search" aria-hidden="true"></i>Explore</li>
-							<li class="resp-tab-item"><i class="fa fa-history" aria-hidden="true"></i>Transactions</li>
+							<li class="resp-tab-item2"><i class="fa fa-qrcode" aria-hidden="true"></i>QR Code</li>
+							<li class="resp-tab-item2"><i class="fa fa-gift" aria-hidden="true"></i>Rewards</li>
+							<li class="resp-tab-item2"><i class="fa fa-search" aria-hidden="true"></i>Explore</li>
+							<li class="resp-tab-item2"><i class="fa fa-history" aria-hidden="true"></i>Transactions</li>
 						</ul>
 					</div>
 
@@ -426,41 +405,46 @@
 									<?php 
 									//$userid = $_SESSION['userid']; 
 
-									$query = "select r.modified, r.earnedpoints,r.redeemedpoints,r.balance, 		bd.businessname
+									$query = "select r.modified, r.earnedpoints,r.redeemedpoints,r.balance, bd.businessname
 												from rewardtransaction r left join businessdetail bd  on r.businessid = bd.userid 
 												where r.userid = ".$userid." group by balance";
 										$result = $mysqli->query($query);
 										?>
-										<table border='1' class="table-sort table-sort-search table-sort-show-search-count">
+										<input id="search_input" type="text" placeholder="Search.." style="width: 100%;">
+                                        <div class="table-responsive">
+										<table class="table">
 											<thead>
-													<tr>
-														<th>Date</th>
-														<th>Time</th>
-														<th>Business Name</th>
-														<th>Earned Points</th>
-														<th>Redeemed Points</th>
-														<th>Balance Points</th>
-													</tr>
+												<tr>
+													<th>Date</th>
+													<th>Time</th>
+													<th>Business Name</th>
+													<th>Earned Points</th>
+													<th>Redeemed Points</th>
+													<th>Balance Points</th>
+												</tr>
 											</thead>
+											<tbody id="transTable">
 											
-										<?php
-										if ($result->num_rows > 0) {
-											while($row = $result->fetch_array()){	 
-											$dateTime = explode(" ",$row["modified"]);
-										?>
-											<tr>
-												<td class="tdtransaction"><?php echo $dateTime[0];?></td>
-												<td class="tdtransaction"><?php echo $dateTime[1];?></td>
-												<td class="tdtransaction"><?php echo $row["businessname"];?></td>
-												<td class="tdtransaction"><?php echo $row["earnedpoints"];?></td>
-												<td class="tdtransaction"><?php echo $row["redeemedpoints"];?></td>
-												<td class="tdtransaction"><?php echo $row["balance"];?></td>	
-											</tr>	
-												<?php	
-											}
-										}	
-										?>
-									</table>	                                    	
+												<?php
+												if ($result->num_rows > 0) {
+													while($row = $result->fetch_array()){	 
+													$dateTime = explode(" ",$row["modified"]);
+												?>
+													<tr>
+														<td><?php echo $dateTime[0];?></td>
+														<td><?php echo $dateTime[1];?></td>
+														<td><?php echo $row["businessname"];?></td>
+														<td><?php echo $row["earnedpoints"];?></td>
+														<td><?php echo $row["redeemedpoints"];?></td>
+														<td><?php echo $row["balance"];?></td>	
+													</tr>	
+														<?php	
+													}
+												}	
+												?>
+											</tbody>
+										</table>
+                                        </div>	                                    	
 								</div>
 							</div>
 
@@ -511,8 +495,7 @@
 		</div>
 	</div>
 	<?php
-		include 'footer.php';
-		
+		include 'footer.php';		
 	?>
 	<!--start-date-piker-->
 		<link rel="stylesheet" href="css/jquery-ui.css" />
@@ -557,18 +540,6 @@ for (j = 0; j < pAcc.length; j++) {
 /* close connection */
 	$mysqli->close();
 ?>
-<!-- Transaction Table -->
-<!-- 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script> 
- -->	<script src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script> 
-	<script type="text/javascript" src="searchBoxPlugin/tablesort.js"></script> 
-	<script type="text/javascript">
-        // For Demo Purposes
-        $(function () {
-            $('table.table-sort').tablesort();
-            hljs.initHighlightingOnLoad(); // Syntax Hilighting
-        });
-    </script>
-    <!-- Transaction Table -->
 
 </body>
 </html>
