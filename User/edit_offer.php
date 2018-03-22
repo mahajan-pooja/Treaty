@@ -151,7 +151,7 @@
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 
-                            <li><a href="customer_list.php">Customers</a></li>                                                       
+                            <!-- <li><a href="customer_list.php">Customers</a></li> -->
                             <li><a href="business_profile.php">Profile</a></li>
                             <li><a href="../logout.php">Logout</a></li>                           
                         </ul>
@@ -201,8 +201,8 @@
 				<div class="tabs">
 					<div class="tab-left">
 						<ul class="resp-tabs-list" style="margin: 0px;">
-							<li class="resp-tab-item-edit" onclick="loadScan();"><i class="fa fa-car" aria-hidden="true"></i>Edit</li>
-							<li class="resp-tab-item-edit"><i class="fa fa-university" aria-hidden="true"></i>Delete</li>
+							<li class="resp-tab-item-edit" onclick="loadScan();"><i class="fa fa-edit" aria-hidden="true"></i>Edit</li>
+							<li class="resp-tab-item-edit"><i class="fa fa-trash" aria-hidden="true"></i>Delete</li>
 							
 						</ul>
 					</div>

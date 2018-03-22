@@ -19,6 +19,7 @@
 	         earnedpoints, redeemedpoints, balance, isactive, modified, created)
 	         VALUES (\"" . $cid . "\",\"" . $bid . "\", \"" . $amount . "\", 0,\"" . $balance . "\", 1, sysdate(), sysdate())";
 	$qryResult = $mysqli->query($qryTrans);
+	//echo $qryTrans;die;
 
 	//query change from insert to update to make only one entry in customer business table with updated added balance
 	 $qry = "UPDATE customerbusiness SET earnedpoints= ".$amount.", redeemedpoints= 0, balance= ".$balance.", modified = sysdate() WHERE userid=".$cid." and businessid=".$bid;

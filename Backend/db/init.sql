@@ -191,7 +191,8 @@ CREATE TABLE IF NOT EXISTS `treaty`.`rewardtransaction` (
     REFERENCES `treaty`.`user` (`id`),
   CONSTRAINT `fk_customeroffer_businessid_1`
     FOREIGN KEY (`businessid`)
-    REFERENCES `treaty`.`businessdetail` (`id`))
+    -- chnaged to be checked
+    REFERENCES `treaty`.`businessdetail` (`userid`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_unicode_ci;

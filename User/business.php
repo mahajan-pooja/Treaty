@@ -28,21 +28,36 @@
 		<!-- Script for image display after selection -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 		<script type="text/javascript">
+			//Function to change image on selection of new image
 			function displayImage(input) {
 	    		if (input.files && input.files[0]) {
-	        	var reader = new FileReader();
-	        	reader.onload = function (e) {
-	        	$('#image').attr('src', e.target.result);
+	        		var reader = new FileReader();
+	        		reader.onload = function (e) {
+	        			$('#image').attr('src', e.target.result);
+	       			}
+	        		reader.readAsDataURL(input.files[0]);
 	       		}
-	        reader.readAsDataURL(input.files[0]);
-	       }
-	    }
-		</script>
-		<script type="text/javascript">
-			function resetImage(){
+	    	}
+
+	    	//Function to reset image after cancle button is clicked
+	    	function resetImage(){
 		        document.getElementById('image').src="images/default-image.png";
 		    }
-	    </script>
+
+
+	    	//Table Search for transaction
+    		$(document).ready(function(){
+		  		$("#search_input").on("keyup", function() {
+		    		var value = $(this).val().toLowerCase();
+		    		$("#custTable tr").filter(function() {
+		      			$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    		});
+		  		});
+			}); 
+
+
+		</script>
+		
         <style>
 		.agile_form textarea {
 			padding: 0.5em 1em;
@@ -61,6 +76,10 @@
 	<?php
         require '../config.php';
 
+        
+        if (isset($_SESSION['userid'])) {
+            $userid = $_SESSION['userid'];
+        }
         if (isset($_POST['fname'])) {
             $fname = $_POST['fname'];
         }
@@ -112,8 +131,8 @@
         if(isset($_POST['businessdescriptions'])){
         	$businessdescription = $_POST['businessdescriptions'];
         }
-
-        $userid = $_SESSION['userid'];
+        
+        
         if (!empty($fname)) {
         	//create business
         	// Find Lon and Lat of address
@@ -345,7 +364,7 @@
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?>
-                            <li><a href="customer_list.php">Customers</a></li>
+                            <!-- <li><a href="customer_list.php">Customers</a></li> -->
                             <li><a href="business_profile.php">Profile</a></li>
                             <li><a href="../logout.php">Logout</a></li>
                         </ul>
@@ -411,6 +430,7 @@
 								<li class="resp-tab-item-business"><i class="fa fa-briefcase" aria-hidden="true"></i>Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-map-marker" aria-hidden="true"></i>Register Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-cogs" aria-hidden="true"></i>Create Offer</li>
+								<li class="resp-tab-item-business"><i class="fa fa-users" aria-hidden="true"></i>Customers</li>
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -630,12 +650,51 @@
 											<input type="text" placeholder="Offer Points" name="oPoints" class="name agileits" required=""/>
 											<input placeholder="Start Date" class="date" name="datepicker1" id="datepicker1" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
 											<input placeholder="End Date" class="date" name="datepicker2" id="datepicker2" type="text" value="" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = '';}" required=""/>
-											<div class="submitBtn"><br>
+											<div class="submit" style="margin-left: 0px;"><br>
 												<input type="submit" value="Save">
 												<input type="reset" value="Cancel">
                                                 <br><br>
 											</div>
 										</form>
+									</div>
+								</div>
+								<!-- Customers Section -->
+								<div class="tab-1 resp-tab-content">
+									<p class="secHead">Your Customers</p>
+									<div class="register agileits">
+										<?php 
+											//$userid = $_SESSION['userid']; 
+
+											$query = "SELECT c.userid, c.balance, c.businessid, u.firstname, u.lastname
+												  FROM customerbusiness c, userdetail u
+												  WHERE u.userid = c.userid and c.businessid = ".$userid." order by c.modified desc";
+											$result = $mysqli->query($query);
+										?>
+											<input id="search_input" type="text" placeholder="Search.." style="width:100%">
+                                            <div class="table-responsive">
+											<table class="table">
+												<thead>
+													<tr>
+														<th>Name</th>
+														<th>Rewards</th>
+													</tr>
+												</thead>
+												<tbody id="custTable">
+										<?php
+												if ($result->num_rows > 0) {
+													while($row = $result->fetch_array()){	  
+										?>
+														<tr>
+															<td><?php echo $row["firstname"]." ".$row["lastname"];?></td>
+															<td><?php echo $row["balance"];?></td>	
+														</tr>	
+										<?php	
+													}
+												}	
+										?>
+												</tbody>
+											</table>
+                                           	</div>
 									</div>
 								</div>
 							</div>

@@ -5,7 +5,7 @@
 
 
 	try {
-		$fb_access_token = $helper->getAccessToken();
+		$fb_access_token = $helper->getAccessToken('http://localhost/Treaty/social_login/fb-callback.php');
 	} catch (\Facebook\Exceptions\FacebookResponseException $e) {
 		echo "Response Exception: " . $e->getMessage();
 		exit();
@@ -14,7 +14,7 @@
 		exit();
 	}
 
-	if (!$fb_access_token) {
+	if (!$fb_access_token){
 		header('Location: ../login.php');
 		exit();
 	}
