@@ -12,7 +12,15 @@
         $bal = $row['balance'] . '<br />';
     }
     $balance = $bal - $points;
-
+    
+    //get business name
+    $query = "select businessname from businessdetail
+     		where userid=".$bid." LIMIT 1";
+    $result = $mysqli->query($query);
+    while($row = $result->fetch_assoc()){ 
+        $businessname = $row['businessname'];
+    }
+    
     //redeem rewards from customer account
     //old query that create new rows for every redeem reward activity.             
     $qryTrans  = "INSERT INTO rewardtransaction(userid, businessid,
@@ -62,7 +70,7 @@
                              <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
                              <img src="https://s-media-cache-ak0.pinimg.com/originals/b0/a0/a3/b0a0a33dee17c0640f3db16940447c39.jpg">
                              <div>
-                                 <p> Congratulations '.$points.' rewards redeemed from your treaty account.<br>
+                                 <p> Congratulations '.$points.' rewards redeemed from your treaty account for business '.$businessname.'!!<br>
                                  Your current Treaty Rewards are - '.$balance.'</p>
                              </div>
                              </body>

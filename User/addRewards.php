@@ -21,8 +21,16 @@
 	$qryResult = $mysqli->query($qryTrans);
 	//echo $qryTrans;die;
 
+	//get business name
+    $query = "select businessname from businessdetail
+     		where userid=".$bid." LIMIT 1";
+    $result = $mysqli->query($query);
+    while($row = $result->fetch_assoc()){ 
+        $businessname = $row['businessname'];
+    }
+	
 	//query change from insert to update to make only one entry in customer business table with updated added balance
-	 $qry = "UPDATE customerbusiness SET earnedpoints= ".$amount.", redeemedpoints= 0, balance= ".$balance.", modified = sysdate() WHERE userid=".$cid." and businessid=".$bid;
+ 	$qry = "UPDATE customerbusiness SET earnedpoints= ".$amount.", redeemedpoints= 0, balance= ".$balance.", modified = sysdate() WHERE userid=".$cid." and businessid=".$bid;
 	$res = $mysqli->query($qry);
     if ($res) {
     		//send text message to customer
@@ -62,7 +70,7 @@
 								 <body style="background-color:#ffb900;margin:0 auto;text-align: center;width: 500px;padding-top:5%;">
 								 <img src="https://s-media-cache-ak0.pinimg.com/originals/b0/a0/a3/b0a0a33dee17c0640f3db16940447c39.jpg">
 								 <div>
-										 <p> Congratulations '.$amount.' points have been added to your rewards account!! <br>
+										 <p> Congratulations '.$amount.' points have been added to your rewards account for '.$businessname.'!! <br>
 									 		 Your total rewards balance is '.$balance.'</p>
 								 </div>
 								 </body>

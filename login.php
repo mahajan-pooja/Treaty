@@ -89,8 +89,7 @@ session_start();
 
 		// database connection
 		if(!empty($signInemail)) {
-		    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"
-									and isactive=1";
+		    $query = "SELECT id, role FROM user where email=\"".$signInemail."\" and encryptedpassword=\"". $signInpassword."\"";
 		    // Sign In
 		    $result = $mysqli->query($query);
 		    if ($result->num_rows > 0) {
@@ -100,7 +99,7 @@ session_start();
 		        $_SESSION['userid'] = $row['id'];
 				$role = $row['role'];
 				// check if there if exists an entry in user_detail table
-				$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\"";
+				$query = "SELECT id FROM userdetail where userid=\"".$row['id']."\" and isactive=1";
 				$result = $mysqli->query($query);
 				// if yes, do not take him to profile page
 				if ($result->num_rows > 0) {
