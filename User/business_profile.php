@@ -136,10 +136,34 @@
                     WHERE id=".$userid;
           $result = $mysqli->query($query);
           if ($result) {
-              echo '<script>window.location.href = "/Treaty/index.php";</script>';
+              $query2 = "UPDATE userdetail
+                        SET isactive = 0 , modified = sysdate()
+                        WHERE userid=".$userid;
+              $result2 = $mysqli->query($query2);
+              if($result2) {
+                  echo '<script>window.location.href = "/Treaty/User/business_profile.php";</script>';
+              }
           } else {
-              $message = "Failed to update password";
+              $message = "Failed to deactivate account";
           }
+      } else if(isset($_POST['activate'])) {
+          $query = "UPDATE user
+                    SET isactive = 1 , modified = sysdate()
+                    WHERE id=".$userid;
+          $result = $mysqli->query($query);
+          if ($result) {
+              $query2 = "UPDATE userdetail
+                        SET isactive = 1 , modified = sysdate()
+                        WHERE userid=".$userid;
+              $result2 = $mysqli->query($query2);
+              if($result2) {
+                  echo '<script>window.location.href = "/Treaty/User/business_profile.php";</script>';
+              }
+          } else {
+              $message = "Failed to activate account";
+          }
+      } else if(isset($_POST['cancel'])) {
+          echo '<script>window.location.href = "/Treaty/User/business_profile.php";</script>';
       } else if(!empty($fname)) {
 
       //get the userid from user table
@@ -174,6 +198,19 @@
                 }
             }
     	} else {
+            $query2 = "SELECT isactive
+					  FROM userdetail
+					  WHERE userid=\"".$userid."\"";
+			$result2 = $mysqli->query($query2);
+            if ($result2 -> num_rows > 0) {
+                $row2 = $result2->fetch_array();
+                $isactive = $row2["isactive"];
+                $activationFlag = true;
+                if($isactive == 0) {
+                    $activationFlag = false;
+                }
+            }
+            
             $query = "SELECT id,firstname,lastname, phonenumber, address1, address2, city, state, country, zipcode, is_send_sms
 					  FROM userdetail
 					  WHERE userid=\"".$userid."\"";
@@ -217,7 +254,7 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if($_SESSION['displaydashboard']){
+                                if($activationFlag){
                                     echo "<li><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 
@@ -285,7 +322,8 @@
                                   }
                             ?>
 							<li class="resp-tab-item-pro"><i class="fa fa-key" aria-hidden="true"></i>Change Password</li>
-							<li class="resp-tab-item-pro"><i class="fa fa-user-times" aria-hidden="true"></i>Deactivate Account</li>
+							<li class="resp-tab-item-pro"><i class="fa fa-user-times" aria-hidden="true"></i>
+                                <?php echo $activationFlag ? 'Deactivate Account' : 'Activate account' ?></li>
 						</ul>
 					</div>
 
@@ -360,13 +398,16 @@
 
 							<!-- Deactivate customer account -->
 							<div class="tab-1 resp-tab-content">
-								<p class="secHead">Deactivate Account</p><br>
-								<img class="settingImg" src="images/deactive.png" width="100" height="100">
+								<p class="secHead">
+                                <?php echo $activationFlag ? 'Deactivate Account' : 'Activate Account' ?>
+                                </p><br>
+								<img class="settingImg" src="<?php echo $activationFlag ? 'images/deactive.png ' : 'images/activate.jpg' ?>" width="100" height="100">
 								<div class="agile-send-mail">
 									<form method="post" class="agile_form">
-										<p class="b_name" style="color: white;text-align: center;">Click on below button to Deactivate your account.</p><br>
+										<p class="b_name" style="color: white;text-align: center;">Click on below button to <?php echo $activationFlag ? 'Deactivate' : 'Activate' ?>
+                                        your account.</p><br>
 										<div class="submit"><br>
-										  <input type="submit" name="deactivate" value="Deactivate">
+										  <input type="submit" name="<?php echo $activationFlag ? 'deactivate' : 'activate' ?>" value="<?php echo $activationFlag ? 'Deactivate' : 'Activate' ?>">
 										  <input type="submit" name="cancel" value="Cancel">
 										</div>
 									</form>
