@@ -254,7 +254,7 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if(isset($activationFlag)){
+                                if($activationFlag){
                                     echo "<li><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 
@@ -323,7 +323,7 @@
                             ?>
 							<li class="resp-tab-item-pro"><i class="fa fa-key" aria-hidden="true"></i>Change Password</li>
 							<li class="resp-tab-item-pro"><i class="fa fa-user-times" aria-hidden="true"></i>
-                                <?php  echo isset($activationFlag)  ? 'Deactivate Account' : 'Activate account' ?></li>
+                                <?php  echo $activationFlag  ? 'Deactivate Account' : 'Activate account' ?></li>
 						</ul>
 					</div>
 
@@ -399,15 +399,15 @@
 							<!-- Deactivate customer account -->
 							<div class="tab-1 resp-tab-content">
 								<p class="secHead">
-                                <?php echo isset($activationFlag) ? 'Deactivate Account' : 'Activate Account' ?>
+                                <?php echo $activationFlag ? 'Deactivate Account' : 'Activate Account' ?>
                                 </p><br>
-								<img class="settingImg" src="<?php echo isset($activationFlag) ? 'images/deactive.png ' : 'images/activate.jpg' ?>" width="100" height="100">
+								<img class="settingImg" src="<?php echo $activationFlag ? 'images/deactive.png ' : 'images/activate.jpg' ?>" width="100" height="100">
 								<div class="agile-send-mail">
 									<form method="post" class="agile_form">
-										<p class="b_name" style="color: white;text-align: center;">Click on below button to <?php echo isset($activationFlag) ? 'Deactivate' : 'Activate' ?>
+										<p class="b_name" style="color: white;text-align: center;">Click on below button to <?php echo $activationFlag ? 'Deactivate' : 'Activate' ?>
                                         your account.</p><br>
 										<div class="submit"><br>
-										  <input type="submit" name="<?php echo isset($activationFlag) ? 'deactivate' : 'activate' ?>" value="<?php echo isset($activationFlag) ? 'Deactivate' : 'Activate' ?>">
+										  <input type="submit" name="<?php echo $activationFlag ? 'deactivate' : 'activate' ?>" value="<?php echo $activationFlag ? 'Deactivate' : 'Activate' ?>">
 										  <input type="submit" name="cancel" value="Cancel">
 										</div>
 									</form>
