@@ -22,7 +22,7 @@
 	}
 
 	//All offers
-	$query = "SELECT userid, offername, offerdescription, startdate, expirationdate FROM businessoffer ORDER BY userid";
+	$query = "SELECT userid, offername, offerdescription, startdate, expirationdate FROM businessoffer WHERE isactive=1 ORDER BY userid";
 
 	$result = $mysqli->query($query);
 	$offers_array = array();	
