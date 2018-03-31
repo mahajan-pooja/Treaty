@@ -109,20 +109,33 @@
 			} else if(!empty($cancel)) {
 				echo '<script>window.location.href = "business.php#horizontalTab3";</script>';
 			} else if(!empty($businessname)) {
-				//Find Lon and Lat of the adrress.			
-				$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;				
-				$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-				$geo = json_decode($geo, true);
-				if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-				  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-				  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
+				//Find Lon and Lat of the adrress.
+				if($address2 == ''){
+					$complete_business_address = $address1.",".$city.",".$state.",".$country.",".$zipcode;					
+				}			
+				else{
+					$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;					
+				}			
+				
+				$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($complete_business_address)."&key=AIzaSyD1-5rKx9dW1LUrOwXnrI8_cF3PTcLdaHY";
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				$response = curl_exec($ch);
+				curl_close($ch);
+				$response_a = json_decode($response);
+				if (isset($response_a->status) && ($response_a->status == 'OK')) {
+					$latitude = number_format($response_a->results[0]->geometry->location->lat,6);
+					$longitude = number_format($response_a->results[0]->geometry->location->lng,6);					
 				}
 				else{
 					echo '<script>alert("Please Check your address. Enter valid address.");</script>';	
 					$latitude = 0;
 				    $longitude = 0;
 				}
-
 				
 				//Check if Image file has been changed: Y Update table with Image. N Update table without Image.
 				if($_FILES['image']['error'] == 0){
@@ -218,9 +231,9 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if(isset($_SESSION['displaydashboard'])){
+                                //if(isset($_SESSION['displaydashboard'])){
                                     echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
-                                }
+                                //}
                             ?> 
                             <!-- <li><a href="customer_list.php">Customers</a></li> -->                                                       
                             <li><a href="business_profile.php">Profile</a></li>

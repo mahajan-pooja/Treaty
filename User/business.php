@@ -136,13 +136,31 @@
         if (!empty($fname)) {
         	//create business
         	// Find Lon and Lat of address
-        	$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
-			$geo = file_get_contents('http://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($complete_business_address).'&sensor=false');
-			$geo = json_decode($geo, true);
-			if (isset($geo['status']) && ($geo['status'] == 'OK')) {
-			  $latitude = number_format($geo['results'][0]['geometry']['location']['lat'],6); // Latitude
-			  $longitude = number_format($geo['results'][0]['geometry']['location']['lng'],6); // Longitude
-			}
+        	if($address2 == ''){
+        		$complete_business_address = $address1.",".$city.",".$state.",".$country.",".$zipcode;
+        	}
+        	else{
+        		$complete_business_address = $address1.",".$address2.",".$city.",".$state.",".$country.",".$zipcode;
+        	}
+			$url = "https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($complete_business_address)."&key=AIzaSyD1-5rKx9dW1LUrOwXnrI8_cF3PTcLdaHY";
+				$ch = curl_init();
+				curl_setopt($ch, CURLOPT_URL, $url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_PROXYPORT, 3128);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+				$response = curl_exec($ch);
+				curl_close($ch);
+				$response_a = json_decode($response);
+				if (isset($response_a->status) && ($response_a->status == 'OK')) {
+					$latitude = number_format($response_a->results[0]->geometry->location->lat,6);
+					$longitude = number_format($response_a->results[0]->geometry->location->lng,6);					
+				}
+				else{
+					echo '<script>alert("Please Check your address. Enter valid address.");</script>';	
+					$latitude = 0;
+				    $longitude = 0;
+				}
 
 			// If Image is selected
 			if(!empty($_FILES['image']['name'])){
@@ -280,7 +298,7 @@
             //load businessname and sector
             $query = "SELECT a.businessname, a.businesssector,a.businessdescription,b.businesssectortext
 						FROM businessdetail as a JOIN businesssector as b ON a.businesssector = b.id
-						WHERE userid=\"" . $userid . "\" LIMIT 1";
+						WHERE userid=\"" . $userid . "\" and isactive=1 LIMIT 1";
 
             $result = $mysqli->query($query);
             $businessresultset = array();
@@ -359,10 +377,9 @@
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
-							<?php
-                                if(isset($_SESSION['displaydashboard'])){
-                                    echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
-                                }
+							<?php                                
+                                echo "<li class='active'><a href='business.php'>Dashboard</a></li>";
+                                
                             ?>
                             <!-- <li><a href="customer_list.php">Customers</a></li> -->
                             <li><a href="business_profile.php">Profile</a></li>
@@ -499,7 +516,7 @@
 											<form action="redeemRewards.php?bid=<?php echo $userid;?>&cid=<?php echo $uid;?>" method="post" class="agile_form">
 												<?php
 												$current_date = date("Y/m/d");
-												$queryOffer = "select id, offername, offerdescription, creditedpoints from businessoffer where userid=".$userid." and creditedpoints <= ".$points." and expirationdate >= '".$current_date."'";
+												$queryOffer = "select id, offername, offerdescription, creditedpoints from businessoffer where isactive=1 and userid=".$userid." and creditedpoints <= ".$points." and expirationdate >= '".$current_date."'";
 												$resultOffer = $mysqli->query($queryOffer);
 								                if ($resultOffer->num_rows > 0) { ?>
 								                <select name="offerToRedeem" id="offerSelect" onchange="offerFunction(this)" style="width: 50%;">

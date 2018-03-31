@@ -10,6 +10,11 @@
 	
 	$result = $mysqli->query($query);
     if ($result) {
+
+    		//to display initial transaction in transaction table
+    		$query_trans  = "INSERT INTO rewardtransaction(userid, businessid,earnedpoints, redeemedpoints, balance, isactive, modified, created)
+	         VALUES (\"" . $cid . "\",\"" . $bid . "\", 20, 0, 20, 1, sysdate(), sysdate())";
+			$result = $mysqli->query($query_trans);
     		
     		//send text message and email to customer, limiting to 1 because there are multiple business entries in businessdetail table
 		    $query = "Select phonenumber,businessname,email from user u,businessdetail b
