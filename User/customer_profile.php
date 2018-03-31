@@ -262,7 +262,8 @@
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
 							<?php
-                                if($activationFlag){
+                                
+                                if(isset($activationFlag)){
                                     echo "<li><a href='customer.php'>Dashboard</a></li>";
                                 }
                             ?>                                                        
@@ -331,7 +332,7 @@
                             ?>
 							<li class="resp-tab-item-profile"><i class="fa fa-key" aria-hidden="true"></i>Change Password</li>
 							<li class="resp-tab-item-profile"><i class="fa fa-user-times" aria-hidden="true"></i>
-                                <?php echo $activationFlag ? 'Deactivate Account' : 'Activate account' ?>
+                                <?php echo isset($activationFlag) ? 'Deactivate Account' : 'Activate account' ?>
                                 </li>
 						</ul>
 					</div>
@@ -367,7 +368,7 @@
                                               value="<?php echo !isset($profileresultset[7]) ? '' : $profileresultset[7]; ?>" required=""/>
 										<input type="text" placeholder="Zip" name="zip" class="name agileits"
                                               value="<?php echo !isset($profileresultset[8]) ? '' : $profileresultset[8]; ?>" required=""/>
-										<p class="notPara"><br><input type="checkbox" name="notifyCheck" <?php echo ($profileresultset[9]==1 ? 'checked' : '');?>>&nbsp&nbsp&nbspDo you want offer notifications?</p>
+										<p class="notPara"><br><input type="checkbox" name="notifyCheck" <?php echo (isset($profileresultset[9])==1 ? 'checked' : '');?>>&nbsp&nbsp&nbspDo you want offer notifications?</p>
 										<div class="submit"><br>
 										  <input type="submit" value="Save">
 										  <input type="submit" value="Cancel">
