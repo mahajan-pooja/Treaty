@@ -263,7 +263,7 @@
                             <li><a href="../index.php">Home</a></li>
 							<?php
                                 
-                                if(isset($activationFlag)){
+                                if($activationFlag){
                                     echo "<li><a href='customer.php'>Dashboard</a></li>";
                                 }
                             ?>                                                        
@@ -332,7 +332,7 @@
                             ?>
 							<li class="resp-tab-item-profile"><i class="fa fa-key" aria-hidden="true"></i>Change Password</li>
 							<li class="resp-tab-item-profile"><i class="fa fa-user-times" aria-hidden="true"></i>
-                                <?php echo isset($activationFlag) ? 'Deactivate Account' : 'Activate account' ?>
+                                <?php echo $activationFlag ? 'Deactivate Account' : 'Activate account' ?>
                                 </li>
 						</ul>
 					</div>

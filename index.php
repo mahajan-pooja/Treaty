@@ -154,22 +154,12 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>Good Food Is Good Mood!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
-                                </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>Believe in yourself! Have faith in your abilities! Without a humble but reasonable confidence in your own powers you cannot be successful or happy.</p>
+                                </div><br><br>
+                                <p>“It’s wild, but people freak out when they get a reward. It’s like they won the world series they LOVE It. That excitement in my business is priceless. The value to me in Treaty is customer engagement, excitement, and driving repeat business. We’ve seen a rise in our customer base and repeat business, not to mention the A+ accessibility to merchant support that Treaty provides.”</p>
                             </div>
                         </div>
                     </div>
@@ -182,22 +172,12 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>We Bring Delight To Our Retailers!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
-                                </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>Life is a song - sing it. Life is a game - play it. Life is a challenge - meet it. Life is a dream - realize it. Life is a sacrifice - offer it. Life is love - enjoy it.</p>
+                                </div><br>
+                                <p>“The reason we chose Treaty over any other customer reward system is because of the ease of signing customers up, communicating to them through Campaigns, the free app, and the excellent customer service, just to mention a few! A quick tap of the screen, entering an email and they are ready. It only takes a few seconds! The ease of acquiring customer emails and reconnecting with them through the Campaigns is the most beneficial. Our customer database has grown tremendously! People don’t hesitate to give you their email when they get points and rewards for doing so.”</p>
                             </div>
                         </div>
                     </div>
@@ -210,22 +190,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>Keep Calm And Pamper Yourself!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>How far you go in life depends on your being tender with the young, compassionate with the aged, sympathetic with the striving and tolerant of the weak and strong. Because someday in your life you will have been all of these.</p>
+                                <br><br>
+                                <p>“Signing up customers with Treaty is very easy. We already used a frequent flyer system so our customers are happy to have a way to not lose their points if they lose their card. Our email list has grown because nobody ever wanted to give us their email address before Treaty and being able to send them an email to get in touch with them is great. I like seeing how often my customers are coming in. Treaty has made it easier for us to connect with our customers.”</p>
                             </div>
                         </div>
                     </div>
@@ -238,22 +209,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Project for Some Client</h3>
+                                    <h3>One Stop Shop For Your Daily Needs!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>Life's but a walking shadow, a poor player, that struts and frets his hour upon the stage, and then is heard no more; it is a tale told by an idiot, full of sound and fury, signifying nothing.</p>
+                                <br><br>
+                                <p>“The best rewards are experiential. It’s a fun way to interact with customers, and it helps build new clientele. We can reach out to our customers for events, sales or even just new inventory! We even upgraded our program in order to use this tool more frequently. Treaty has helped us get our customer in more frequently to shop!”</p>
                             </div>
                         </div>
                     </div>
@@ -266,22 +228,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>You Break It We Fix It!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>We need to give each other the space to grow, to be ourselves, to exercise our diversity. We need to give each other space so that we may both give and receive such beautiful things as ideas, openness, dignity, joy, healing, and inclusion.</p>
+                                <br><br>
+                                <p>“I was one of the first stores that adopted Treaty. We used to have punch cards, and just trying to manage that was kind of a hassle. When we started doing it on a digital platform, we started to see an uptick in people just wanting to come in to check-in. If you have tried punch cards or customer loyalty programs before, this takes it to the next level. It gets your sales associates engaged in the process, and the customer, that younger customer we’re looking for, really get it from the second you put it in the store.”</p>
                             </div>
                         </div>
                     </div>
@@ -294,22 +247,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>Love For Your Pets!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>I went to the woods because I wished to live deliberately, to front only the essential facts of life, and see if I could not learn what it had to teach, and not, when I came to die, discover that I had not lived.</p>
+                                <br><br><br>
+                                <p>Treaty has improved my business by getting more consistent repeat business and create more brand loyalty for our customers.”</p>
                             </div>
                         </div>
                     </div>
@@ -322,22 +266,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>Feed The Beast!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>Always continue the climb. It is possible for you to do whatever you choose, if you first get to know who you are and are willing to work with a power that is greater than ourselves to do it.</p>
+                                <br><br>
+                                <p>“I was one of the first stores that adopted Treaty. We used to have punch cards, and just trying to manage that was kind of a hassle. When we started doing it on a digital platform, we started to see an uptick in people just wanting to come in to check-in. If you have tried punch cards or customer loyalty programs before, this takes it to the next level. It gets your sales associates engaged in the process, and the customer, that younger customer we’re looking for, really get it from the second you put it in the store.”</p>
                             </div>
                         </div>
                     </div>
@@ -350,22 +285,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>Healthy Outside Starts From Inside!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>What if you gave someone a gift, and they neglected to thank you for it - would you be likely to give them another? Life is the same way. In order to attract more of the blessings that life has to offer, you must truly appreciate what you already have.</p>
+                                <br><br>
+                                <p>“What I like about Treaty is that our members already knew it because they were used to using it in the neighborhood already. Members come in, check in and it’s seamless. It was challenging for us to track customer loyalty on a large scale, so Treaty has allowed us to put some larger pie in the sky prizes out there. We give a free 30 minute massage, we also give free personal training and smoothies. Having the revenue go up and seeing the company grow is a tremendous thing.”</p>
                             </div>
                         </div>
                     </div>
@@ -378,22 +304,13 @@
                         <div class="span6">
                             <div class="project-description">
                                 <div class="project-title clearfix">
-                                    <h3>Webste for Some Client</h3>
+                                    <h3>We Are The Best In Making The Shine!!</h3>
                                     <span class="show_hide close">
                                         <i class="icon-cancel"></i>
                                     </span>
                                 </div>
-                                <div class="project-info">
-                                    <div>
-                                        <span>Client</span>Some Client Name</div>
-                                    <div>
-                                        <span>Date</span>July 2013</div>
-                                    <div>
-                                        <span>Skills</span>HTML5, CSS3, JavaScript</div>
-                                    <div>
-                                        <span>Link</span>http://examplecomp.com</div>
-                                </div>
-                                <p>I learned that we can do anything, but we can't do everything... at least not at the same time. So think of your priorities not in terms of what activities you do, but when you do them. Timing is everything.</p>
+                                <br><br><br>
+                                <p>Treaty has improved my business by getting more consistent repeated business and create more brand loyalty for our customers.We provide natural cleaning services that are healthy and eco friendly.”</p>
                             </div>
                         </div>
                     </div>
@@ -405,7 +322,7 @@
                                 <a href="#single-project" class="more show_hide" rel="#slidingDiv">
                                     <i class="icon-plus"></i>
                                 </a>
-                                <h3>Retaurants</h3>
+                                <h3>Restaurants</h3>
                                 <!-- <p>Thumbnail caption...</p> -->
                                 <div class="mask"></div>
                             </div>
@@ -509,94 +426,43 @@
             <div class="container">
                 <div class="title">
                     <h1>Who We Are?</h1>
-                    <p>We are passionate Software Engineers trying to help small business communities through Treaty Program.</p>
+                    <p>We are here to help small business communities through Treaty Program.</p>
                 </div>
                 <div class="row-fluid team">
                     <div class="span4" id="first-person">
                         <div class="thumbnail">
                             <img src="images/a1.jpg" alt="team 1">
-                            <h3>Pooja Mahajan</h3>
-                            <ul class="social">
-                                <li>
-                                    <a href="">
-                                        <span class="icon-facebook-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-twitter-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-linkedin-circled"></span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <h3>Customer Acquisition</h3>
                             <div class="mask">
-                                <h2>Copywriter</h2>
-                                <p>When you stop expecting people to be perfect, you can like them for who they are.</p>
+                                <h2></h2>
+                                <p>Attracting new customers is a vital part of your business’s growth—and it doesn’t have to be a headache. That’s why Treaty built tools—using the delight of your customers, and the power of your network—for simple, low-cost, and astonishingly effective customer acquisition.</p>
                             </div>
                         </div>
                     </div>
                     <div class="span4" id="second-person">
                         <div class="thumbnail">
                             <img src="images/a1.jpg" alt="team 1">
-                            <h3>Poonam Korade</h3>
-                            <ul class="social">
-                                <li>
-                                    <a href="">
-                                        <span class="icon-facebook-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-twitter-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-linkedin-circled"></span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <h3>Loyalty and Retention</h3>
                             <div class="mask">
-                                <h2>Designer</h2>
-                                <p>When you stop expecting people to be perfect, you can like them for who they are.</p>
+                                <h2></h2>
+                                <p>Imagine if every person who visited your store for the first time paid you a return visit. Getting new customers to try out your business is a good way to grow—but getting your existing customers to return is even better. With Treaty, you’ll transform casual shoppers into regulars, by sending personalized offers they can’t resist.</p>
                             </div>
                         </div>
                     </div>
                     <div class="span4" id="third-person">
                         <div class="thumbnail">
                             <img src="images/a1.jpg" alt="team 1">
-                            <h3>Rajeshwari Kute</h3>
-                            <ul class="social">
-                                <li>
-                                    <a href="">
-                                        <span class="icon-facebook-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-twitter-circled"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="">
-                                        <span class="icon-linkedin-circled"></span>
-                                    </a>
-                                </li>
-                            </ul>
+                            <h3>Powerful Promotions</h3>
                             <div class="mask">
-                                <h2>Photographer</h2>
-                                <p>When you stop expecting people to be perfect, you can like them for who they are.</p>
+                                <h2></h2>
+                                <p>We’re huge believers in data—we built our entire system on it—and our reporting tool lets you see your marketing program in action. Through your dashboard, you’ll always have access to intuitively organized and easily navigable insights on how your marketing program is performing, on both a big-picture and a granular level. We think you’ll like what you see.</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="about-text centered">
                     <h3>About Us</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, ullamcorper suscipit lobortis nisl ut aliquip consequat. I learned that we can do anything, but we can't do everything...</p>
+                    <p>Treaty is a loyalty rewards management system that will offer unique and exceptional rewards to places you love to shop or dine. It will be a platform where the business owners and the customers can collaborate and get benefit from each other. Treaty will allow the business owners to post their offers and on the other hand the customers to track the offers and their loyalty points they have earned.</p>
                 </div>
                 <h3>We achieved</h3>
                 <div class="row-fluid">
@@ -646,41 +512,41 @@
                 <div class="container">
                     <div class="title">
                         <h1>What Client Say?</h1>
-                        <p>Duis mollis placerat quam, eget laoreet tellus tempor eu. Quisque dapibus in purus in dignissim.</p>
+                        <p>Still not convinced that Treaty is the right fit? This is just a small sample of what our customers are saying about thier experience working with us.</p>
                     </div>
                     <div class="row">
                         <div class="span4">
                             <div class="testimonial">
-                                <p>"I've worked too hard and too long to let anything stand in the way of my goals. I will not let my teammates down and I will not let myself down."</p>
+                                <p>"Before Treaty, I used a local marketing text tool, but it didn’t give me the return on investment I was looking for. Treaty does. Believe me, Treaty is a great investment for your business."</p>
                                 <div class="whopic">
                                     <div class="arrow"></div>
-                                    <img src="images/Client1.png" class="centered" alt="client 1">
-                                    <strong>John Doe
-                                        <small>Client</small>
+                                    <img src="images/c1.jpg" class="centered" alt="client 1">
+                                    <strong>Restaurant
+                                        <small>Owner</small>
                                     </strong>
                                 </div>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="testimonial">
-                                <p>"In motivating people, you've got to engage their minds and their hearts. I motivate people, I hope, by example - and perhaps by excitement, by having productive ideas to make others feel involved."</p>
+                                <p>"Treaty is the best loyalty system out there. I've been with them for five years and still love it. Treaty helps to retain loyal customers. We got huge response from our custpmers on thanks giving."</p>
                                 <div class="whopic">
                                     <div class="arrow"></div>
-                                    <img src="images/Client2.png" class="centered" alt="client 2">
-                                    <strong>John Doe
-                                        <small>Client</small>
+                                    <img src="images/c3.jpg" class="centered" alt="client 2">
+                                    <strong>Spa
+                                        <small>Owner</small>
                                     </strong>
                                 </div>
                             </div>
                         </div>
                         <div class="span4">
                             <div class="testimonial">
-                                <p>"Determine never to be idle. No person will have occasion to complain of the want of time who never loses any. It is wonderful how much may be done if we are always doing."</p>
+                                <p>"We brought in $7,500 last Black Friday and then brought in $13,000 this Black Friday. The ONLY thing we did differently was use Treaty Promotions. It’s phenomenal. Treaty is worth to invest."</p>
                                 <div class="whopic">
                                     <div class="arrow"></div>
-                                    <img src="images/Client3.png" class="centered" alt="client 3">
-                                    <strong>John Doe
-                                        <small>Client</small>
+                                    <img src="images/c2.jpg" class="centered" alt="client 3">
+                                    <strong>Retailer
+                                        <small>Owner</small>
                                     </strong>
                                 </div>
                             </div>
@@ -697,7 +563,7 @@
                 <div class="sub-section">
                     <div class="title clearfix">
                         <div class="pull-left">
-                            <h3>Our Clients</h3>
+                            <h3 style="color: white;">Our Clients</h3>
                         </div>
                         <ul class="client-nav pull-right">
                             <li id="client-prev"></li>
