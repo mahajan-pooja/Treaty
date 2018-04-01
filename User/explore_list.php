@@ -122,14 +122,14 @@
 	echo '<div id="myModal" class="modal hide fade">										
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		<h3 id = "business_name" style="text-align:left"></h3>
+		<h3 id = "business_name" style="text-align:left;color:#333"></h3>
 	</div>	
 	<div class="modal-body">'; 
 		
 		
 	echo '</div>	
 	<div class="modal-footer">
-		<a href="#" style="float: right;" class="btn" data-dismiss="modal">Close</a>
+		<a href="#" style="float: right;color:#333" class="btn" data-dismiss="modal">Close</a>
 	</div>
 </div>';
 	
