@@ -448,6 +448,7 @@
 								<li class="resp-tab-item-business"><i class="fa fa-map-marker" aria-hidden="true"></i>Register Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-cogs" aria-hidden="true"></i>Create Offer</li>
 								<li class="resp-tab-item-business"><i class="fa fa-users" aria-hidden="true"></i>Customers</li>
+								<li class="resp-tab-item-business"><i class="fa fa-bar-chart" aria-hidden="true"></i>Business Tracker</li>
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -714,6 +715,34 @@
                                            	</div>
 									</div>
 								</div>
+								<!-- Business Tracker Section -->
+								<div class="tab-1 resp-tab-content">
+									<p class="secHead">Business Tracker</p>
+									<div class="register agileits">
+										
+										<?php
+										// Total Customers
+										$query_tot_cust = "SELECT count(DISTINCT id) as total_cust FROM user WHERE role = \"Customer\" and isactive = 1";
+									    $result = $mysqli->query($query_tot_cust);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_cust = $row["total_cust"];
+										}
+										echo "Total Customers on Treaty:".$total_cust;
+
+										// Total Subcribed Customers
+										$query_sub_cust = "SELECT COUNT(DISTINCT userid) as total_sub_cust FROM customerbusiness WHERE businessid=".$userid;
+									    $result = $mysqli->query($query_sub_cust);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_sub_cust = $row["total_sub_cust"];
+										}
+										echo "  Total Subscribed Customers:".$total_sub_cust;
+										
+										?>
+									</div>
+								</div>
+
 							</div>
 						</div>
 						<div class="clear"></div>

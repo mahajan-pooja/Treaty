@@ -431,7 +431,7 @@
                 <div class="row-fluid team">
                     <div class="span4" id="first-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Customer Acquisition</h3>
                             <div class="mask">
                                 <h2></h2>
@@ -441,7 +441,7 @@
                     </div>
                     <div class="span4" id="second-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Loyalty and Retention</h3>
                             <div class="mask">
                                 <h2></h2>
@@ -451,7 +451,7 @@
                     </div>
                     <div class="span4" id="third-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Powerful Promotions</h3>
                             <div class="mask">
                                 <h2></h2>
