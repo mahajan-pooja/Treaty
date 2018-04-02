@@ -524,12 +524,13 @@
 								                <?php
 								                	while($row = $resultOffer->fetch_assoc()) {
 								                    ?>
-								                    <option value = "<?php echo $row['creditedpoints'];?>"><?php echo $row['offername']." - ".$row['offerdescription']." - ".$row['creditedpoints'];?></option>
+								                    <option value = "<?php echo $row['id'].'_'.$row['creditedpoints'];?>"><?php echo $row['offername']." - ".$row['offerdescription']." - ".$row['creditedpoints'];?></option>
 								                    <?php
 								                	}
 								                	?></select><br>
 								                	<p style="width: 100%;display: none;margin-bottom: 0px; padding-bottom: 0px;" id="offerPoint"></p><br>
 								                	<input type="text" name="redeemPoints" id="redeemPoints" style="display: none;">
+								                	<input type="text" name="offer_id" id="offer_id" style="display: none;">
 												<div class="submitButton"><br>
 													<input type="submit" value="Redeem Rewards">
 												</div>
@@ -545,12 +546,20 @@
 								            	}
 
 												?>
+												<?php 
+												if(isset($_POST['offerToRedeem']))
+													$offerData = explode("_",$_POST['offerToRedeem']);
+													$offer_id = $offerData[0];
+													$creadit_points = $offerData[1];
+												?>
 												<script>
 												function offerFunction(data) {
 												    var x = document.getElementById("offerSelect").value;
+												    var offer_points = x.split("_");
 												    document.getElementById("offerPoint").style.display = 'block';
-												    document.getElementById("offerPoint").innerHTML = x+" Points will be redeemed.";
-												    document.getElementById("redeemPoints").value = data.value;
+												    document.getElementById("offerPoint").innerHTML = offer_points[1]+" Points will be redeemed.";
+												    document.getElementById("redeemPoints").value =offer_points[1];
+												    document.getElementById("offer_id").value = offer_points[0];
 												}
 												</script>
 
