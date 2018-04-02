@@ -4,6 +4,9 @@
     $points = $_POST['redeemPoints'];
     $bid = $_GET['bid'];
     $cid = $_GET['cid'];
+    //added this offerid in rewardstransaction table
+    $offerid = $_POST['offer_id'];
+
     //get current balance rewards of customer
     $query = "Select balance from customerbusiness
      		where userid = ".$cid." and businessid=".$bid;
@@ -24,8 +27,8 @@
     //redeem rewards from customer account
     //old query that create new rows for every redeem reward activity.             
     $qryTrans  = "INSERT INTO rewardtransaction(userid, businessid,
-            earnedpoints, redeemedpoints, balance, isactive, modified, created)
-            VALUES (\"" . $cid . "\",\"" . $bid . "\", 0, \"" . $points . "\",\"" . $balance . "\", 1, sysdate(), sysdate())";
+            earnedpoints, redeemedpoints, balance, isactive, modified, created,offerid)
+            VALUES (\"" . $cid . "\",\"" . $bid . "\", 0, \"" . $points . "\",\"" . $balance . "\", 1, sysdate(), sysdate()," . $offerid . ")";
     $resTrans = $mysqli->query($qryTrans);
 
     //query change from insert to update to make only one entry in customer business table with updated redeemed balance
