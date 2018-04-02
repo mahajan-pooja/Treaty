@@ -44,10 +44,10 @@
 			    //echo '<script>window.location.href = "send_sms.php?flag=add&phone='.$phone.'&amount='.$amount.'&balance='.$balance.'";</script>'; 
 			    //actual code to send text msg
 			    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-			        'api_key' => d0fbd93d,
-			        'api_secret' => bcaca354e0887dd9,
+			        'api_key' => e4add77b,
+			        'api_secret' => '6LWxE3X9EaiKil32',
 			        'to' => $phone,
-			        'from' => 12034089447,
+			        'from' => 12015946271,
 			        'text' => $text
 			    ]);
 			    $ch = curl_init($url);
