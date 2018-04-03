@@ -276,17 +276,18 @@
                 if ($resultQry->num_rows > 0) {
                     while($row = $resultQry->fetch_assoc()){
 	                   	$text = "New offer at ".$row['businessname'].".\n".$oName."\n ".$oDesc."\nExpires on - ".$datepicker2."\n";
+	                    //send sms
 	                    $url = 'https://rest.nexmo.com/sms/json?' . http_build_query([
-									        'api_key' => d0fbd93d,
-									        'api_secret' => bcaca354e0887dd9,
-									        'to' => $row['phonenumber'],
-									        'from' => 12034089447,
-									        'text' => $text
-					    				]);
-											$ch = curl_init($url);
-											curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-											$response = curl_exec($ch);
-											curl_close($ch);
+						        'api_key' => e4add77b,
+						        'api_secret' => '6LWxE3X9EaiKil32',
+						        'to' => $row['phonenumber'],
+						        'from' => 12015946271,
+						        'text' => $text
+						    ]);
+								$ch = curl_init($url);
+								curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+								$response = curl_exec($ch);
+								curl_close($ch);
 	            	}
                 }
 	            //redirect to business.php page after sending sms to customers
