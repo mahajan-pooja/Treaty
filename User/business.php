@@ -1,6 +1,7 @@
 <?php
 	// Start the session
 	session_start();
+
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
@@ -55,8 +56,8 @@
 		  		});
 			}); 
 
-
 		</script>
+		
 		
         <style>
 		.agile_form textarea {
@@ -448,7 +449,7 @@
 								<li class="resp-tab-item-business"><i class="fa fa-map-marker" aria-hidden="true"></i>Register Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-cogs" aria-hidden="true"></i>Create Offer</li>
 								<li class="resp-tab-item-business"><i class="fa fa-users" aria-hidden="true"></i>Customers</li>
-								<li class="resp-tab-item-business"><i class="fa fa-bar-chart" aria-hidden="true"></i>Business Tracker</li>
+								<li class="resp-tab-item-business"><i class="fa fa-line-chart" aria-hidden="true"></i>Business Tracker</li>
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -737,7 +738,7 @@
 											$row = $result->fetch_array();
 											$total_cust = $row["total_cust"];
 										}
-										echo "Total Customers on Treaty:".$total_cust;
+										
 
 										// Total Subcribed Customers
 										$query_sub_cust = "SELECT COUNT(DISTINCT userid) as total_sub_cust FROM customerbusiness WHERE businessid=".$userid;
@@ -746,9 +747,48 @@
 											$row = $result->fetch_array();
 											$total_sub_cust = $row["total_sub_cust"];
 										}
-										echo "  Total Subscribed Customers:".$total_sub_cust;
 										
+
+										//Total Visits
+										$query_tot_visits = "SELECT COUNT(DISTINCT userid, DATE(created)) as total_visits FROM rewardtransaction WHERE businessid=".$userid;
+									    $result = $mysqli->query($query_tot_visits);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_visits = $row["total_visits"];
+										}
+										
+
+										//Total Offers
+										$query_tot_offers = "SELECT COUNT(id) as total_offers FROM businessoffer WHERE userid=".$userid;
+									    $result = $mysqli->query($query_tot_offers);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_offers = $row["total_offers"];
+										}
+
+										//Offer and redeem count
+										$query_bar_chart1 = "SELECT b.offername,COUNT(*) as total_redeem FROM rewardtransaction as a JOIN businessoffer as b ON a.offerid = b.id WHERE a.offerid IS NOT NULL and a.businessid = ".$userid." GROUP BY offername";
+									    $bar_chart_result1 = $mysqli->query($query_bar_chart1);
+									 								    
+										//echo '<pre>',print_r($bar_chart_array),'</pre>';	
+										//Offer and redeem count
+										$query_bar_chart2 = "SELECT DATE(created) as date,count(distinct userid) as total_visits FROM rewardtransaction WHERE businessid = ".$userid." GROUP BY DATE(created) ORDER BY DATE(created);";
+									    $bar_chart_result2 = $mysqli->query($query_bar_chart2);	
+
 										?>
+
+										<table>
+											<tr>
+												<td><?php echo " Total Customers on Treaty:".$total_cust; ?> </td>
+												<td><?php echo "  Total Subscribed Customers:".$total_sub_cust; ?> </td>
+												<td><?php echo "  Total Visits:".$total_visits; ?> </td>
+												<td><?php echo "  Total Offers(till date):".$total_offers; ?> </td>
+											</tr>
+										</table>
+										<br>
+										<div id="columnchart1" style="width: 900px; height: 300px;"></div>
+										<div id="columnchart2" style="width: 900px; height: 300px;"></div>
+										
 									</div>
 								</div>
 
@@ -774,6 +814,89 @@
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+
+		<!-- Script to render Column Chart -->
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+			google.charts.load("current", {packages:['corechart']});
+    		google.charts.setOnLoadCallback(drawChart1);
+    		google.charts.setOnLoadCallback(drawChart2);
+
+    		// For chart 1
+    		function drawChart1() {
+		    	var data = google.visualization.arrayToDataTable([
+		    		['Offer Name','Redeem Count'],
+		    		<?php 
+		    			$y_max = 0;
+		    			while ($row = $bar_chart_result1->fetch_assoc()) {
+		    				if($y_max<$row["total_redeem"]){
+		    					$y_max = $row["total_redeem"];
+		    				}
+		    				echo "['".$row["offername"]."', ".$row["total_redeem"]."],";
+		    			}
+		    		?>		        
+		    	]);
+
+		    	var options = {
+			        title: "Reponse for Offers",
+			        width: 600,
+			        height: 250,
+			        hAxis: {
+			          title: 'Offer Name'			          
+			         },
+			        vAxis: {
+			          title: 'Redeem Count',
+			          viewWindow:{
+			            max:<?php echo $y_max + 3;?>,
+			            min:0
+			          },			          
+			          format: '#'			          
+			        },
+			        bar: {groupWidth: "10%"},
+			        legend: { position: "none" },
+		      	};
+		    	var chart = new google.visualization.ColumnChart(document.getElementById("columnchart1"));
+		      	chart.draw(data, options);
+		    }
+
+		    // For chart 2
+		    function drawChart2() {
+		    	var data = google.visualization.arrayToDataTable([
+		    		['Date','No. of Visits'],
+		    		<?php 
+		    			$y_max = 0;
+		    			while ($row = $bar_chart_result2->fetch_assoc()) {
+		    				if($y_max<$row["total_visits"]){
+		    					$y_max = $row["total_visits"];
+		    				}
+		    				echo "['".$row["date"]."', ".$row["total_visits"]."],";
+		    			}
+		    		?>		        
+		    	]);
+
+		    	var options = {
+			        title: "No. of Visits Vs Date",
+			        width: 600,
+			        height: 250,
+			        hAxis: {
+			          title: 'No. of Visits'			          
+			         },
+			        vAxis: {
+			          title: 'Date',
+			          viewWindow:{
+			            max:<?php echo $y_max + 3;?>,
+			            min:0
+			          },			          
+			          format: '#'			          
+			        },
+			        bar: {groupWidth: "20%"},
+			        legend: { position: "none" },
+		      	};
+		    	var chart = new google.visualization.BarChart(document.getElementById("columnchart2"));
+		      	chart.draw(data, options);
+		    }
+
+		</script>
 		<?php
 		/* close connection */
             $mysqli->close();
