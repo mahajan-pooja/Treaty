@@ -407,7 +407,7 @@
 
 									$query = "select r.modified, r.earnedpoints,r.redeemedpoints,r.balance, bd.businessname
 												from rewardtransaction r left join businessdetail bd  on r.businessid = bd.userid 
-												where r.userid = ".$userid." group by balance";
+												where r.userid = ".$userid;
 										$result = $mysqli->query($query);
 										?>
 										<input id="search_input" type="text" placeholder="Search.." style="width: 100%;">
