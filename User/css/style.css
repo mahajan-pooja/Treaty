@@ -44,13 +44,15 @@ p {
     padding-top:0;
 }
 .navbar-inner {
-    /*background: #181A1C;*/
     background: #a9c750;
     border-radius:0;
     filter: none;
     border: none;
     box-shadow: none;
 }
+/*.business-navbar {
+	background:#84c2c9fc!important;
+}*/
 .navbar .brand img {
     width:127px;
     height:auto;

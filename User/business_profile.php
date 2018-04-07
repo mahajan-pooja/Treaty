@@ -199,8 +199,8 @@
             }
     	} else {
             $query2 = "SELECT isactive
-					  FROM userdetail
-					  WHERE userid=\"".$userid."\"";
+					  FROM user
+					  WHERE id=\"".$userid."\"";
 			$result2 = $mysqli->query($query2);
             if ($result2 -> num_rows > 0) {
                 $row2 = $result2->fetch_array();
@@ -253,8 +253,8 @@
                     <div class="nav-collapse collapse pull-right">
                         <ul class="nav">
                             <li><a href="../index.php">Home</a></li>
-							<?php
-                                if($activationFlag){
+							               <?php
+                                if($_SESSION['displaydashboard'] == true and $activationFlag == true){
                                     echo "<li><a href='business.php'>Dashboard</a></li>";
                                 }
                             ?> 
@@ -267,21 +267,21 @@
                 </div>
             </div>
         </div>
-        <span class="loginName">
-            <?php 
-                $Qry = "SELECT firstname, lastname
-                          FROM userdetail
-                          WHERE userid=\"" . $userid . "\" and isactive = 1";
-                $result = $mysqli->query($Qry);
-                if ($result->num_rows > 0) {
-                    $row = $result->fetch_assoc();
-                    echo "Hello, ". $row['firstname']." ".$row['lastname'];
-                }
-            ?>      
-        </span>
-        <br><br>
-
-	<h1></h1>
+        <div class="container">        
+            <div class="loginName">
+                <?php 
+                    $Qry = "SELECT firstname, lastname
+                              FROM userdetail
+                              WHERE userid=\"" . $userid . "\" and isactive = 1";
+                    $result = $mysqli->query($Qry);
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                    }
+                ?>    	
+            </div>
+        </div>             
+        
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">

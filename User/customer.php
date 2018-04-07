@@ -45,7 +45,7 @@
 	?>
 <style>
 	.accordion {
-	    background-color: #A9C750;
+	    background-color: #84c2c9fc;
 	    color: #444;
 	    cursor: pointer;
 	    padding: 18px;
@@ -91,7 +91,7 @@
 	    content: "\2212";
 	}
 	.active, .panelAccordion:hover {
-	    background-color: #A9C750; 
+	    background-color: #84c2c9fc; 
 	}
 	.active, .accordion:hover {
 	    color: white;
@@ -256,8 +256,8 @@
 
 <body>
         <div class="navbar">
-            <div class="navbar-inner">
-                <div>
+            <div class="navbar-inner customer-navbar">
+                <div class="container">
                     <a href="../index.php" class="brand">
                         <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
                         <!-- This is website logo -->
@@ -281,21 +281,21 @@
                 </div>
             </div>
         </div>
-        <span class="loginName">
-        	<?php 
-        		$Qry = "SELECT firstname, lastname
-						  FROM userdetail
-                          WHERE userid=\"" . $userid . "\" and isactive = 1";
-                $result = $mysqli->query($Qry);
-                if ($result->num_rows > 0) {
-                	$row = $result->fetch_assoc();
-                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
-                }
-        	?>    	
-        </span>
-        <br><br>
+        <div class="container">        
+            <div class="loginName">
+                <?php 
+                    $Qry = "SELECT firstname, lastname
+                              FROM userdetail
+                              WHERE userid=\"" . $userid . "\" and isactive = 1";
+                    $result = $mysqli->query($Qry);
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                    }
+                ?>    	
+            </div>
+        </div>
         
-	<h1></h1>
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
@@ -370,7 +370,7 @@
                                                     Reward Points - <?php echo explode("-",$value)[1]; ?><br><br>
                                                     <a href="unsubscribe.php?bid=<?php echo $business_owner_id; ?>">Unsubscribe</a>
                                                 </div>
-                                            
+                                            <br>
                                         <?php endforeach; ?>   
                                     </div>	
 								</div>

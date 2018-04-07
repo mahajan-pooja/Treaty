@@ -298,7 +298,7 @@
                                         	<tr>
                                             	<td style="padding-left: 6px;">
                                             		<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
-                                            		<img src = <?php if(isset($businessresultset[9])) echo 'data:image/jpeg;base64,'.$businessresultset[9] ?>  alt = "Image not Available" id = "image" width="100px" />
+                                            		<img src = <?php if(isset($businessresultset[9])) echo 'data:image/jpeg;base64,'.$businessresultset[9] ?>  alt = "Image not Available" id = "image" width="100px" style="height:100%"/>
                                             		</div>
                                             	</td>
                                             	<td style="vertical-align: bottom;width: 100%;">                                        

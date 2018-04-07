@@ -45,8 +45,7 @@
         <div id="home">
             <!-- Start cSlider -->
             <div id="da-slider" class="da-slider">
-<!--                 <div class="triangle"></div>
- -->                <!-- mask elemet use for masking background image -->
+                <!-- mask elemet use for masking background image -->
                 <div class="mask"></div>
                 <!-- All slides centred in container element -->
                 <div class="container">
@@ -139,7 +138,6 @@
         <!-- Service section end -->
         <!-- Portfolio section start -->
         <div class="section secondary-section " id="portfolio">
-            <div class="triangleBlack"></div>
             <div class="container">
                 <div class=" title">
                     <h1>Businesses Like Yours Depend on Treaty</h1>
@@ -422,7 +420,6 @@
         <!-- Portfolio section end -->
         <!-- About us section start -->
         <div class="section primary-section" id="about">
-            <div class="triangleGray"></div>
             <div class="container">
                 <div class="title">
                     <h1>Who We Are?</h1>
@@ -498,7 +495,6 @@
         </div>
         <!-- About us section end -->
         <div class="section secondary-section">
-            <div class="triangleBlack"></div>
             <div class="container centered">
                 <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
                 <a href="User/find_location.php" class="button">Find Locations</a>
@@ -508,7 +504,6 @@
         <!-- Client section start -->
         <div id="clients">
             <div class="section primary-section">
-                <div class="triangleGray"></div>
                 <div class="container">
                     <div class="title">
                         <h1>What Client Say?</h1>
