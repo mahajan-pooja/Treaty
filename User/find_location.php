@@ -29,7 +29,7 @@
 <body>
 
         <div class="navbar">
-            <div class="navbar-inner">
+            <div class="navbar-inner customer-navbar">
                 <div class="container">
                     <a href="../index.php" class="brand">
                         <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />

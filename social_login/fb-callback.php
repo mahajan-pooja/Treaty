@@ -68,12 +68,20 @@
 		else
 		{
 			$signUpPhone = '1234567890';
-			$signUppassword = 'facebook';
+			$signUppassword = 'test1234';
 			$query = "INSERT INTO user (email,role,phonenumber,encryptedpassword)
 						VALUES (\"".$_SESSION['email']."\",\"".$_SESSION['signUprole_social']."\",\"".$signUpPhone."\",\"". $signUppassword."\")";
 		    
 		    $result = $mysqli->query($query);		    
 		    if ($result){
+
+		    	//Fetch user id to set it in session.
+				$query_userid = "SELECT id FROM user where email=\"".$_SESSION['email']."\"";
+		        $result_userid = $mysqli->query($query_userid);
+		        if ($result_userid->num_rows > 0) {
+		        	$row = $result_userid->fetch_array();
+		            $_SESSION['userid'] = $row['id'];		                        
+		        }
 		    	
 				if(strcasecmp($_SESSION['signUprole_social'], 'Business Owner') == 0){
 					header('Location: ../User/business_profile.php');

@@ -42,9 +42,8 @@
 	background-color:#D2E09D!important;
 }*/
 .loginName{
-	float: right!important;
-	margin-right: 10%;
-	margin-top: 1%!important;
+	margin: 20px 0px;
+	text-align: left;
 }
 .modal-content{
 	margin:auto;
@@ -198,7 +197,8 @@
 	color: black;
 	font-size: 160%;
 	text-align: center;
-	padding: 5% 0% 3% 0%;
+	padding: 5% 0% 3% 0%!important;
+	font-weight: 400;
 
 }
 body {
@@ -268,7 +268,7 @@ h1 {
 
 .tabs {
     background-color: #f1f1f2;
-    min-height: 482px;
+    min-height: 718px;
 }
 .tab-left {
     width: 100%;
@@ -385,7 +385,7 @@ h1 {
 	-o-transition: all 0.3s ease-out;
 	transition: all 0.3s ease-out;
 	display: inline-block;
-	width: 16.35%;
+	width: 13.97%;
 	border: none;
 	font-weight: normal;
 }
@@ -859,7 +859,7 @@ input.name,input.date {
 }
 
 .w3l-sign-in, .register.agileits, .agileinfo-recover, .wthree-subscribe, .agile-send-mail {
-    padding: 0 0 0 1.5em;
+    padding: 0 1.5em 0 1.5em;
 }
  h3 {
     color: #fff;

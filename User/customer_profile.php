@@ -204,11 +204,13 @@
               }
 			}
 		}  else {
+            
             $query2 = "SELECT isactive
-					  FROM userdetail
-					  WHERE userid=\"".$userid."\"";
-			$result2 = $mysqli->query($query2);
-            if ($result2 -> num_rows > 0) {
+					  FROM user
+					  WHERE id=\"".$userid."\"";
+            $result2 = $mysqli->query($query2);
+
+            if ($result2->num_rows > 0) {                
                 $row2 = $result2->fetch_array();
                 $isactive = $row2["isactive"];
                 $activationFlag = true;
@@ -247,7 +249,7 @@
 
 <body>
         <div class="navbar">
-            <div class="navbar-inner">
+            <div class="navbar-inner customer-navbar">
                 <div class="container">
                     <a href="../index.php" class="brand">
                         <img src="../images/logoIcon.png" width="240" height="80" alt="Logo" />
@@ -263,7 +265,7 @@
                             <li><a href="../index.php">Home</a></li>
 							<?php
                                 
-                                if($activationFlag){
+                                if($_SESSION['customerdashboard'] == true and $activationFlag == true){
                                     echo "<li><a href='customer.php'>Dashboard</a></li>";
                                 }
                             ?>                                                        
@@ -276,21 +278,21 @@
                 </div>
             </div>
         </div>
-        <span class="loginName">
-        	<?php 
-        		$Qry = "SELECT firstname, lastname
-						  FROM userdetail
-                          WHERE userid=\"" . $userid . "\" and isactive = 1";
-                $result = $mysqli->query($Qry);
-                if ($result->num_rows > 0) {
-                	$row = $result->fetch_assoc();
-                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
-                }
-        	?>    	
-        </span>
-        <br><br>
-
-	<h1></h1>
+		<div class="container">        
+            <div class="loginName">
+                <?php 
+                    $Qry = "SELECT firstname, lastname
+                              FROM userdetail
+                              WHERE userid=\"" . $userid . "\" and isactive = 1";
+                    $result = $mysqli->query($Qry);
+                    if ($result->num_rows > 0) {
+                        $row = $result->fetch_assoc();
+                        echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                    }
+                ?>    	
+            </div>
+        </div>     
+        
 	<div class="container">
 		<div class="tab">
 			<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">

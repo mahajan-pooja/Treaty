@@ -45,8 +45,7 @@
         <div id="home">
             <!-- Start cSlider -->
             <div id="da-slider" class="da-slider">
-<!--                 <div class="triangle"></div>
- -->                <!-- mask elemet use for masking background image -->
+                <!-- mask elemet use for masking background image -->
                 <div class="mask"></div>
                 <!-- All slides centred in container element -->
                 <div class="container">
@@ -139,7 +138,6 @@
         <!-- Service section end -->
         <!-- Portfolio section start -->
         <div class="section secondary-section " id="portfolio">
-            <div class="triangleBlack"></div>
             <div class="container">
                 <div class=" title">
                     <h1>Businesses Like Yours Depend on Treaty</h1>
@@ -422,7 +420,6 @@
         <!-- Portfolio section end -->
         <!-- About us section start -->
         <div class="section primary-section" id="about">
-            <div class="triangleGray"></div>
             <div class="container">
                 <div class="title">
                     <h1>Who We Are?</h1>
@@ -431,7 +428,7 @@
                 <div class="row-fluid team">
                     <div class="span4" id="first-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Customer Acquisition</h3>
                             <div class="mask">
                                 <h2></h2>
@@ -441,7 +438,7 @@
                     </div>
                     <div class="span4" id="second-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Loyalty and Retention</h3>
                             <div class="mask">
                                 <h2></h2>
@@ -451,7 +448,7 @@
                     </div>
                     <div class="span4" id="third-person">
                         <div class="thumbnail">
-                            <img src="images/a1.jpg" alt="team 1">
+                            <img src="images/Slider01.png" alt="team 1">
                             <h3>Powerful Promotions</h3>
                             <div class="mask">
                                 <h2></h2>
@@ -498,7 +495,6 @@
         </div>
         <!-- About us section end -->
         <div class="section secondary-section">
-            <div class="triangleBlack"></div>
             <div class="container centered">
                 <p class="large-text">Explore all business locations who supports Treaty Reward program.</p>
                 <a href="User/find_location.php" class="button">Find Locations</a>
@@ -508,7 +504,6 @@
         <!-- Client section start -->
         <div id="clients">
             <div class="section primary-section">
-                <div class="triangleGray"></div>
                 <div class="container">
                     <div class="title">
                         <h1>What Client Say?</h1>

@@ -1,6 +1,7 @@
 <?php
 	// Start the session
 	session_start();
+
 ?>
 <!DOCTYPE html>
 <html class=" js cssanimations csstransitions">
@@ -55,8 +56,8 @@
 		  		});
 			}); 
 
-
 		</script>
+		
 		
         <style>
 		.agile_form textarea {
@@ -70,7 +71,26 @@
 			letter-spacing: 1px;
 			-webkit-appearance: none;
 			margin: 5px;
-		}		
+		}
+		.row {
+			margin-right: -15px;
+			margin-left: -15px;
+		}
+		
+		@media (min-width: 992px) {
+		.col-md-3 {
+			width: 25%;
+		}
+		.col-md-3 {
+			float: left;
+		}
+		}
+		@media (max-width: 992px) {
+		.chart-responsive {
+			min-height: .01%;
+			overflow-x: auto;
+		}
+		}						
 		</style>
 	</head>
 	<?php
@@ -391,22 +411,23 @@
                 </div>
             </div>
         </div>
-        <span class="loginName">
-        	<?php
-        		$loginNameQry = "SELECT firstname, lastname
-						  FROM userdetail
-                          WHERE userid=\"" . $userid . "\" and isactive = 1";
+        
+        <div class="container">        
+            <div class="loginName">
+				<?php
+                    $loginNameQry = "SELECT firstname, lastname
+                              FROM userdetail
+                              WHERE userid=\"" . $userid . "\" and isactive = 1";
+    
+                    $resultName = $mysqli->query($loginNameQry);
+                    if ($resultName->num_rows > 0) {
+                        $row = $resultName->fetch_assoc();
+                        echo "Hello, ". $row['firstname']." ".$row['lastname'];
+                    }
+                ?>    	
+            </div>
+        </div>        
 
-                $resultName = $mysqli->query($loginNameQry);
-                if ($resultName->num_rows > 0) {
-                	$row = $resultName->fetch_assoc();
-                	echo "Hello, ". $row['firstname']." ".$row['lastname'];
-                }
-        	?>
-        </span>
-        <br><br>
-
-		<h1></h1>
 		<div class="container">
 			<div class="tab">
 				<div id="horizontalTab" style="display: block; width: 100%; margin: 0px;">
@@ -443,12 +464,13 @@
 					<div class="tabs">
 						<div class="tab-left">
 							<ul class="resp-tabs-list" style="margin: 0px;">
-								<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-calculator" aria-hidden="true"></i>Add/Redeem Rewards</li>
+								<li class="resp-tab-item-business" onclick="loadScan();"><i class="fa fa-calculator" aria-hidden="true"></i>Add / Redeem</li>
 								<li class="resp-tab-item-business"><i class="fa fa-star" aria-hidden="true"></i>Offers</li>
 								<li class="resp-tab-item-business"><i class="fa fa-briefcase" aria-hidden="true"></i>Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-map-marker" aria-hidden="true"></i>Register Business</li>
 								<li class="resp-tab-item-business"><i class="fa fa-cogs" aria-hidden="true"></i>Create Offer</li>
 								<li class="resp-tab-item-business"><i class="fa fa-users" aria-hidden="true"></i>Customers</li>
+								<li class="resp-tab-item-business"><i class="fa fa-line-chart" aria-hidden="true"></i>Business Tracker</li>
 							</ul>
 						</div>
 						<div class="tab-right">
@@ -604,7 +626,7 @@
                                         	<tr>
                                             	<td style="padding-left: 3%;">
 	                                            	<div style="width: 100px;height: 100px;border: 1px solid #ccc;margin-bottom: 5px;">
-	                                            	<img src = "images/default-image.jpg" alt = "Upload Image" id = "image" width="100px" />
+	                                            	<img src = "images/default-image.jpg" alt = "Upload Image" id = "image" width="100px" style="height:100%" />
 	                                            	</div>
                                             	</td>
 
@@ -724,6 +746,96 @@
                                            	</div>
 									</div>
 								</div>
+								<!-- Business Tracker Section -->
+								<div class="tab-1 resp-tab-content">
+									<p class="secHead">Business Tracker</p>
+									<div>
+										
+										<?php
+										// Total Customers
+										$query_tot_cust = "SELECT count(DISTINCT id) as total_cust FROM user WHERE role = \"Customer\" and isactive = 1";
+									    $result = $mysqli->query($query_tot_cust);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_cust = $row["total_cust"];
+										}
+										
+
+										// Total Subcribed Customers
+										$query_sub_cust = "SELECT COUNT(DISTINCT userid) as total_sub_cust FROM customerbusiness WHERE businessid=".$userid;
+									    $result = $mysqli->query($query_sub_cust);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_sub_cust = $row["total_sub_cust"];
+										}
+										
+
+										//Total Visits
+										$query_tot_visits = "SELECT COUNT(DISTINCT userid, DATE(created)) as total_visits FROM rewardtransaction WHERE businessid=".$userid;
+									    $result = $mysqli->query($query_tot_visits);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_visits = $row["total_visits"];
+										}
+										
+
+										//Total Offers
+										$query_tot_offers = "SELECT COUNT(id) as total_offers FROM businessoffer WHERE userid=".$userid;
+									    $result = $mysqli->query($query_tot_offers);
+									    if ($result->num_rows > 0) {
+											$row = $result->fetch_array();
+											$total_offers = $row["total_offers"];
+										}
+
+										//Offer and redeem count
+										$query_bar_chart1 = "SELECT b.offername,COUNT(*) as total_redeem FROM rewardtransaction as a JOIN businessoffer as b ON a.offerid = b.id WHERE a.offerid IS NOT NULL and a.businessid = ".$userid." GROUP BY offername";
+									    $bar_chart_result1 = $mysqli->query($query_bar_chart1);
+									 								    
+										//echo '<pre>',print_r($bar_chart_array),'</pre>';	
+										//Offer and redeem count
+										$query_bar_chart2 = "SELECT DATE(created) as date,count(distinct userid) as total_visits FROM rewardtransaction WHERE businessid = ".$userid." GROUP BY DATE(created) ORDER BY DATE(created);";
+									    $bar_chart_result2 = $mysqli->query($query_bar_chart2);	
+
+										?>                                                                      
+                                        
+										<div class="row">
+                                        	<div class="col-md-3 col-xs-6" style="margin-bottom: 5px;">
+                                            	<div style="padding: 20px;background:#fff;border: 1px solid #ddd;margin: 5px;height: 125px;">
+                                            		<i class="fa fa-user" style="font-size:48px;color:#a9c750"></i>
+                                            		<p style="color:#333;margin: 0px;"><?php echo "Total Customers on Treaty: <strong>".$total_cust; ?></strong></p>
+                                                </div>
+                                            </div>
+                                        	<div class="col-md-3 col-xs-6" style="margin-bottom: 5px;">
+                                            	<div style="padding: 20px;background:#fff;border: 1px solid #ddd;margin: 5px;height: 125px;">
+                                            		<i class="fa fa-clipboard" style="font-size:48px;color:#a9c750"></i>
+                                                	<p style="color:#333;margin: 0px;"><?php echo "Total Subscribed Customers: <strong>".$total_sub_cust; ?></strong></p>
+                                                </div>                                            
+                                            </div>
+                                        	<div class="col-md-3 col-xs-6" style="margin-bottom: 5px;">
+                                            	<div style="padding: 20px;background:#fff;border: 1px solid #ddd;margin: 5px;height: 125px;">
+                                            		<i class="fa fa-shopping-cart" style="font-size:48px;color:#a9c750"></i>
+                                                	<p style="color:#333;margin: 0px;"><?php echo "Total Visits: <strong>".$total_visits; ?></strong></p>
+                                                </div>                                            
+                                            </div>
+                                        	<div class="col-md-3 col-xs-6" style="margin-bottom: 5px;">
+                                            	<div style="padding: 20px;background:#fff;border: 1px solid #ddd;margin: 5px;height: 125px;">
+                                            		<i class="fa fa-star" style="font-size:48px;color:#a9c750"></i>
+                                                	<p style="color:#333;margin: 0px;"><?php echo "Total Offers(till date): <strong>".$total_offers; ?></strong></p>
+                                                </div>                                            
+                                            </div>                                                                                                                                    
+                                        </div>                                        
+                                                                                
+										<br>
+                                        <center>
+										<div id="columnchart1" class="chart-responsive"></div>
+                                        <br>
+										<div id="columnchart2" class="chart-responsive"></div>
+										</center>
+                                        <br><br>
+                                        
+									</div>
+								</div>
+
 							</div>
 						</div>
 						<div class="clear"></div>
@@ -746,6 +858,89 @@
 			});
 		</script>
 		<!-- 97-rgba(0, 0, 0, 0.75)/End-date-piker -->
+
+		<!-- Script to render Column Chart -->
+		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+		<script type="text/javascript">
+			google.charts.load("current", {packages:['corechart']});
+    		google.charts.setOnLoadCallback(drawChart1);
+    		google.charts.setOnLoadCallback(drawChart2);
+
+    		// For chart 1
+    		function drawChart1() {
+		    	var data = google.visualization.arrayToDataTable([
+		    		['Offer Name','Redeem Count'],
+		    		<?php 
+		    			$y_max = 0;
+		    			while ($row = $bar_chart_result1->fetch_assoc()) {
+		    				if($y_max<$row["total_redeem"]){
+		    					$y_max = $row["total_redeem"];
+		    				}
+		    				echo "['".$row["offername"]."', ".$row["total_redeem"]."],";
+		    			}
+		    		?>		        
+		    	]);
+
+		    	var options = {
+			        title: "Reponse for Offers",
+			        width: 600,
+			        height: 250,
+			        hAxis: {
+			          title: 'Offer Name'			          
+			         },
+			        vAxis: {
+			          title: 'Redeem Count',
+			          viewWindow:{
+			            max:<?php echo $y_max + 3;?>,
+			            min:0
+			          },			          
+			          format: '#'			          
+			        },
+			        bar: {groupWidth: "10%"},
+			        legend: { position: "none" },
+		      	};
+		    	var chart = new google.visualization.ColumnChart(document.getElementById("columnchart1"));
+		      	chart.draw(data, options);
+		    }
+
+		    // For chart 2
+		    function drawChart2() {
+		    	var data = google.visualization.arrayToDataTable([
+		    		['Date','No. of Visits'],
+		    		<?php 
+		    			$y_max = 0;
+		    			while ($row = $bar_chart_result2->fetch_assoc()) {
+		    				if($y_max<$row["total_visits"]){
+		    					$y_max = $row["total_visits"];
+		    				}
+		    				echo "['".$row["date"]."', ".$row["total_visits"]."],";
+		    			}
+		    		?>		        
+		    	]);
+
+		    	var options = {
+			        title: "No. of Visits Vs Date",
+			        width: 600,
+			        height: 250,
+			        hAxis: {
+			          title: 'No. of Visits'			          
+			         },
+			        vAxis: {
+			          title: 'Date',
+			          viewWindow:{
+			            max:<?php echo $y_max + 3;?>,
+			            min:0
+			          },			          
+			          format: '#'			          
+			        },
+			        bar: {groupWidth: "20%"},
+			        legend: { position: "none" },
+		      	};
+		    	var chart = new google.visualization.BarChart(document.getElementById("columnchart2"));
+		      	chart.draw(data, options);
+		    }
+
+		</script>
 		<?php
 		/* close connection */
             $mysqli->close();
