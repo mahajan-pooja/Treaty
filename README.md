@@ -32,7 +32,7 @@ Treaty is a loyalty rewards management system that will offer unique and excepti
 </p>
   <br>
   
-#### Login as a Business User
+#### Login as a Business Owner
   
   <br>
 <p align="center"> 
@@ -79,7 +79,7 @@ Treaty is a loyalty rewards management system that will offer unique and excepti
 </p>
   <br>
 
-#### Login as a Normal User
+#### Login as a Customer
 
   <br>
 <p align="center"> 
