@@ -19,4 +19,113 @@ Treaty is a loyalty rewards management system that will offer unique and excepti
 
 6) Access URL- http://localhost/Treaty/index.php .
 
-7) For Domain Access URL - https://www.ruchirkute.com/treaty/
+7) For Domain Access URL - https://www.ruchirkute.com/Treaty/
+
+
+## Screenshots
+
+
+<p align="center"> Login/Sign Up Page 
+  <br>
+  <br>
+  <img src="screenshots/login.png" width="550"/>
+</p>
+  <br>
+  
+#### Login as a Business User
+  
+  <br>
+<p align="center"> 
+  Scan QR code to add/redeem points
+  <br>
+  <br>
+  <img src="screenshots/business_1.png" width="550"/>
+  <br>
+  <br>
+  All offers created by Business
+  <br>
+  <br>
+  <img src="screenshots/business_2.png" width="550"/>
+  <br>
+  <br>
+  Different branches of Business
+  <br>
+  <br>
+  <img src="screenshots/business_3.png" width="550"/>
+  <br>
+  <br>
+  Register your Business
+  <br>
+  <br>
+  <img src="screenshots/business_4.png" width="550"/>
+  <br>
+  <br>
+  Create Offer page
+  <br>
+  <br>
+  <img src="screenshots/business_5.png" width="550"/>
+  <br>
+  <br>
+  Customers registered for a Business
+  <br>
+  <br>
+  <img src="screenshots/business_6.png" width="550"/>
+  <br>
+  <br>
+  Business Tracker Dashboard
+  <br>
+  <br>
+  <img src="screenshots/business_7.png" width="550"/>
+</p>
+  <br>
+
+#### Login as a Normal User
+
+  <br>
+<p align="center"> 
+  Update account information
+  <br>
+  <br>
+  <img src="screenshots/consumer_1.png" width="550"/>
+  <br>
+  <br>
+  Deactivate account page
+  <br>
+  <br>
+  <img src="screenshots/consumer_2.png" width="550"/>
+  <br>
+  <br>
+  Customer will find QR code here
+  <br>
+  <br>
+  <img src="screenshots/consumer_3.png" width="550"/>
+  <br>
+  <br>
+  Rewards available in account
+  <br>
+  <br>
+  <img src="screenshots/consumer_4.png" width="550"/>
+  <br>
+  <br>
+  Explore page shows different Businesses available on Treaty
+  <br>
+  <br>
+  <img src="screenshots/consumer_5.png" width="550"/>
+  <br>
+  <br>
+  Transactions page
+  <br>
+  <br>
+  <img src="screenshots/consumer_6.png" width="550"/>
+  <br>
+  <br>
+  Find Location page shows Business
+  <br>
+  <br>
+  <img src="screenshots/consumer_7.png" width="550"/>
+</p>
+
+
+
+
+
